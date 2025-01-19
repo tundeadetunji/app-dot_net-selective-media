@@ -25,10 +25,6 @@ Public Class Constants
 	Public Shared SupportedImageFileTypes As New List(Of String) From {
 		"*.jpg", "*.jpeg", "*.bmp"
 	}
-	Public Shared Players As New List(Of String) From {
-		Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) & "\VideoLan\Vlc\vlc.exe",
-		Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) & "\MPC-HC\mpc-hc.exe"
-	}
 
 #End Region
 

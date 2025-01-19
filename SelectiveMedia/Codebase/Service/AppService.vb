@@ -133,6 +133,7 @@ Public Class AppService
 		StartApps(ReadText(settings.GetNightProgramsFile))
 	End Sub
 	Public Function PlayerIsOn() As Boolean
+		Dim Players As List(Of String) = ReadText(PlayersFile).StringToList
 		For Each player As String In Players
 			If AppIsOn(player) Then Return True
 		Next
