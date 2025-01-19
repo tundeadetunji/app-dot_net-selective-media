@@ -4,6 +4,13 @@ Imports System.Runtime.Remoting
 Imports System.Windows.Forms.VisualStyles.VisualStyleElement.Window
 Public Class UiService
 
+#Region "Initialization"
+	Public Shared ReadOnly Property Instance As UiService = New UiService
+	Private Sub New()
+
+	End Sub
+#End Region
+
 #Region "Constants"
 	Public Shared ReadOnly Property background_color As Color = Color.FromArgb(34, 34, 34)
 
@@ -20,14 +27,6 @@ Public Class UiService
 		s_manual.ToolTipTitle = "Need a tip?"
 		s_manual.SetToolTip(HelpIcon, "Click for Help!")
 	End Sub
-	Private Sub SetInitiallyHiddenControls(dialog As IDialogResource)
-		dialog.GetBeginTime.Value = Date.Parse(Services.settings.GetBeginTime)
-		dialog.GetEndTime.Value = Date.Parse(Services.settings.GetEndTime)
-		BindProperty(dialog.GetModeDropDown, GetEnum(New Mode))
-		dialog.GetModeDropDown.Text = Services.settings.GetMode
-		BindProperty(dialog.GetRateDropDown, GetEnum(New Rate))
-		dialog.GetRateDropDown.Text = Services.settings.GetRate
-	End Sub
 
 #End Region
 
@@ -37,9 +36,8 @@ Public Class UiService
 		dialog.GetDialog.Text = "PC Transform"
 		dialog.GetDialog.BackColor = background_color
 		dialog.GetDialogTitleLabel.Text = "Settings"
-		SetInitiallyHiddenControls(dialog)
 		ShowOrHideInitiallyHiddenControls(dialog, False)
-		CloseDialogButton.Text = ChrW(10539)
+		dialog.GetCloseDialogButton.Text = ChrW(10539)
 	End Sub
 	Public Sub HideDialog(dialog As IDialogResource)
 		dialog.GetDialog.Hide()

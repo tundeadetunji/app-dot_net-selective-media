@@ -117,7 +117,7 @@ Partial Class Form1
         'DialogTitle
         '
         Me.DialogTitle.AutoSize = True
-        Me.DialogTitle.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.DialogTitle.Cursor = System.Windows.Forms.Cursors.Default
         Me.DialogTitle.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.DialogTitle.Location = New System.Drawing.Point(11, 18)
         Me.DialogTitle.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)

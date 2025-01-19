@@ -15,4 +15,5 @@
     Function GetMediaTimer() As Timer
     Function GetDayTimer() As Timer
     Function GetNightTimer() As Timer
+    Function GetCloseDialogButton() As Label
 End Interface

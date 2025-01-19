@@ -69,17 +69,23 @@ Public Class Form1 : Implements IDialogResource
 		Return NightTimer
 	End Function
 
+	Public Function GetCloseDialogButton() As Label Implements IDialogResource.GetCloseDialogButton
+		Return CloseDialogButton
+	End Function
+
 #End Region
 
 #Region "Properties"
-	Private ReadOnly Property ui As UiService = New UiService
-	Private ReadOnly Property program As AppService = New AppService
-	Private ReadOnly Property disk As DiskService = New DiskService
-	Private ReadOnly Property desktop As DesktopService = New DesktopService
-	Private ReadOnly Property settings As SettingsService = New SettingsService
-	Private ReadOnly Property playback As MediaService = New MediaService
-	Private ReadOnly Property state As StateService = StateService.Instance(False, MediaSection.Regular)
-	Private ReadOnly Property history As HistoryService = HistoryService.Instance
+	Private ReadOnly Property services As InstanceFactory = InstanceFactory.Instance
+
+	'Private ReadOnly Property ui As UiService = New UiService
+	'Private ReadOnly Property program As AppService = New AppService
+	'Private ReadOnly Property disk As DiskService = New DiskService
+	'Private ReadOnly Property desktop As DesktopService = New DesktopService
+	'Private ReadOnly Property settings As SettingsService = New SettingsService
+	'Private ReadOnly Property playback As MediaService = New MediaService
+	'Private ReadOnly Property state As StateService = StateService.Instance(False, MediaSection.Regular)
+	'Private ReadOnly Property history As HistoryService = HistoryService.Instance
 
 #End Region
 
@@ -103,11 +109,11 @@ Public Class Form1 : Implements IDialogResource
 
 #Region "Control Box Related"
 	Private Sub CloseDialogButton_Click(sender As Object, e As EventArgs) Handles CloseDialogButton.Click
-		If settings.SettingsValidated Then
-			settings.SaveSettings(Me, disk, history, state)
-			ui.ShowOrHideInitiallyHiddenControls(Me, False)
+		If services.settings.Validated(Me) Then
+			services.settings.SaveSettings(Me, services.program, services.disk, services.history, services.settings, services.state)
+			services.ui.ShowOrHideInitiallyHiddenControls(Me, False)
 			FadeOutTimer.Enabled = True
-			program.Start(Me, disk, settings)
+			services.program.Start(Me, services.disk, services.history, services.settings, services.state)
 		End If
 	End Sub
 	Private Sub FadeInTimer_Tick(sender As Object, e As EventArgs) Handles FadeInTimer.Tick
@@ -133,52 +139,59 @@ Public Class Form1 : Implements IDialogResource
 
 		FadeInTimer.Enabled = False
 
-		ui.HideDialog(Me)
+		services.disk.SetPermissions()
 
-		ui.InitializeDialog(Me)
+		services.ui.HideDialog(Me)
 
-		If Not program.CanStart(Me) Then
+		services.ui.InitializeDialog(Me)
+
+		services.settings.RestoreSettings(Me)
+
+		If Not services.program.CanStart(Me, services.settings) Then
 			FadeInTimer.Enabled = True
 		Else
 			FadeInTimer.Enabled = False
-			program.Start(Me, disk, settings)
+			services.program.Start(Me, services.disk, services.history, services.settings, services.state)
 		End If
 
 	End Sub
 	Private Sub Form1_DoubleClick(sender As Object, e As EventArgs) Handles Me.DoubleClick
-		ui.ShowOrHideInitiallyHiddenControls(Me, Not BeginTime.Visible) 'just picked BeginTime at random, could have been any one of them
+		services.ui.ShowOrHideInitiallyHiddenControls(Me, Not BeginTime.Visible) 'just picked BeginTime at random, could have been any one of them
 	End Sub
 
 	Private Sub NightMediaLocationTextBox_DoubleClick(sender As Object, e As EventArgs) Handles NightMediaLocationTextBox.DoubleClick, RegularMediaLocationTextBox.DoubleClick, AlternateMediaLocationTextBox.DoubleClick, WallpaperLocationTextBox.DoubleClick
-		CType(sender, TextBox).Text = disk.GetFolder(sender)
+		CType(sender, TextBox).Text = services.disk.GetFolder(sender)
+	End Sub
+	Private Sub ProgramsFileTextBox_DoubleClick(sender As Object, e As EventArgs) Handles ProgramsFileTextBox.DoubleClick
+		CType(sender, TextBox).Text = services.disk.GetFile(sender)
 	End Sub
 
 	Private Sub MediaTimer_Tick(sender As Object, e As EventArgs) Handles MediaTimer.Tick
 
-		If desktop.PlayerIsOn(disk) Then
-			If settings.GetMode(disk) = Random Then
+		If services.program.PlayerIsOn() Then
+			If services.settings.GetMode() = Random Then
 				MediaTimer.Interval = TwoMinutes
 			End If
 			Exit Sub
 		End If
 
-		playback.StartMedia(Me, program, disk, history, settings, state)
+		services.playback.StartMedia(Me, services.program, services.desktop, services.disk, services.history, services.settings, services.state)
 
 	End Sub
 
 
 	Private Sub DayTimer_Tick(sender As Object, e As EventArgs) Handles DayTimer.Tick
-		If program.GetPeriod(Me, disk, settings) = Period.Day Then
+		If services.program.GetPeriod(services.disk, services.settings) = Period.Day Then
 			DayTimer.Enabled = False
-			program.PrepNight()
+			services.program.PrepNight(services.settings)
 			NightTimer.Enabled = True
 		End If
 	End Sub
 
 	Private Sub NightTimer_Tick(sender As Object, e As EventArgs) Handles NightTimer.Tick
-		If program.GetPeriod(Me, disk, settings) = Period.Night Then
+		If services.program.GetPeriod(services.disk, services.settings) = Period.Night Then
 			NightTimer.Enabled = False
-			program.PrepDay()
+			services.program.PrepDay(services.desktop, services.disk, services.settings)
 			DayTimer.Enabled = True
 		End If
 
@@ -191,5 +204,4 @@ Public Class Form1 : Implements IDialogResource
 	Private Sub HelpIcon_Click(sender As Object, e As EventArgs) Handles HelpIcon.Click
 		StartFile(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\help.txt")
 	End Sub
-
 End Class

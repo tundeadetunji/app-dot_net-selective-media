@@ -3,6 +3,7 @@ Public Class Constants
 
 #Region "Exported"
 	Public Const Random As String = "Random"
+	Public Const Sequential As String = "Sequential"
 	Public Const SequentialNight As String = "SequentialNight"
 	Public Const SequentialRegular As String = "SequentialRegular"
 	Public Const SequentialAlternate As String = "SequentialAlternate"
@@ -23,6 +24,10 @@ Public Class Constants
 	}
 	Public Shared SupportedImageFileTypes As New List(Of String) From {
 		"*.jpg", "*.jpeg", "*.bmp"
+	}
+	Public Shared Players As New List(Of String) From {
+		Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) & "\VideoLan\Vlc\vlc.exe",
+		Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) & "\MPC-HC\mpc-hc.exe"
 	}
 
 #End Region

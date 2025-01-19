@@ -1,132 +1,171 @@
-﻿Public Class SettingsService
+﻿Imports iNovation.Code.General
+Imports iNovation.Code.Desktop
+Imports iNovation.Code.GeneralExtensions
+Imports SelectiveMedia.Constants
+Public Class SettingsService
+
+#Region "Initialization"
+    Public Shared ReadOnly Property Instance As SettingsService = New SettingsService
+    Private Sub New()
+
+    End Sub
+#End Region
 
 #Region "Properties"
     Private ReadOnly Property BeginTimeFile As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\BeginTime.txt"
     Private ReadOnly Property EndTimeFile As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\EndTime.txt"
-    Private ReadOnly ModeFile As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\Mode.txt"
     Private ReadOnly Property AnnounceFile As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\Announce.txt"
     Private ReadOnly Property DayProgramsFile As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\DayPrograms.txt"
     Private ReadOnly Property NightProgramsFile As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\NightPrograms.txt"
+    Private ReadOnly Property NightMediaLocationFile As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\NightMediaLocation.txt"
+    Private ReadOnly Property RegularMediaLocationFile As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\RegularMediaLocation.txt"
+    Private ReadOnly Property AlternateMediaLocationFile As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\AlternateMediaLocation.txt"
+    Private ReadOnly Property WallpapersLocationFile As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\WallpapersLocation.txt"
+    Private ReadOnly Property ProgramsFile As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\Programs.txt"
     Private ReadOnly Property RateFile As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\Rate.txt"
-    Private ReadOnly Property PlayersFile As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\Players.txt"
-
-#End Region
-
-#Region "Support"
-    ''' <summary>
-    ''' if folders have changed or their number of files have changed, then clear the history files
-    ''' </summary>
-    Private Sub Recalibrate(history As HistoryService)
-
-    End Sub
+    Private ReadOnly Property ModeFile As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\Mode.txt"
 
 #End Region
 
 #Region "Exported"
+    ''' <summary>
+    ''' All files are in place and locations are valid
+    ''' </summary>
+    ''' <returns></returns>
+    Public Function Validated(dialog As IDialogResource) As Boolean
+        Dim valid As Boolean = True
 
-    Public Function SettingsValidated() As Boolean
+        If Not IO.Directory.Exists(dialog.GetNightMediaLocationTextBox.Text) Then valid = False
+        If Not IO.Directory.Exists(dialog.GetRegularMediaLocationTextBox.Text) Then valid = False
+        If Not IO.Directory.Exists(dialog.GetAlternateMediaLocationTextBox.Text) Then valid = False
+        If Not IO.File.Exists(dialog.GetProgramsFileTextBox.Text) Then valid = False
+        If Not IO.Directory.Exists(dialog.GetWallpaperLocationTextBox.Text) Then valid = False
+        If String.IsNullOrEmpty(dialog.GetModeDropDown.Text) Then valid = False
+        If String.IsNullOrEmpty(dialog.GetRateDropDown.Text) Then valid = False
 
+        Return valid
     End Function
-    Public Sub SaveSettings(dialog As IDialogResource, disk As DiskService, history As HistoryService, state As StateService)
-        'recalibrate
-        Recalibrate(history)
-        state.UpdateSequentialState()
-        state.UpdateCurrentSection()
-        disk.SetFiles()
-        disk.setWallpapers()
+    Public Sub SaveSettings(dialog As IDialogResource, app As AppService, disk As DiskService, history As HistoryService, settings As SettingsService, state As StateService)
 
         'save settings
+        SetBeginTime(dialog.GetBeginTime.Value.ToShortTimeString)
+        SetEndTime(dialog.GetEndTime.Value.ToShortTimeString)
+        SetAnnounce(dialog.GetAnnounceTextBox.Text)
+        SetDayPrograms(String.Empty)
+        SetNightPrograms(String.Empty)
+        SetNightMediaLocation(dialog.GetNightMediaLocationTextBox.Text)
+        SetRegularMediaLocation(dialog.GetRegularMediaLocationTextBox.Text)
+        SetAlternateMediaLocation(dialog.GetAlternateMediaLocationTextBox.Text)
+        SetWallpapersLocation(dialog.GetWallpaperLocationTextBox.Text)
+        SetProgramsFile(dialog.GetProgramsFileTextBox.Text)
+        SetRate(dialog.GetRateDropDown.Text)
+        SetMode(dialog.GetModeDropDown.Text)
+
+        'load
+        app.Start(dialog, disk, history, settings, state)
     End Sub
 
-    Public Function GetWallpapersLocation() As String
 
+    Public Function GetBeginTime() As String
+        Dim b_time_f As String = ReadText(BeginTimeFile)
+        Return If(Not String.IsNullOrEmpty(b_time_f), b_time_f, "12:00 AM")
     End Function
 
-    Public Function GetPlayers(disk As DiskService)
+    Public Sub SetBeginTime(begin_time As String)
+        WriteText(BeginTimeFile, begin_time)
+    End Sub
 
+    Public Function GetEndTime() As String
+        Dim e_time_f As String = ReadText(EndTimeFile)
+        Return If(Not String.IsNullOrEmpty(e_time_f), e_time_f, "6:00 AM")
     End Function
 
+    Public Sub SetEndTime(end_time As String)
+        WriteText(EndTimeFile, end_time)
+    End Sub
+
+    Public Function GetAnnounce() As String
+        Return ReadText(AnnounceFile)
+    End Function
+    Public Sub SetAnnounce(announcement As String)
+        WriteText(AnnounceFile, announcement)
+    End Sub
+
+    Public Function GetDayProgramsFile() As String
+        Return ReadText(DayProgramsFile)
+    End Function
+
+    Public Sub SetDayPrograms(programs As String)
+        'Todo
+    End Sub
+
+    Public Function GetNightProgramsFile() As String
+        Return ReadText(NightProgramsFile)
+    End Function
+
+    Public Sub SetNightPrograms(programs As String)
+        'Todo
+    End Sub
     Public Function GetNightMediaLocation() As String
-
+        Return ReadText(NightMediaLocationFile)
     End Function
-    Public Sub SetNightMediaLocation(location As String, disk As DiskService)
-
+    Public Sub SetNightMediaLocation(location As String)
+        WriteText(NightMediaLocationFile, location)
     End Sub
+
     Public Function GetRegularMediaLocation() As String
-
+        Return ReadText(RegularMediaLocationFile)
     End Function
-    Public Sub SetRegularMediaLocation(location As String, disk As DiskService)
-
+    Public Sub SetRegularMediaLocation(location As String)
+        WriteText(RegularMediaLocationFile, location)
     End Sub
     Public Function GetAlternateMediaLocation() As String
-
+        Return ReadText(AlternateMediaLocationFile)
     End Function
-    Public Sub SetAlternateMediaLocation(location As String, disk As DiskService)
-
+    Public Sub SetAlternateMediaLocation(location As String)
+        WriteText(AlternateMediaLocationFile, location)
     End Sub
-    Public Sub SetWallpaperLocation(location As String, disk As DiskService)
-
-    End Sub
-    Public Function GetAnnounce(disk As DiskService) As String
-
+    Public Function GetWallpapersLocation() As String
+        Return ReadText(WallpapersLocationFile)
     End Function
-    Public Sub SetAnnounce(location As String, disk As DiskService)
-
+    Public Sub SetWallpapersLocation(location As String)
+        WriteText(WallpapersLocationFile, location)
     End Sub
-
-    Public Function GetBeginTime(disk As DiskService) As String
-        Dim b_time_f As String
-        Try
-            b_time_f = My.Computer.FileSystem.ReadAllText(BeginTimeFile).Trim
-        Catch x As Exception
-            b_time_f = "12:00 AM"
-        End Try
-        Return b_time_f
+    Public Function GetProgramsFile() As String
+        Return ReadText(ProgramsFile)
     End Function
 
-    Public Sub SetBeginTime(begin_time As String, disk As DiskService)
-        Try
-            My.Computer.FileSystem.WriteAllText(BeginTimeFile, b_, False)
-        Catch ex As Exception
-        End Try
+    Public Sub SetProgramsFile(value As String)
+        WriteText(ProgramsFile, value)
     End Sub
-
-    Public Function GetEndTime(disk As DiskService) As String
-        Dim e_time_f As String
-        Try
-            e_time_f = My.Computer.FileSystem.ReadAllText(end_time).Trim
-        Catch x As Exception
-            e_time_f = "6:00 AM"
-        End Try
-        Return e_time_f
+    Public Function GetRate() As String
+        Return ReadText(RateFile)
     End Function
 
-    Public Sub SetEndTime(end_time As String, disk As DiskService)
-        Try
-            My.Computer.FileSystem.WriteAllText(end_time, e_, False)
-        Catch ex As Exception
-        End Try
+    Public Sub SetRate(_rate As String)
+        WriteText(RateFile, _rate)
     End Sub
-    Public Function GetMode(disk As DiskService) As String
-
+    Public Function GetMode() As String
+        Return ReadText(ModeFile)
     End Function
 
-    Public Sub SetMode(_mode As String, disk As DiskService)
-
+    Public Sub SetMode(_mode As String)
+        WriteText(ModeFile, _mode)
     End Sub
-    Public Function GetRate(disk As DiskService) As String
 
-    End Function
-
-    Public Sub SetRate(_rate As String, disk As DiskService)
-
-    End Sub
-    Public Function GetProgramsFile(disk As DiskService) As String
-
-    End Function
-
-    Public Sub SetProgramsFile(ProgramsFile As String, disk As DiskService)
-
+    Friend Sub RestoreSettings(dialog As IDialogResource)
+        dialog.GetNightMediaLocationTextBox.Text = GetNightMediaLocation()
+        dialog.GetRegularMediaLocationTextBox.Text = GetRegularMediaLocation()
+        dialog.GetAlternateMediaLocationTextBox.Text = GetAlternateMediaLocation()
+        dialog.GetProgramsFileTextBox.Text = GetProgramsFile()
+        dialog.GetWallpaperLocationTextBox.Text = GetWallpapersLocation()
+        dialog.GetAnnounceTextBox.Text = GetAnnounce()
+        dialog.GetBeginTime.Value = Date.Parse(GetBeginTime.Trim).ToShortTimeString
+        dialog.GetEndTime.Value = Date.Parse(GetEndTime.Trim).ToShortTimeString
+        BindProperty(dialog.GetModeDropDown, GetEnum(New Mode))
+        dialog.GetModeDropDown.Text = GetMode()
+        BindProperty(dialog.GetRateDropDown, GetEnum(New Rate))
+        dialog.GetRateDropDown.Text = GetRate()
     End Sub
 
 #End Region

@@ -136,6 +136,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Codebase\Factory\InstanceFactory.vb" />
     <Compile Include="Codebase\Model\IDialogResource.vb" />
     <Compile Include="Codebase\Model\MediaSection.vb" />
     <Compile Include="Codebase\Model\Mode.vb" />
@@ -233,10 +234,10 @@
     <Content Include="homenet.ico" />
     <Content Include="ICS client.ico" />
     <None Include="packages.config" />
-    <None Include="Codebase\Service\Resources\girl-idea-icon_128.png" />
-    <None Include="Codebase\Service\Resources\girl-idea-icon_96.png" />
-    <None Include="Codebase\Service\Resources\girl-idea-icon_24.png" />
-    <None Include="Codebase\Service\Resources\girl-idea-icon_32.png" />
+    <None Include="Resources\girl-idea-icon_128.png" />
+    <None Include="Resources\girl-idea-icon_96.png" />
+    <None Include="Resources\girl-idea-icon_24.png" />
+    <None Include="Resources\girl-idea-icon_32.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">

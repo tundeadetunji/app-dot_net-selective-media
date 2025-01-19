@@ -1,70 +1,143 @@
 ﻿Imports iNovation.Code.General
+Imports iNovation.Code.GeneralExtensions
 Imports iNovation.Code.Desktop
+Imports SelectiveMedia.Constants
 Public Class AppService
 
+#Region "Initialization"
+	Public Shared ReadOnly Property Instance As AppService = New AppService
+	Private Sub New()
+
+	End Sub
+#End Region
+
+#Region "Properties"
+	Private ReadOnly Property PlayersFile As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\Players.txt"
+#End Region
+
+
 #Region "Support"
-	Private Sub SetPermissions()
+	''' <summary>
+	''' if folders have changed or their number of files have changed, then clear the history files
+	''' </summary>
+	Private Sub Recalibrate(dialog As IDialogResource, disk As DiskService, history As HistoryService, settings As SettingsService)
+		'NightMediaLocation
+		If Not dialog.GetNightMediaLocationTextBox.Text.EqualsIgnoreCase(settings.GetNightMediaLocation) Then
+			history.ClearHistory(MediaSection.Night)
+		Else
+			Dim _NightFiles As List(Of String) = ConstructNightFiles(settings)
+			If _NightFiles.Count <> disk.GetNightFilesCount Then
 
-        PermitFolder(My.Application.Info.DirectoryPath)
+				history.ClearHistory(MediaSection.Night)
+			End If
+		End If
 
-    End Sub
+		'RegularMediaLocation
+		If Not dialog.GetRegularMediaLocationTextBox.Text.EqualsIgnoreCase(settings.GetRegularMediaLocation) Then
+			history.ClearHistory(MediaSection.Regular)
+		Else
+			Dim _RegularFiles As List(Of String) = ConstructRegularFiles(settings)
+			If _RegularFiles.Count <> disk.GetRegularFilesCount Then
+				history.ClearHistory(MediaSection.Regular)
+			End If
+		End If
 
+		'AlternateMediaLocation
+		If Not dialog.GetAlternateMediaLocationTextBox.Text.EqualsIgnoreCase(settings.GetAlternateMediaLocation) Then
+			history.ClearHistory(MediaSection.Alternate)
+		Else
+			Dim _AlternateFiles As List(Of String) = ConstructAlternateFiles(settings)
+			If _AlternateFiles.Count <> disk.GetAlternateFilesCount Then
+				history.ClearHistory(MediaSection.Alternate)
+			End If
+		End If
+
+	End Sub
+	Private Function ConstructRegularFiles(settings As SettingsService)
+		Dim _RegularFiles As New List(Of String)
+		Dim directory As String = settings.GetRegularMediaLocation()
+		For Each fileType As String In SupportedMediaFileTypes
+			Dim files = My.Computer.FileSystem.GetFiles(directory, FileIO.SearchOption.SearchAllSubDirectories, fileType)
+			If files.Count > 1 Then
+				_RegularFiles.AddRange(files)
+			End If
+		Next
+		Return _RegularFiles
+	End Function
+	Private Function ConstructAlternateFiles(settings As SettingsService) As List(Of String)
+		Dim _AlternateFiles As New List(Of String)
+		Dim directory As String = settings.GetAlternateMediaLocation()
+		For Each fileType As String In SupportedMediaFileTypes
+			Dim files = My.Computer.FileSystem.GetFiles(directory, FileIO.SearchOption.SearchAllSubDirectories, fileType)
+			If files.Count > 1 Then
+				_AlternateFiles.AddRange(files)
+			End If
+		Next
+		Return _AlternateFiles
+	End Function
+	Private Function ConstructNightFiles(settings As SettingsService) As List(Of String)
+		Dim _NightFiles As New List(Of String)
+		Dim directory As String = settings.GetNightMediaLocation()
+		For Each fileType As String In SupportedMediaFileTypes
+			Dim files = My.Computer.FileSystem.GetFiles(directory, FileIO.SearchOption.SearchAllSubDirectories, fileType)
+			If files.Count > 1 Then
+				_NightFiles.AddRange(files)
+			End If
+		Next
+		Return _NightFiles
+	End Function
 
 #End Region
 
+
+
 #Region "Exported"
 
-	''' <summary>
-	''' All files are in place and locations are valid
-	''' </summary>
-	''' <returns></returns>
-	Public Function CanStart(dialog As IDialogResource) As Boolean
-		'Todo
+	Public Function CanStart(dialog As IDialogResource, settings As SettingsService) As Boolean
+		Return settings.Validated(dialog)
 	End Function
 
-	Public Sub Start(dialog As IDialogResource, disk As DiskService, settings As SettingsService)
-		SetPermissions()
+	Public Sub Start(dialog As IDialogResource, disk As DiskService, history As HistoryService, settings As SettingsService, state As StateService)
 
-		If GetPeriod(dialog, disk, settings) = Period.Day Then
+		Recalibrate(dialog, disk, history, settings)
+		Load(disk, state, settings)
+
+		If GetPeriod(disk, settings) = Period.Day Then
 			dialog.GetDayTimer.Enabled = True
 		Else
 			dialog.GetNightTimer.Enabled = True
 		End If
-
 		dialog.GetMediaTimer.Enabled = True
-
 	End Sub
-
-
-	Public Function GetPeriod(dialog As IDialogResource, disk As DiskService, settings As SettingsService) As Period
-		If Date.Parse(Now.ToShortTimeString) >= Date.Parse(settings.GetBeginTime(disk)).ToShortTimeString And Date.Parse(Now.ToShortTimeString) <= Date.Parse(settings.GetEndTime(disk)).ToShortTimeString Then
+	Public Sub Load(disk As DiskService, state As StateService, settings As SettingsService)
+		state.UpdateSequentialState(settings.GetMode().Contains(Sequential))
+		state.UpdateCurrentSection(If(GetPeriod(disk, settings) = Period.Day, MediaSection.Regular, MediaSection.Night))
+		disk.Load(settings)
+	End Sub
+	Public Function GetPeriod(disk As DiskService, settings As SettingsService) As Period
+		If Date.Parse(Now.ToShortTimeString) >= Date.Parse(settings.GetBeginTime()).ToShortTimeString And Date.Parse(Now.ToShortTimeString) <= Date.Parse(settings.GetEndTime()).ToShortTimeString Then
 			Return Period.Day
 		Else
 			Return Period.Night
 		End If
 	End Function
-	Public Sub PrepDay(dialog As IDialogResource, desktop As DesktopService, disk As DiskService, settings As SettingsService)
+	Public Sub PrepDay(desktop As DesktopService, disk As DiskService, settings As SettingsService)
 		Dim wallpapers As List(Of String) = disk.GetWallpapers
-		Dim wallpaper As String = wallpapers(Random_(0, wallpapers.Count))
-		desktop.SetWallpaper(wallpaper)
-		StartApps(ReadText(programs_))
+		If wallpapers.Count > 0 Then
+			Dim wallpaper As String = wallpapers(Random_(0, wallpapers.Count))
+			desktop.SetWallpaper(wallpaper)
+		End If
+		desktop.StartTheApps(settings.GetDayProgramsFile)
 	End Sub
-
-	Public Sub PrepNight()
-		'adult films, theme
-		'my widgets, vg
-		WTimer.Enabled = False
-		''Try
-		''	Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) & "\My Widgets\Picture Frame.widget")
-		''Catch ex As Exception
-		''End Try
-		Try
-			PickWallpaper("n")
-		Catch ex As Exception
-		End Try
-		'open other programs
-		StartApps(ReadText(programs_alternate))
+	Public Sub PrepNight(settings As SettingsService)
+		StartApps(ReadText(settings.GetNightProgramsFile))
 	End Sub
+	Public Function PlayerIsOn() As Boolean
+		For Each player As String In Players
+			If AppIsOn(player) Then Return True
+		Next
+		Return False
+	End Function
 
 #End Region
 End Class
