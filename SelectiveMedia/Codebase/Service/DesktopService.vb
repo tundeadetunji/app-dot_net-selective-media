@@ -1,4 +1,6 @@
-﻿Public Class DesktopService
+﻿Imports iNovation.Code.General
+Imports iNovation.Code.Desktop
+Public Class DesktopService
 
 #Region "Properties"
 	Private Const SPI_SETDESKWALLPAPER As Integer = &H14
@@ -38,6 +40,7 @@
 
 #Region "Exported"
 	Friend Sub SetWallpaper(ByVal img As String)
+		''Todo adjust for landscape/portrait
 
 		Dim imageLocation As String
 
@@ -64,6 +67,12 @@
 
 	End Function
 
+	Public Sub StartTheApps(file As String)
+		Dim apps As List(Of String) = StringToList(file)
+		For Each app As String In apps
+			StartFile(app)
+		Next
+	End Sub
 
 
 #End Region

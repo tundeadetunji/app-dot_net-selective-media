@@ -150,7 +150,6 @@
     <Compile Include="Codebase\Service\AppService.vb" />
     <Compile Include="Codebase\Service\StateService.vb" />
     <Compile Include="Codebase\Service\UiService.vb" />
-    <Compile Include="Database.vb" />
     <Compile Include="FileDataSet.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -234,10 +233,10 @@
     <Content Include="homenet.ico" />
     <Content Include="ICS client.ico" />
     <None Include="packages.config" />
-    <None Include="Resources\girl-idea-icon_128.png" />
-    <None Include="Resources\girl-idea-icon_96.png" />
-    <None Include="Resources\girl-idea-icon_24.png" />
-    <None Include="Resources\girl-idea-icon_32.png" />
+    <None Include="Codebase\Service\Resources\girl-idea-icon_128.png" />
+    <None Include="Codebase\Service\Resources\girl-idea-icon_96.png" />
+    <None Include="Codebase\Service\Resources\girl-idea-icon_24.png" />
+    <None Include="Codebase\Service\Resources\girl-idea-icon_32.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">

@@ -1,5 +1,6 @@
 ﻿Imports SelectiveMedia.Constants
 Imports iNovation.Code.General
+Imports iNovation.Code.FeedbackExtensions
 Imports iNovation.Code.Desktop
 Public Class MediaService
 
@@ -39,9 +40,9 @@ Public Class MediaService
                 Dim random_value = Random_(1, 4)
                 Select Case random_value
                     Case 1
-                        dialog.GetMediaTimer.Interval = If(settings.GetRate = Relaxed, TwentyMinutes, TwoMinutes)
+                        dialog.GetMediaTimer.Interval = If(settings.GetRate(disk) = Relaxed, TwentyMinutes, TwoMinutes)
                     Case 2
-                        dialog.GetMediaTimer.Interval = If(settings.GetRate = Relaxed, TenMinutes, ThreeMinutes)
+                        dialog.GetMediaTimer.Interval = If(settings.GetRate(disk) = Relaxed, TenMinutes, ThreeMinutes)
                     Case 3
                         dialog.GetMediaTimer.Interval = FiveMinutes
                 End Select
@@ -53,31 +54,37 @@ Public Class MediaService
 
 #Region "Exported"
 
-    Public Sub StartMedia(disk As DiskService, settings As SettingsService, state As StateService)
+    Public Sub StartMedia(dialog As IDialogResource, desktop As DesktopService, program As AppService, disk As DiskService, history As HistoryService, settings As SettingsService, state As StateService)
 
         Select Case settings.GetMode(disk)
             Case SequentialNight, SequentialRegular, SequentialAlternate
-                StartMediaSequential(state)
+                StartMediaSequential(state, disk, history, settings)
             Case Random
-                StartMediaRandom()
+                StartMediaRandom(program, state, disk, history)
             Case App
-                'start apps
+                desktop.StartTheApps(settings.GetProgramsFile(disk))
         End Select
 
-        SetTime()
+        SetTime(dialog, disk, settings)
     End Sub
-    Private Sub StartMediaRandom(state As StateService, disk As DiskService, history As HistoryService)
-        Dim files As List(Of String) = disk.GetFiles(state.NextSection)
-        Dim file As String = ChoseFileToPlay()
-        history.AddFileToHistory(file)
+
+    Private Sub StartMediaRandom(app As AppService, state As StateService, disk As DiskService, history As HistoryService)
+        Dim files As List(Of String) = disk.GetFiles(state.NextSection(app))
+        Dim file As String = ChoseRandomFileToPlay(files, history, state.CurrentSection)
+        history.AddFileToHistory(file, state.CurrentSection)
         StartFile(file)
 
     End Sub
 
-    Private Sub StartMediaSequential(state As StateService, disk As DiskService, history As HistoryService)
+    Private Sub StartMediaSequential(state As StateService, disk As DiskService, history As HistoryService, settings As SettingsService)
         Dim files As List(Of String) = disk.GetFiles(state.CurrentSection)
-        Dim index As Long = ChoseSequentialFileToPlay()
-        history.UpdateTheIndexOfTheFilePlayingNow(index)
+        Dim index As Long = ChoseSequentialFileToPlay(files, history, state.CurrentSection)
+        history.UpdateIndexOfTheFilePlayingNow(index)
+
+        If Not state.SequentialState Then
+            state.UpdateSequentialState(True)
+            settings.GetAnnounce(disk).Inform
+        End If
         StartFile(files(index))
     End Sub
 

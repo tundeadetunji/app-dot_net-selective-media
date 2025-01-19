@@ -52,7 +52,7 @@
 
     End Function
 
-    Public Sub UpdateTheIndexOfTheFilePlayingNow(index As Long)
+    Public Sub UpdateIndexOfTheFilePlayingNow(index As Long)
         Me.CurrentSequentialFileIndex = index
     End Sub
 

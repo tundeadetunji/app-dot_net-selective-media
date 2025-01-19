@@ -2,6 +2,7 @@
 Imports iNovation.Code.General
 Imports System.IO
 Imports System.Collections.ObjectModel
+Imports SelectiveMedia.Constants
 Public Class Form1 : Implements IDialogResource
 
 #Region "Overrides"
@@ -56,6 +57,17 @@ Public Class Form1 : Implements IDialogResource
 		Return RateDropDown
 	End Function
 
+	Public Function GetMediaTimer() As Timer Implements IDialogResource.GetMediaTimer
+		Return MediaTimer
+	End Function
+
+	Public Function GetDayTimer() As Timer Implements IDialogResource.GetDayTimer
+		Return DayTimer
+	End Function
+
+	Public Function GetNightTimer() As Timer Implements IDialogResource.GetNightTimer
+		Return NightTimer
+	End Function
 
 #End Region
 
@@ -67,7 +79,7 @@ Public Class Form1 : Implements IDialogResource
 	Private ReadOnly Property settings As SettingsService = New SettingsService
 	Private ReadOnly Property playback As MediaService = New MediaService
 	Private ReadOnly Property state As StateService = StateService.Instance(False, MediaSection.Regular)
-
+	Private ReadOnly Property history As HistoryService = HistoryService.Instance
 
 #End Region
 
@@ -92,10 +104,10 @@ Public Class Form1 : Implements IDialogResource
 #Region "Control Box Related"
 	Private Sub CloseDialogButton_Click(sender As Object, e As EventArgs) Handles CloseDialogButton.Click
 		If settings.SettingsValidated Then
-			settings.SaveSettings()
+			settings.SaveSettings(Me, disk, history, state)
 			ui.ShowOrHideInitiallyHiddenControls(Me, False)
 			FadeOutTimer.Enabled = True
-			program.Start()
+			program.Start(Me, disk, settings)
 		End If
 	End Sub
 	Private Sub FadeInTimer_Tick(sender As Object, e As EventArgs) Handles FadeInTimer.Tick
@@ -129,7 +141,7 @@ Public Class Form1 : Implements IDialogResource
 			FadeInTimer.Enabled = True
 		Else
 			FadeInTimer.Enabled = False
-			program.Start(Me)
+			program.Start(Me, disk, settings)
 		End If
 
 	End Sub
@@ -144,36 +156,30 @@ Public Class Form1 : Implements IDialogResource
 	Private Sub MediaTimer_Tick(sender As Object, e As EventArgs) Handles MediaTimer.Tick
 
 		If desktop.PlayerIsOn(disk) Then
-			'If settings.GetMode(disk) = Sequential Then
 			If settings.GetMode(disk) = Random Then
-				MediaTimer.Interval = CheckPlayerIsClosedAfterMilliseconds
+				MediaTimer.Interval = TwoMinutes
 			End If
 			Exit Sub
 		End If
 
-		playback.StartMedia(settings)
+		playback.StartMedia(Me, program, disk, history, settings, state)
 
 	End Sub
 
 
-#Region "Main"
 	Private Sub DayTimer_Tick(sender As Object, e As EventArgs) Handles DayTimer.Tick
-		If Date.Parse(Now.ToShortTimeString) >= Date.Parse(BeginTime.Value.ToShortTimeString) And Date.Parse(Now.ToShortTimeString) <= Date.Parse(EndTime.Value.ToShortTimeString) Then
+		If program.GetPeriod(Me, disk, settings) = Period.Day Then
 			DayTimer.Enabled = False
-			PrepNight() 'do stuff to happen during interval
-			NightTimer.Enabled = True 'listen for end of interval; at that point, timer takes over
-		Else
+			program.PrepNight()
+			NightTimer.Enabled = True
 		End If
-
 	End Sub
 
-	'CLEAR
 	Private Sub NightTimer_Tick(sender As Object, e As EventArgs) Handles NightTimer.Tick
-		If Date.Parse(Now.ToShortTimeString) >= Date.Parse(BeginTime.Value.ToShortTimeString) And Date.Parse(Now.ToShortTimeString) <= Date.Parse(EndTime.Value.ToShortTimeString) Then
-		Else
+		If program.GetPeriod(Me, disk, settings) = Period.Night Then
 			NightTimer.Enabled = False
-			PrepDay() 'do stuff to happen outside interval
-			DayTimer.Enabled = True 'listen for begining of interval; at that point, timer takes over
+			program.PrepDay()
+			DayTimer.Enabled = True
 		End If
 
 	End Sub
@@ -185,8 +191,5 @@ Public Class Form1 : Implements IDialogResource
 	Private Sub HelpIcon_Click(sender As Object, e As EventArgs) Handles HelpIcon.Click
 		StartFile(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\help.txt")
 	End Sub
-
-
-#End Region
 
 End Class

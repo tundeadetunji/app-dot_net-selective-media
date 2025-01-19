@@ -33,35 +33,37 @@
         state.UpdateSequentialState()
         state.UpdateCurrentSection()
         disk.SetFiles()
+        disk.setWallpapers()
 
         'save settings
     End Sub
+
+    Public Function GetWallpapersLocation() As String
+
+    End Function
 
     Public Function GetPlayers(disk As DiskService)
 
     End Function
 
-    Public Function GetNightMediaLocation(disk As DiskService) As String
+    Public Function GetNightMediaLocation() As String
 
     End Function
     Public Sub SetNightMediaLocation(location As String, disk As DiskService)
 
     End Sub
-    Public Function GetRegularMediaLocation(disk As DiskService) As String
+    Public Function GetRegularMediaLocation() As String
 
     End Function
     Public Sub SetRegularMediaLocation(location As String, disk As DiskService)
 
     End Sub
-    Public Function GetAlternateMediaLocation(disk As DiskService) As String
+    Public Function GetAlternateMediaLocation() As String
 
     End Function
     Public Sub SetAlternateMediaLocation(location As String, disk As DiskService)
 
     End Sub
-    Public Function GetWallpaperLocation(disk As DiskService) As String
-
-    End Function
     Public Sub SetWallpaperLocation(location As String, disk As DiskService)
 
     End Sub

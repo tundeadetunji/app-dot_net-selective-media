@@ -1,37 +1,56 @@
-﻿Imports System.Runtime.Remoting
-
+﻿Imports iNovation.Code.General
+Imports iNovation.Code.Desktop
 Public Class AppService
 
-#Region "Properties"
-    Private ReadOnly Property disk As DiskService = DiskService.Instance
-#End Region
-
 #Region "Support"
-
 	Private Sub SetPermissions()
 
         PermitFolder(My.Application.Info.DirectoryPath)
 
     End Sub
 
-	Private Sub PrepDay()
-		'films, theme
-		'close my widgets and vg
-		WTimer.Enabled = True
 
-		'		Try
-		'			Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) & "\Microsoft\Windows\Themes\theme.theme")
-		'		Catch ex As Exception
-		'		End Try
-		Try
-			PickWallpaper("d")
-		Catch ex As Exception
-		End Try
-		'open other programs
+#End Region
+
+#Region "Exported"
+
+	''' <summary>
+	''' All files are in place and locations are valid
+	''' </summary>
+	''' <returns></returns>
+	Public Function CanStart(dialog As IDialogResource) As Boolean
+		'Todo
+	End Function
+
+	Public Sub Start(dialog As IDialogResource, disk As DiskService, settings As SettingsService)
+		SetPermissions()
+
+		If GetPeriod(dialog, disk, settings) = Period.Day Then
+			dialog.GetDayTimer.Enabled = True
+		Else
+			dialog.GetNightTimer.Enabled = True
+		End If
+
+		dialog.GetMediaTimer.Enabled = True
+
+	End Sub
+
+
+	Public Function GetPeriod(dialog As IDialogResource, disk As DiskService, settings As SettingsService) As Period
+		If Date.Parse(Now.ToShortTimeString) >= Date.Parse(settings.GetBeginTime(disk)).ToShortTimeString And Date.Parse(Now.ToShortTimeString) <= Date.Parse(settings.GetEndTime(disk)).ToShortTimeString Then
+			Return Period.Day
+		Else
+			Return Period.Night
+		End If
+	End Function
+	Public Sub PrepDay(dialog As IDialogResource, desktop As DesktopService, disk As DiskService, settings As SettingsService)
+		Dim wallpapers As List(Of String) = disk.GetWallpapers
+		Dim wallpaper As String = wallpapers(Random_(0, wallpapers.Count))
+		desktop.SetWallpaper(wallpaper)
 		StartApps(ReadText(programs_))
 	End Sub
 
-	Private Sub PrepNight()
+	Public Sub PrepNight()
 		'adult films, theme
 		'my widgets, vg
 		WTimer.Enabled = False
@@ -46,40 +65,6 @@ Public Class AppService
 		'open other programs
 		StartApps(ReadText(programs_alternate))
 	End Sub
-
-#End Region
-
-#Region "Exported"
-	Public Sub OnStartup(dialog As IDialogResource)
-        'Todo remove
-        disk.SetPermissions()
-    End Sub
-
-    ''' <summary>
-    ''' All files are in place and locations are valid
-    ''' </summary>
-    ''' <returns></returns>
-    Public Function CanStart(dialog As IDialogResource) As Boolean
-
-    End Function
-
-	Public Sub Start(dialog As IDialogResource)
-
-
-		If Date.Parse(Now.ToShortTimeString) >= Date.Parse(BeginTime.Value.ToShortTimeString) And Date.Parse(Now.ToShortTimeString) <= Date.Parse(EndTime.Value.ToShortTimeString) Then
-			DayWTimer.Enabled = True
-		Else
-			NWTimer.Enabled = True
-		End If
-
-		MediaTimer.Enabled = True
-
-	End Sub
-
-
-	Public Function GetPeriod() As Period
-
-	End Function
 
 #End Region
 End Class

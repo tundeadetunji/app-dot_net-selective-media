@@ -13,4 +13,6 @@
     Function GetModeDropDown() As ComboBox
     Function GetRateDropDown() As ComboBox
     Function GetMediaTimer() As Timer
+    Function GetDayTimer() As Timer
+    Function GetNightTimer() As Timer
 End Interface
