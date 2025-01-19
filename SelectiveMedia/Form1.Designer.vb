@@ -44,38 +44,6 @@ Partial Class Form1
         Me.FadeInTimer = New System.Windows.Forms.Timer(Me.components)
         Me.WTimer = New System.Windows.Forms.Timer(Me.components)
         Me.MediaTimer = New System.Windows.Forms.Timer(Me.components)
-        Me.FileBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.FileDataSet = New SelectiveMedia.FileDataSet()
-        Me.BBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.BDataSet = New SelectiveMedia.FileDataSet()
-        Me.CBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.CDataSet = New SelectiveMedia.FileDataSet()
-        Me.Settings_DataSet = New SelectiveMedia.FileDataSet()
-        Me.FileCountDataSet = New SelectiveMedia.FileDataSet()
-        Me.SoFarDataSet = New SelectiveMedia.FileDataSet()
-        Me.EBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.EDataSet = New SelectiveMedia.FileDataSet()
-        Me.FolderBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.FolderDataSet = New SelectiveMedia.FileDataSet()
-        Me.FileTableAdapter = New SelectiveMedia.FileDataSetTableAdapters.DialogTableAdapter()
-        Me.FolderTableAdapter = New SelectiveMedia.FileDataSetTableAdapters.DialogTableAdapter()
-        Me.FolderCounterTableAdapter = New SelectiveMedia.FileDataSetTableAdapters.DialogTableAdapter()
-        Me.FileCounterATableAdapter = New SelectiveMedia.FileDataSetTableAdapters.DialogTableAdapter()
-        Me.WhereFolderTableAdapter = New SelectiveMedia.FileDataSetTableAdapters.DialogTableAdapter()
-        Me.WhereFileTableAdapter = New SelectiveMedia.FileDataSetTableAdapters.DialogTableAdapter()
-        Me.Settings_TableAdapter = New SelectiveMedia.FileDataSetTableAdapters.SettingNTableAdapter()
-        Me.FileCountTableAdapter = New SelectiveMedia.FileDataSetTableAdapters.FileCountTableAdapter()
-        Me.BTableAdapter = New SelectiveMedia.FileDataSetTableAdapters.SettingBTableAdapter()
-        Me.CTableAdapter = New SelectiveMedia.FileDataSetTableAdapters.SettingCTableAdapter()
-        Me.SoFarTableAdapter = New SelectiveMedia.FileDataSetTableAdapters.SoFarTableAdapter()
-        Me.FileCounterBTableAdapter = New SelectiveMedia.FileDataSetTableAdapters.SettingBTableAdapter()
-        Me.FileCounterCTableAdapter = New SelectiveMedia.FileDataSetTableAdapters.SettingCTableAdapter()
-        Me.FileCounterETableAdapter = New SelectiveMedia.FileDataSetTableAdapters.SettingETableAdapter()
-        Me.ETableAdapter = New SelectiveMedia.FileDataSetTableAdapters.SettingETableAdapter()
-        Me.ACountTableAdapter = New SelectiveMedia.FileDataSetTableAdapters.DialogTableAdapter()
-        Me.BCountTableAdapter = New SelectiveMedia.FileDataSetTableAdapters.SettingBTableAdapter()
-        Me.CCountTableAdapter = New SelectiveMedia.FileDataSetTableAdapters.SettingCTableAdapter()
-        Me.ECountTableAdapter = New SelectiveMedia.FileDataSetTableAdapters.SettingETableAdapter()
         Me.ModeDropDown = New System.Windows.Forms.ComboBox()
         Me.RateDropDown = New System.Windows.Forms.ComboBox()
         Me.AnnounceTextBox = New System.Windows.Forms.TextBox()
@@ -88,19 +56,6 @@ Partial Class Form1
         Me.CloseDialogButton = New System.Windows.Forms.Label()
         Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.ContextMenuStrip1.SuspendLayout()
-        CType(Me.FileBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.FileDataSet, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.BBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.BDataSet, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.CBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.CDataSet, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.Settings_DataSet, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.FileCountDataSet, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.SoFarDataSet, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.EBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.EDataSet, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.FolderBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.FolderDataSet, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.HelpIcon, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TopBorder, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.BottomBorder, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -236,147 +191,6 @@ Partial Class Form1
         'MediaTimer
         '
         Me.MediaTimer.Interval = 1000
-        '
-        'FileBindingSource
-        '
-        Me.FileBindingSource.DataMember = "Dialog"
-        Me.FileBindingSource.DataSource = Me.FileDataSet
-        '
-        'FileDataSet
-        '
-        Me.FileDataSet.DataSetName = "FileDataSet"
-        Me.FileDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
-        '
-        'BBindingSource
-        '
-        Me.BBindingSource.DataMember = "SettingB"
-        Me.BBindingSource.DataSource = Me.BDataSet
-        '
-        'BDataSet
-        '
-        Me.BDataSet.DataSetName = "FileDataSet"
-        Me.BDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
-        '
-        'CBindingSource
-        '
-        Me.CBindingSource.DataMember = "SettingC"
-        Me.CBindingSource.DataSource = Me.CDataSet
-        '
-        'CDataSet
-        '
-        Me.CDataSet.DataSetName = "FileDataSet"
-        Me.CDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
-        '
-        'Settings_DataSet
-        '
-        Me.Settings_DataSet.DataSetName = "FileDataSet"
-        Me.Settings_DataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
-        '
-        'FileCountDataSet
-        '
-        Me.FileCountDataSet.DataSetName = "FileDataSet"
-        Me.FileCountDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
-        '
-        'SoFarDataSet
-        '
-        Me.SoFarDataSet.DataSetName = "FileDataSet"
-        Me.SoFarDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
-        '
-        'EBindingSource
-        '
-        Me.EBindingSource.DataMember = "SettingE"
-        Me.EBindingSource.DataSource = Me.EDataSet
-        '
-        'EDataSet
-        '
-        Me.EDataSet.DataSetName = "FileDataSet"
-        Me.EDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
-        '
-        'FolderBindingSource
-        '
-        Me.FolderBindingSource.DataMember = "Dialog"
-        Me.FolderBindingSource.DataSource = Me.FolderDataSet
-        '
-        'FolderDataSet
-        '
-        Me.FolderDataSet.DataSetName = "FileDataSet"
-        Me.FolderDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
-        '
-        'FileTableAdapter
-        '
-        Me.FileTableAdapter.ClearBeforeFill = True
-        '
-        'FolderTableAdapter
-        '
-        Me.FolderTableAdapter.ClearBeforeFill = True
-        '
-        'FolderCounterTableAdapter
-        '
-        Me.FolderCounterTableAdapter.ClearBeforeFill = True
-        '
-        'FileCounterATableAdapter
-        '
-        Me.FileCounterATableAdapter.ClearBeforeFill = True
-        '
-        'WhereFolderTableAdapter
-        '
-        Me.WhereFolderTableAdapter.ClearBeforeFill = True
-        '
-        'WhereFileTableAdapter
-        '
-        Me.WhereFileTableAdapter.ClearBeforeFill = True
-        '
-        'Settings_TableAdapter
-        '
-        Me.Settings_TableAdapter.ClearBeforeFill = True
-        '
-        'FileCountTableAdapter
-        '
-        Me.FileCountTableAdapter.ClearBeforeFill = True
-        '
-        'BTableAdapter
-        '
-        Me.BTableAdapter.ClearBeforeFill = True
-        '
-        'CTableAdapter
-        '
-        Me.CTableAdapter.ClearBeforeFill = True
-        '
-        'SoFarTableAdapter
-        '
-        Me.SoFarTableAdapter.ClearBeforeFill = True
-        '
-        'FileCounterBTableAdapter
-        '
-        Me.FileCounterBTableAdapter.ClearBeforeFill = True
-        '
-        'FileCounterCTableAdapter
-        '
-        Me.FileCounterCTableAdapter.ClearBeforeFill = True
-        '
-        'FileCounterETableAdapter
-        '
-        Me.FileCounterETableAdapter.ClearBeforeFill = True
-        '
-        'ETableAdapter
-        '
-        Me.ETableAdapter.ClearBeforeFill = True
-        '
-        'ACountTableAdapter
-        '
-        Me.ACountTableAdapter.ClearBeforeFill = True
-        '
-        'BCountTableAdapter
-        '
-        Me.BCountTableAdapter.ClearBeforeFill = True
-        '
-        'CCountTableAdapter
-        '
-        Me.CCountTableAdapter.ClearBeforeFill = True
-        '
-        'ECountTableAdapter
-        '
-        Me.ECountTableAdapter.ClearBeforeFill = True
         '
         'ModeDropDown
         '
@@ -520,19 +334,6 @@ Partial Class Form1
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Settings"
         Me.ContextMenuStrip1.ResumeLayout(False)
-        CType(Me.FileBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.FileDataSet, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.BBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.BDataSet, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.CBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.CDataSet, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.Settings_DataSet, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.FileCountDataSet, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.SoFarDataSet, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.EBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.EDataSet, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.FolderBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.FolderDataSet, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.HelpIcon, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.TopBorder, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.BottomBorder, System.ComponentModel.ISupportInitialize).EndInit()
@@ -561,38 +362,6 @@ Partial Class Form1
     Friend WithEvents FadeInTimer As Timer
     Friend WithEvents WTimer As Timer
     Friend WithEvents MediaTimer As Timer
-    Friend WithEvents FileDataSet As FileDataSet
-    Friend WithEvents FileBindingSource As BindingSource
-    Friend WithEvents FileTableAdapter As FileDataSetTableAdapters.DialogTableAdapter
-    Friend WithEvents FolderDataSet As FileDataSet
-    Friend WithEvents FolderTableAdapter As FileDataSetTableAdapters.DialogTableAdapter
-    Friend WithEvents FolderBindingSource As BindingSource
-    Friend WithEvents FolderCounterTableAdapter As FileDataSetTableAdapters.DialogTableAdapter
-    Friend WithEvents FileCounterATableAdapter As FileDataSetTableAdapters.DialogTableAdapter
-    Friend WithEvents WhereFolderTableAdapter As FileDataSetTableAdapters.DialogTableAdapter
-    Friend WithEvents WhereFileTableAdapter As FileDataSetTableAdapters.DialogTableAdapter
-    Friend WithEvents Settings_DataSet As FileDataSet
-    Friend WithEvents Settings_TableAdapter As FileDataSetTableAdapters.SettingNTableAdapter
-    Friend WithEvents FileCountDataSet As FileDataSet
-    Friend WithEvents FileCountTableAdapter As FileDataSetTableAdapters.FileCountTableAdapter
-    Friend WithEvents BDataSet As FileDataSet
-    Friend WithEvents BTableAdapter As FileDataSetTableAdapters.SettingBTableAdapter
-    Friend WithEvents BBindingSource As BindingSource
-    Friend WithEvents CTableAdapter As FileDataSetTableAdapters.SettingCTableAdapter
-    Friend WithEvents CDataSet As FileDataSet
-    Friend WithEvents CBindingSource As BindingSource
-    Friend WithEvents SoFarTableAdapter As FileDataSetTableAdapters.SoFarTableAdapter
-    Friend WithEvents SoFarDataSet As FileDataSet
-    Friend WithEvents FileCounterBTableAdapter As FileDataSetTableAdapters.SettingBTableAdapter
-    Friend WithEvents FileCounterCTableAdapter As FileDataSetTableAdapters.SettingCTableAdapter
-    Friend WithEvents FileCounterETableAdapter As FileDataSetTableAdapters.SettingETableAdapter
-    Friend WithEvents ETableAdapter As FileDataSetTableAdapters.SettingETableAdapter
-    Friend WithEvents EDataSet As FileDataSet
-    Friend WithEvents EBindingSource As BindingSource
-    Friend WithEvents ACountTableAdapter As FileDataSetTableAdapters.DialogTableAdapter
-    Friend WithEvents BCountTableAdapter As FileDataSetTableAdapters.SettingBTableAdapter
-    Friend WithEvents CCountTableAdapter As FileDataSetTableAdapters.SettingCTableAdapter
-    Friend WithEvents ECountTableAdapter As FileDataSetTableAdapters.SettingETableAdapter
     Friend WithEvents ModeDropDown As ComboBox
     Friend WithEvents RateDropDown As ComboBox
     Friend WithEvents AnnounceTextBox As TextBox
