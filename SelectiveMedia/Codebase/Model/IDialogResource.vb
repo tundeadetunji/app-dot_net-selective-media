@@ -12,4 +12,5 @@
     Function GetEndTime() As DateTimePicker
     Function GetModeDropDown() As ComboBox
     Function GetRateDropDown() As ComboBox
+    Function GetMediaTimer() As Timer
 End Interface

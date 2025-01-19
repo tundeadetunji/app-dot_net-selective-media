@@ -1,5 +1,8 @@
 ﻿Public Enum Mode
 	Random = 1
-	Sequential = 2
-	App = 3 ' start a program instead
+	SequentialRegular = 2
+	SequentialAlternate = 3
+	SequentialNight = 4
+	App = 5 ' start a program instead
+
 End Enum

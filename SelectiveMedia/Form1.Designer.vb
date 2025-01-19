@@ -33,15 +33,15 @@ Partial Class Form1
         Me.EndTime = New System.Windows.Forms.DateTimePicker()
         Me.BeginTime = New System.Windows.Forms.DateTimePicker()
         Me.WallpaperLocationTextBox = New System.Windows.Forms.TextBox()
-        Me.DayWTimer = New System.Windows.Forms.Timer(Me.components)
-        Me.NWTimer = New System.Windows.Forms.Timer(Me.components)
+        Me.DayTimer = New System.Windows.Forms.Timer(Me.components)
+        Me.NightTimer = New System.Windows.Forms.Timer(Me.components)
         Me.NotifyIcon1 = New System.Windows.Forms.NotifyIcon(Me.components)
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.ShowToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem21 = New System.Windows.Forms.ToolStripSeparator()
         Me.AllAppsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.OutTimer = New System.Windows.Forms.Timer(Me.components)
-        Me.InTimer = New System.Windows.Forms.Timer(Me.components)
+        Me.FadeOutTimer = New System.Windows.Forms.Timer(Me.components)
+        Me.FadeInTimer = New System.Windows.Forms.Timer(Me.components)
         Me.WTimer = New System.Windows.Forms.Timer(Me.components)
         Me.MediaTimer = New System.Windows.Forms.Timer(Me.components)
         Me.FileBindingSource = New System.Windows.Forms.BindingSource(Me.components)
@@ -81,6 +81,12 @@ Partial Class Form1
         Me.AnnounceTextBox = New System.Windows.Forms.TextBox()
         Me.HelpIcon = New System.Windows.Forms.PictureBox()
         Me.ProgramsFileTextBox = New System.Windows.Forms.TextBox()
+        Me.TopBorder = New System.Windows.Forms.PictureBox()
+        Me.BottomBorder = New System.Windows.Forms.PictureBox()
+        Me.LeftBorder = New System.Windows.Forms.PictureBox()
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.CloseDialogButton = New System.Windows.Forms.Label()
+        Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.ContextMenuStrip1.SuspendLayout()
         CType(Me.FileBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.FileDataSet, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -96,6 +102,11 @@ Partial Class Form1
         CType(Me.FolderBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.FolderDataSet, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.HelpIcon, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.TopBorder, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.BottomBorder, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.LeftBorder, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'TimeTimer
@@ -108,11 +119,12 @@ Partial Class Form1
         Me.DialogTitle.AutoSize = True
         Me.DialogTitle.Cursor = System.Windows.Forms.Cursors.Hand
         Me.DialogTitle.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.DialogTitle.Location = New System.Drawing.Point(316, 333)
+        Me.DialogTitle.Location = New System.Drawing.Point(11, 18)
         Me.DialogTitle.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.DialogTitle.Name = "DialogTitle"
-        Me.DialogTitle.Size = New System.Drawing.Size(0, 20)
+        Me.DialogTitle.Size = New System.Drawing.Size(76, 20)
         Me.DialogTitle.TabIndex = 14579
+        Me.DialogTitle.Text = "Settings"
         '
         'TimeLabel
         '
@@ -124,6 +136,7 @@ Partial Class Form1
         '
         'NightMediaLocationTextBox
         '
+        Me.NightMediaLocationTextBox.ForeColor = System.Drawing.Color.Wheat
         Me.NightMediaLocationTextBox.Location = New System.Drawing.Point(14, 63)
         Me.NightMediaLocationTextBox.Name = "NightMediaLocationTextBox"
         Me.NightMediaLocationTextBox.Size = New System.Drawing.Size(406, 26)
@@ -131,6 +144,7 @@ Partial Class Form1
         '
         'RegularMediaLocationTextBox
         '
+        Me.RegularMediaLocationTextBox.ForeColor = System.Drawing.Color.Wheat
         Me.RegularMediaLocationTextBox.Location = New System.Drawing.Point(14, 95)
         Me.RegularMediaLocationTextBox.Name = "RegularMediaLocationTextBox"
         Me.RegularMediaLocationTextBox.Size = New System.Drawing.Size(406, 26)
@@ -138,6 +152,7 @@ Partial Class Form1
         '
         'AlternateMediaLocationTextBox
         '
+        Me.AlternateMediaLocationTextBox.ForeColor = System.Drawing.Color.Wheat
         Me.AlternateMediaLocationTextBox.Location = New System.Drawing.Point(14, 127)
         Me.AlternateMediaLocationTextBox.Name = "AlternateMediaLocationTextBox"
         Me.AlternateMediaLocationTextBox.Size = New System.Drawing.Size(406, 26)
@@ -151,7 +166,6 @@ Partial Class Form1
         Me.EndTime.Size = New System.Drawing.Size(200, 26)
         Me.EndTime.TabIndex = 3
         Me.EndTime.Value = New Date(2018, 12, 31, 6, 0, 0, 0)
-        Me.EndTime.Visible = False
         '
         'BeginTime
         '
@@ -161,22 +175,22 @@ Partial Class Form1
         Me.BeginTime.Size = New System.Drawing.Size(200, 26)
         Me.BeginTime.TabIndex = 2
         Me.BeginTime.Value = New Date(2018, 12, 31, 0, 0, 0, 0)
-        Me.BeginTime.Visible = False
         '
         'WallpaperLocationTextBox
         '
+        Me.WallpaperLocationTextBox.ForeColor = System.Drawing.Color.Wheat
         Me.WallpaperLocationTextBox.Location = New System.Drawing.Point(14, 191)
         Me.WallpaperLocationTextBox.Name = "WallpaperLocationTextBox"
         Me.WallpaperLocationTextBox.Size = New System.Drawing.Size(406, 26)
         Me.WallpaperLocationTextBox.TabIndex = 8
         '
-        'DayWTimer
+        'DayTimer
         '
-        Me.DayWTimer.Interval = 1000
+        Me.DayTimer.Interval = 1000
         '
-        'NWTimer
+        'NightTimer
         '
-        Me.NWTimer.Interval = 1000
+        Me.NightTimer.Interval = 1000
         '
         'NotifyIcon1
         '
@@ -209,10 +223,10 @@ Partial Class Form1
         Me.AllAppsToolStripMenuItem.Size = New System.Drawing.Size(179, 24)
         Me.AllAppsToolStripMenuItem.Text = "Task Manager"
         '
-        'OutTimer
+        'FadeOutTimer
         '
         '
-        'InTimer
+        'FadeInTimer
         '
         '
         'WTimer
@@ -372,7 +386,6 @@ Partial Class Form1
         Me.ModeDropDown.Size = New System.Drawing.Size(202, 28)
         Me.ModeDropDown.TabIndex = 0
         Me.ModeDropDown.Tag = "f"
-        Me.ModeDropDown.Visible = False
         '
         'RateDropDown
         '
@@ -382,10 +395,10 @@ Partial Class Form1
         Me.RateDropDown.Size = New System.Drawing.Size(202, 28)
         Me.RateDropDown.TabIndex = 1
         Me.RateDropDown.Tag = "f"
-        Me.RateDropDown.Visible = False
         '
         'AnnounceTextBox
         '
+        Me.AnnounceTextBox.ForeColor = System.Drawing.Color.Wheat
         Me.AnnounceTextBox.Location = New System.Drawing.Point(14, 223)
         Me.AnnounceTextBox.Name = "AnnounceTextBox"
         Me.AnnounceTextBox.Size = New System.Drawing.Size(406, 26)
@@ -407,16 +420,82 @@ Partial Class Form1
         '
         'ProgramsFileTextBox
         '
+        Me.ProgramsFileTextBox.ForeColor = System.Drawing.Color.Wheat
         Me.ProgramsFileTextBox.Location = New System.Drawing.Point(14, 159)
         Me.ProgramsFileTextBox.Name = "ProgramsFileTextBox"
         Me.ProgramsFileTextBox.Size = New System.Drawing.Size(406, 26)
         Me.ProgramsFileTextBox.TabIndex = 7
+        '
+        'TopBorder
+        '
+        Me.TopBorder.BackColor = System.Drawing.Color.Black
+        Me.TopBorder.Location = New System.Drawing.Point(0, 0)
+        Me.TopBorder.Name = "TopBorder"
+        Me.TopBorder.Size = New System.Drawing.Size(434, 1)
+        Me.TopBorder.TabIndex = 16772
+        Me.TopBorder.TabStop = False
+        '
+        'BottomBorder
+        '
+        Me.BottomBorder.BackColor = System.Drawing.Color.Black
+        Me.BottomBorder.Location = New System.Drawing.Point(0, 629)
+        Me.BottomBorder.Name = "BottomBorder"
+        Me.BottomBorder.Size = New System.Drawing.Size(434, 1)
+        Me.BottomBorder.TabIndex = 16773
+        Me.BottomBorder.TabStop = False
+        '
+        'LeftBorder
+        '
+        Me.LeftBorder.BackColor = System.Drawing.Color.Black
+        Me.LeftBorder.Location = New System.Drawing.Point(0, 0)
+        Me.LeftBorder.Name = "LeftBorder"
+        Me.LeftBorder.Size = New System.Drawing.Size(1, 630)
+        Me.LeftBorder.TabIndex = 16774
+        Me.LeftBorder.TabStop = False
+        '
+        'PictureBox1
+        '
+        Me.PictureBox1.BackColor = System.Drawing.Color.Black
+        Me.PictureBox1.Location = New System.Drawing.Point(433, 0)
+        Me.PictureBox1.Name = "PictureBox1"
+        Me.PictureBox1.Size = New System.Drawing.Size(1, 630)
+        Me.PictureBox1.TabIndex = 16775
+        Me.PictureBox1.TabStop = False
+        '
+        'CloseDialogButton
+        '
+        Me.CloseDialogButton.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.CloseDialogButton.AutoSize = True
+        Me.CloseDialogButton.BackColor = System.Drawing.Color.Transparent
+        Me.CloseDialogButton.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.CloseDialogButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.CloseDialogButton.ForeColor = System.Drawing.Color.Black
+        Me.CloseDialogButton.Location = New System.Drawing.Point(401, 15)
+        Me.CloseDialogButton.Name = "CloseDialogButton"
+        Me.CloseDialogButton.Size = New System.Drawing.Size(21, 24)
+        Me.CloseDialogButton.TabIndex = 16776
+        Me.CloseDialogButton.Text = "x"
+        '
+        'PictureBox2
+        '
+        Me.PictureBox2.BackColor = System.Drawing.Color.Black
+        Me.PictureBox2.Location = New System.Drawing.Point(0, 48)
+        Me.PictureBox2.Name = "PictureBox2"
+        Me.PictureBox2.Size = New System.Drawing.Size(434, 1)
+        Me.PictureBox2.TabIndex = 16777
+        Me.PictureBox2.TabStop = False
         '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(434, 630)
+        Me.Controls.Add(Me.PictureBox2)
+        Me.Controls.Add(Me.CloseDialogButton)
+        Me.Controls.Add(Me.PictureBox1)
+        Me.Controls.Add(Me.LeftBorder)
+        Me.Controls.Add(Me.BottomBorder)
+        Me.Controls.Add(Me.TopBorder)
         Me.Controls.Add(Me.ProgramsFileTextBox)
         Me.Controls.Add(Me.HelpIcon)
         Me.Controls.Add(Me.AnnounceTextBox)
@@ -431,6 +510,7 @@ Partial Class Form1
         Me.Controls.Add(Me.DialogTitle)
         Me.Controls.Add(Me.TimeLabel)
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ForeColor = System.Drawing.Color.Wheat
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
@@ -454,6 +534,11 @@ Partial Class Form1
         CType(Me.FolderBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.FolderDataSet, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.HelpIcon, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.TopBorder, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.BottomBorder, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.LeftBorder, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -467,13 +552,13 @@ Partial Class Form1
     Friend WithEvents EndTime As DateTimePicker
     Friend WithEvents BeginTime As DateTimePicker
     Friend WithEvents WallpaperLocationTextBox As TextBox
-    Friend WithEvents DayWTimer As Timer
-    Friend WithEvents NWTimer As Timer
+    Friend WithEvents DayTimer As Timer
+    Friend WithEvents NightTimer As Timer
     Friend WithEvents NotifyIcon1 As NotifyIcon
     Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
     Friend WithEvents ShowToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents OutTimer As Timer
-    Friend WithEvents InTimer As Timer
+    Friend WithEvents FadeOutTimer As Timer
+    Friend WithEvents FadeInTimer As Timer
     Friend WithEvents WTimer As Timer
     Friend WithEvents MediaTimer As Timer
     Friend WithEvents FileDataSet As FileDataSet
@@ -515,4 +600,10 @@ Partial Class Form1
     Friend WithEvents AllAppsToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents HelpIcon As PictureBox
     Friend WithEvents ProgramsFileTextBox As TextBox
+    Friend WithEvents TopBorder As PictureBox
+    Friend WithEvents BottomBorder As PictureBox
+    Friend WithEvents LeftBorder As PictureBox
+    Friend WithEvents PictureBox1 As PictureBox
+    Friend WithEvents CloseDialogButton As Label
+    Friend WithEvents PictureBox2 As PictureBox
 End Class
