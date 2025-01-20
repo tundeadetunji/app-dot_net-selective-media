@@ -26,6 +26,13 @@ Public Class Constants
 		"*.jpg", "*.jpeg", "*.bmp"
 	}
 
+	Public Shared ReadOnly Property HelpFile As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\SelectiveMediaHelp.html"
+
+	Public Const Edit As String = "Edit"
+	Public Const Lock As String = "Lock"
+	Public Shared ReadOnly Property EditIcon As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\EditIcon.png"
+	Public Shared ReadOnly Property LockIcon As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\LockIcon.png"
+
 #End Region
 
 End Class

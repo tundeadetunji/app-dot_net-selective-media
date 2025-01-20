@@ -14,6 +14,7 @@ Public Class MediaService
 
 #Region "Support"
     Private Function ChoseRandomFileToPlay(files As List(Of String), history As HistoryService, section As MediaSection) As Long
+        'Todo redo this function. Note that it seems the system is skipping some files
         Dim index
         Dim counter As Long = 0
 2:
@@ -32,7 +33,6 @@ Public Class MediaService
     End Function
     Private Function ChoseSequentialFileToPlay(files As List(Of String), history As HistoryService, section As MediaSection) As Long
         If history.GetCurrentSequentialFileIndex > files.Count - 1 Then
-            history.ClearHistory(section)
             Return 0
         Else
             Return history.GetCurrentSequentialFileIndex + 1
@@ -77,17 +77,22 @@ Public Class MediaService
     End Sub
 
     Private Sub StartMediaRandom(app As AppService, disk As DiskService, settings As SettingsService, history As HistoryService, state As StateService)
-        Dim files As List(Of String) = disk.GetFiles(state.NextSection(app, disk, settings))
+        Dim current_section As MediaSection = state.CurrentSection
+        Dim next_section As MediaSection = state.NextSection(app, disk, settings)
+        Dim files As List(Of String) = disk.GetFiles(next_section)
         If files.Count < 1 Then Return
-        Dim index As Long = ChoseRandomFileToPlay(files, history, state.CurrentSection)
-        history.AddIndexToHistory(index, state.CurrentSection)
+        Dim index As Long = ChoseRandomFileToPlay(files, history, next_section)
+        state.UpdateCurrentSection(next_section)
+        history.AddIndexToHistory(index, current_section)
         StartFile(files(index))
     End Sub
 
     Private Sub StartMediaSequential(state As StateService, disk As DiskService, history As HistoryService, settings As SettingsService)
-        Dim files As List(Of String) = disk.GetFiles(state.CurrentSection)
+
+        Dim chosenSection As MediaSection = GetSectionFrom(settings)
+        Dim files As List(Of String) = disk.GetFiles(chosenSection)
         If files.Count < 1 Then Return
-        Dim index As Long = ChoseSequentialFileToPlay(files, history, state.CurrentSection)
+        Dim index As Long = ChoseSequentialFileToPlay(files, history, chosenSection)
         history.UpdateIndexOfSequentialPlayback(index)
 
         If Not state.SequentialState Then
@@ -96,6 +101,17 @@ Public Class MediaService
         End If
         StartFile(files(index))
     End Sub
+
+    Private Function GetSectionFrom(settings As SettingsService) As MediaSection
+        Select Case settings.GetMode.ToLower
+            Case SequentialRegular.ToLower
+                Return MediaSection.Regular
+            Case SequentialAlternate.ToLower
+                Return MediaSection.Alternate
+            Case Else
+                Return MediaSection.Night
+        End Select
+    End Function
 
 #End Region
 

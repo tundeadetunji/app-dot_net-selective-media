@@ -70,7 +70,7 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Danrabbit-Elementary-Folder-home.ico</ApplicationIcon>
+    <ApplicationIcon>Gartoon-Team-Gartoon-Places-User-home.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <TargetZone>LocalIntranet</TargetZone>
@@ -211,8 +211,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Danrabbit-Elementary-Folder-home.ico" />
+    <Content Include="Gartoon-Team-Gartoon-Places-User-home.ico" />
     <Content Include="homenet.ico" />
     <Content Include="ICS client.ico" />
+    <None Include="Resources\ICS client.ico" />
+    <None Include="Resources\Gartoon-Team-Gartoon-Places-User-home.1024.png" />
+    <None Include="Resources\Gartoon-Team-Gartoon-Action-Draw-freehand-pencil.1024.png" />
+    <None Include="Resources\Danrabbit-Elementary-Folder-home.ico" />
+    <None Include="Resources\Icons-Land-Medical-Documents-CardiacMonitor.256.png" />
+    <None Include="Resources\Iconsmind-Outline-Power-3.512.png" />
     <None Include="packages.config" />
     <None Include="Resources\girl-idea-icon_128.png" />
     <None Include="Resources\girl-idea-icon_96.png" />

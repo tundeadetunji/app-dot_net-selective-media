@@ -91,16 +91,16 @@ Public Class SettingsService
         WriteText(AnnounceFile, announcement)
     End Sub
 
-    Public Function GetDayProgramsFile() As String
-        Return ReadText(DayProgramsFile)
+    Public Function GetDayPrograms() As List(Of String)
+        Return ReadText(DayProgramsFile).StringToList
     End Function
 
     Public Sub SetDayPrograms(programs As String)
         'Todo
     End Sub
 
-    Public Function GetNightProgramsFile() As String
-        Return ReadText(NightProgramsFile)
+    Public Function GetNightPrograms() As List(Of String)
+        Return ReadText(NightProgramsFile).StringToList
     End Function
 
     Public Sub SetNightPrograms(programs As String)
@@ -160,8 +160,8 @@ Public Class SettingsService
         dialog.GetProgramsFileTextBox.Text = GetProgramsFile()
         dialog.GetWallpaperLocationTextBox.Text = GetWallpapersLocation()
         dialog.GetAnnounceTextBox.Text = GetAnnounce()
-        dialog.GetBeginTime.Value = Date.Parse(GetBeginTime.Trim).ToShortTimeString
-        dialog.GetEndTime.Value = Date.Parse(GetEndTime.Trim).ToShortTimeString
+        dialog.GetBeginTime.Value = Date.Parse(GetBeginTime.Trim).ToString
+        dialog.GetEndTime.Value = Date.Parse(GetEndTime.Trim).ToString
         BindProperty(dialog.GetModeDropDown, GetEnum(New Mode))
         dialog.GetModeDropDown.Text = GetMode()
         BindProperty(dialog.GetRateDropDown, GetEnum(New Rate))

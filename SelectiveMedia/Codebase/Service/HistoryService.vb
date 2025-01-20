@@ -55,6 +55,7 @@ Public Class HistoryService
 
 #Region "Exported"
     Public Function FileAtThisIndexHasAlreadyPlayed(index As Long, section As MediaSection) As Boolean
+        'Todo fix allowing duplicates
         Select Case section
             Case MediaSection.Regular
                 Return GetRegularHistory().Contains(index)

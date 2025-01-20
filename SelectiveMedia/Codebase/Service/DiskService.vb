@@ -27,7 +27,7 @@ Public Class DiskService
 		Dim directory As String = settings.GetRegularMediaLocation()
 		For Each fileType As String In SupportedMediaFileTypes
 			Dim files = My.Computer.FileSystem.GetFiles(directory, FileIO.SearchOption.SearchAllSubDirectories, fileType)
-			If files.Count > 1 Then
+			If files.Count > 0 Then
 				_RegularFiles.AddRange(files)
 			End If
 		Next
@@ -37,7 +37,7 @@ Public Class DiskService
 		Dim directory As String = settings.GetAlternateMediaLocation()
 		For Each fileType As String In SupportedMediaFileTypes
 			Dim files = My.Computer.FileSystem.GetFiles(directory, FileIO.SearchOption.SearchAllSubDirectories, fileType)
-			If files.Count > 1 Then
+			If files.Count > 0 Then
 				_AlternateFiles.AddRange(files)
 			End If
 		Next
@@ -47,7 +47,7 @@ Public Class DiskService
 		Dim directory As String = settings.GetNightMediaLocation()
 		For Each fileType As String In SupportedMediaFileTypes
 			Dim files = My.Computer.FileSystem.GetFiles(directory, FileIO.SearchOption.SearchAllSubDirectories, fileType)
-			If files.Count > 1 Then
+			If files.Count > 0 Then
 				_NightFiles.AddRange(files)
 			End If
 		Next
@@ -63,7 +63,7 @@ Public Class DiskService
 		Dim directory As String = settings.GetWallpapersLocation()
 		For Each FileType As String In SupportedImageFileTypes
 			Dim files = My.Computer.FileSystem.GetFiles(directory, FileIO.SearchOption.SearchAllSubDirectories, FileType)
-			If files.Count > 1 Then
+			If files.Count > 0 Then
 				_Wallpapers.AddRange(files)
 			End If
 		Next

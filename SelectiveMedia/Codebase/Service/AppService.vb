@@ -2,6 +2,7 @@
 Imports iNovation.Code.GeneralExtensions
 Imports iNovation.Code.Desktop
 Imports SelectiveMedia.Constants
+Imports iNovation.Code
 Public Class AppService
 
 #Region "Initialization"
@@ -9,13 +10,14 @@ Public Class AppService
 	Private Sub New()
 
 	End Sub
+
 #End Region
 
 #Region "Properties"
 	Private ReadOnly Property PlayersFile As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\Players.txt"
+
+
 #End Region
-
-
 #Region "Support"
 	''' <summary>
 	''' if folders have changed or their number of files have changed, then clear the history files
@@ -27,7 +29,6 @@ Public Class AppService
 		Else
 			Dim _NightFiles As List(Of String) = ConstructNightFiles(settings)
 			If _NightFiles.Count <> disk.GetNightFilesCount Then
-
 				history.ClearHistory(MediaSection.Night)
 			End If
 		End If
@@ -51,14 +52,13 @@ Public Class AppService
 				history.ClearHistory(MediaSection.Alternate)
 			End If
 		End If
-
 	End Sub
 	Private Function ConstructRegularFiles(settings As SettingsService)
 		Dim _RegularFiles As New List(Of String)
 		Dim directory As String = settings.GetRegularMediaLocation()
 		For Each fileType As String In SupportedMediaFileTypes
 			Dim files = My.Computer.FileSystem.GetFiles(directory, FileIO.SearchOption.SearchAllSubDirectories, fileType)
-			If files.Count > 1 Then
+			If files.Count > 0 Then
 				_RegularFiles.AddRange(files)
 			End If
 		Next
@@ -69,7 +69,7 @@ Public Class AppService
 		Dim directory As String = settings.GetAlternateMediaLocation()
 		For Each fileType As String In SupportedMediaFileTypes
 			Dim files = My.Computer.FileSystem.GetFiles(directory, FileIO.SearchOption.SearchAllSubDirectories, fileType)
-			If files.Count > 1 Then
+			If files.Count > 0 Then
 				_AlternateFiles.AddRange(files)
 			End If
 		Next
@@ -80,45 +80,38 @@ Public Class AppService
 		Dim directory As String = settings.GetNightMediaLocation()
 		For Each fileType As String In SupportedMediaFileTypes
 			Dim files = My.Computer.FileSystem.GetFiles(directory, FileIO.SearchOption.SearchAllSubDirectories, fileType)
-			If files.Count > 1 Then
+			If files.Count > 0 Then
 				_NightFiles.AddRange(files)
 			End If
 		Next
 		Return _NightFiles
 	End Function
 
+
+
+
+
 #End Region
-
-
-
 #Region "Exported"
-
 	Public Function CanStart(dialog As IDialogResource, settings As SettingsService) As Boolean
 		Return settings.Validated(dialog)
 	End Function
-
 	Public Sub Start(dialog As IDialogResource, disk As DiskService, history As HistoryService, settings As SettingsService, state As StateService)
-
 		Recalibrate(dialog, disk, history, settings)
 		Load(disk, state, settings)
+		dialog.GetDayTimer.Enabled = True
 
-		If GetPeriod(disk, settings) = Period.Day Then
-			dialog.GetDayTimer.Enabled = True
-		Else
-			dialog.GetNightTimer.Enabled = True
-		End If
 		dialog.GetMediaTimer.Enabled = True
 	End Sub
 	Public Sub Load(disk As DiskService, state As StateService, settings As SettingsService)
-		state.UpdateSequentialState(settings.GetMode().Contains(Sequential))
-		state.UpdateCurrentSection(If(GetPeriod(disk, settings) = Period.Day, MediaSection.Regular, MediaSection.Night))
+		state.UpdateCurrentSection(If(GetPeriod(disk, settings) = Period.Day, MediaSection.Alternate, MediaSection.Night))
 		disk.Load(settings)
 	End Sub
 	Public Function GetPeriod(disk As DiskService, settings As SettingsService) As Period
 		If Date.Parse(Now.ToShortTimeString) >= Date.Parse(settings.GetBeginTime()).ToShortTimeString And Date.Parse(Now.ToShortTimeString) <= Date.Parse(settings.GetEndTime()).ToShortTimeString Then
-			Return Period.Day
-		Else
 			Return Period.Night
+		Else
+			Return Period.Day
 		End If
 	End Function
 	Public Sub PrepDay(desktop As DesktopService, disk As DiskService, settings As SettingsService)
@@ -127,10 +120,10 @@ Public Class AppService
 			Dim wallpaper As String = wallpapers(Random_(0, wallpapers.Count))
 			desktop.SetWallpaper(wallpaper)
 		End If
-		desktop.StartTheApps(settings.GetDayProgramsFile)
+		desktop.StartTheApps(settings.GetDayPrograms)
 	End Sub
-	Public Sub PrepNight(settings As SettingsService)
-		StartApps(ReadText(settings.GetNightProgramsFile))
+	Public Sub PrepNight(desktop As DesktopService, settings As SettingsService)
+		desktop.StartTheApps(settings.GetNightPrograms)
 	End Sub
 	Public Function PlayerIsOn() As Boolean
 		Dim Players As List(Of String) = ReadText(PlayersFile).StringToList

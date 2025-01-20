@@ -78,15 +78,6 @@ Public Class Form1 : Implements IDialogResource
 #Region "Properties"
 	Private ReadOnly Property services As InstanceFactory = InstanceFactory.Instance
 
-	'Private ReadOnly Property ui As UiService = New UiService
-	'Private ReadOnly Property program As AppService = New AppService
-	'Private ReadOnly Property disk As DiskService = New DiskService
-	'Private ReadOnly Property desktop As DesktopService = New DesktopService
-	'Private ReadOnly Property settings As SettingsService = New SettingsService
-	'Private ReadOnly Property playback As MediaService = New MediaService
-	'Private ReadOnly Property state As StateService = StateService.Instance(False, MediaSection.Regular)
-	'Private ReadOnly Property history As HistoryService = HistoryService.Instance
-
 #End Region
 
 #Region "Notify Icon Related"
@@ -97,10 +88,9 @@ Public Class Form1 : Implements IDialogResource
 	Private Sub ShowToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ShowToolStripMenuItem.Click
 
 		With Me
-			'			.Visible = True
 			.Opacity = 0
+			.TopMost = True
 			.FadeInTimer.Enabled = True
-			'			.Show()
 		End With
 	End Sub
 
@@ -156,7 +146,7 @@ Public Class Form1 : Implements IDialogResource
 
 	End Sub
 	Private Sub Form1_DoubleClick(sender As Object, e As EventArgs) Handles Me.DoubleClick
-		services.ui.ShowOrHideInitiallyHiddenControls(Me, Not BeginTime.Visible) 'just picked BeginTime at random, could have been any one of them
+		services.ui.ShowOrHideInitiallyHiddenControls(Me, Not BeginTime.Visible)
 	End Sub
 
 	Private Sub NightMediaLocationTextBox_DoubleClick(sender As Object, e As EventArgs) Handles NightMediaLocationTextBox.DoubleClick, RegularMediaLocationTextBox.DoubleClick, AlternateMediaLocationTextBox.DoubleClick, WallpaperLocationTextBox.DoubleClick
@@ -179,11 +169,10 @@ Public Class Form1 : Implements IDialogResource
 
 	End Sub
 
-
 	Private Sub DayTimer_Tick(sender As Object, e As EventArgs) Handles DayTimer.Tick
 		If services.program.GetPeriod(services.disk, services.settings) = Period.Day Then
 			DayTimer.Enabled = False
-			services.program.PrepNight(services.settings)
+			services.program.PrepDay(services.desktop, services.disk, services.settings)
 			NightTimer.Enabled = True
 		End If
 	End Sub
@@ -191,10 +180,9 @@ Public Class Form1 : Implements IDialogResource
 	Private Sub NightTimer_Tick(sender As Object, e As EventArgs) Handles NightTimer.Tick
 		If services.program.GetPeriod(services.disk, services.settings) = Period.Night Then
 			NightTimer.Enabled = False
-			services.program.PrepDay(services.desktop, services.disk, services.settings)
+			services.program.PrepNight(services.desktop, services.settings)
 			DayTimer.Enabled = True
 		End If
-
 	End Sub
 
 	Private Sub DropDown_KeyPress(sender As Object, e As KeyPressEventArgs) Handles ModeDropDown.KeyPress, RateDropDown.KeyPress
@@ -202,6 +190,50 @@ Public Class Form1 : Implements IDialogResource
 	End Sub
 
 	Private Sub HelpIcon_Click(sender As Object, e As EventArgs) Handles HelpIcon.Click
-		StartFile(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\help.txt")
+		StartFile(HelpFile)
+	End Sub
+
+	Private Sub ExitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem.Click
+		End
+	End Sub
+
+	Private Sub EditToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EditToolStripMenuItem.Click
+		With EditToolStripMenuItem
+			If .Text = Edit Then 'it's locked, so make it edit
+				.Text = Lock
+				.Image = Image.FromFile(LockIcon)
+				'make controls editable
+				services.ui.SetTextInputControlsReadOnly(Me, False)
+				Return
+			End If
+			.Text = Edit
+			.Image = Image.FromFile(EditIcon)
+			'make controls locked
+			services.ui.SetTextInputControlsReadOnly(Me, True)
+		End With
+	End Sub
+
+	Private Sub NightMediaLocationTextBox_TextChanged(sender As Object, e As EventArgs) Handles NightMediaLocationTextBox.TextChanged
+		services.ui.SetPlaceholder(NightMediaLocationTextBox, "Videos to play between first and second time fields")
+	End Sub
+
+	Private Sub RegularMediaLocationTextBox_TextChanged(sender As Object, e As EventArgs) Handles RegularMediaLocationTextBox.TextChanged
+		services.ui.SetPlaceholder(RegularMediaLocationTextBox, "Videos to play between second and first time fields initially")
+	End Sub
+
+	Private Sub AlternateMediaLocationTextBox_TextChanged(sender As Object, e As EventArgs) Handles AlternateMediaLocationTextBox.TextChanged
+		services.ui.SetPlaceholder(RegularMediaLocationTextBox, "Videos to play between second and first time fields alternately")
+	End Sub
+
+	Private Sub ProgramsFileTextBox_TextChanged(sender As Object, e As EventArgs) Handles ProgramsFileTextBox.TextChanged
+		services.ui.SetPlaceholder(ProgramsFileTextBox, "File containing applications to run instead of videos")
+	End Sub
+
+	Private Sub WallpaperLocationTextBox_TextChanged(sender As Object, e As EventArgs) Handles WallpaperLocationTextBox.TextChanged
+		services.ui.SetPlaceholder(WallpaperLocationTextBox, "Images to select from for wallpaper")
+	End Sub
+
+	Private Sub AnnounceTextBox_TextChanged(sender As Object, e As EventArgs) Handles AnnounceTextBox.TextChanged
+		services.ui.SetPlaceholder(AnnounceTextBox, "Announce when starting sequential play")
 	End Sub
 End Class
