@@ -150,6 +150,7 @@
     <Compile Include="Codebase\Service\AppService.vb" />
     <Compile Include="Codebase\Service\StateService.vb" />
     <Compile Include="Codebase\Service\UiService.vb" />
+    <Compile Include="Codebase\Utility\Support.vb" />
     <Compile Include="Form1.vb">
       <SubType>Form</SubType>
     </Compile>

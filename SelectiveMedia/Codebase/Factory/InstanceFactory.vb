@@ -11,6 +11,7 @@
 		settings = SettingsService.Instance
 		state = StateService.Instance(False, MediaSection.Regular)
 		ui = UiService.Instance
+		util = New Support
 	End Sub
 #End Region
 
@@ -23,6 +24,7 @@
 	Public ReadOnly Property settings As SettingsService
 	Public ReadOnly Property state As StateService
 	Public ReadOnly Property ui As UiService
+	Public ReadOnly Property util As Support
 
 #End Region
 

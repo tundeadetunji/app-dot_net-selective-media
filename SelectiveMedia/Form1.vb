@@ -171,7 +171,7 @@ Public Class Form1 : Implements IDialogResource
 			Exit Sub
 		End If
 
-		services.playback.StartMedia(Me, services.program, services.desktop, services.disk, services.history, services.settings, services.state)
+		services.playback.StartMedia(Me, services.program, services.desktop, services.disk, services.history, services.settings, services.state, services.util)
 
 	End Sub
 

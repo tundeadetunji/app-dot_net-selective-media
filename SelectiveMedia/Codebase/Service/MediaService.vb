@@ -14,7 +14,7 @@ Public Class MediaService
 
 #Region "Support"
 
-    Private Function ChoseRandomFileToPlay(files As List(Of String), history As HistoryService, section As MediaSection) As Long
+    Private Function ChoseRandomFileToPlay(files As List(Of String), history As HistoryService, section As MediaSection, util As Support) As Long
         Dim index As Long
         Dim attempts As Long = 0
         Dim totalFiles As Long = files.Count
@@ -26,7 +26,7 @@ Public Class MediaService
 
         Do
             index = Random_(0, totalFiles) ' Get a random index
-            If Not history.FileAtThisIndexHasAlreadyPlayed(index, section) Then
+            If Not history.FileAtThisIndexHasAlreadyPlayed(index, section, util) Then
                 Return index ' Return the index if it hasn't been played
             End If
 
@@ -89,13 +89,13 @@ Public Class MediaService
 
 #Region "Exported"
 
-    Public Sub StartMedia(dialog As IDialogResource, program As AppService, desktop As DesktopService, disk As DiskService, history As HistoryService, settings As SettingsService, state As StateService)
+    Public Sub StartMedia(dialog As IDialogResource, program As AppService, desktop As DesktopService, disk As DiskService, history As HistoryService, settings As SettingsService, state As StateService, util As Support)
 
         Select Case settings.GetMode()
             Case SequentialNight, SequentialRegular, SequentialAlternate
                 StartMediaSequential(state, disk, history, settings)
             Case Random
-                StartMediaRandom(program, disk, settings, history, state)
+                StartMediaRandom(program, disk, settings, history, state, util)
             Case App
                 desktop.StartTheApps(settings.GetProgramsFile())
         End Select
@@ -103,14 +103,14 @@ Public Class MediaService
         SetTime(dialog, disk, settings)
     End Sub
 
-    Private Sub StartMediaRandom(app As AppService, disk As DiskService, settings As SettingsService, history As HistoryService, state As StateService)
+    Private Sub StartMediaRandom(app As AppService, disk As DiskService, settings As SettingsService, history As HistoryService, state As StateService, util As Support)
         Dim current_section As MediaSection = state.CurrentSection
         Dim next_section As MediaSection = state.NextSection(app, disk, settings)
         Dim files As List(Of String) = disk.GetFiles(next_section)
         If files.Count < 1 Then Return
-        Dim index As Long = ChoseRandomFileToPlay(files, history, next_section)
+        Dim index As Long = ChoseRandomFileToPlay(files, history, next_section, util)
         state.UpdateCurrentSection(next_section)
-        history.AddIndexToHistory(index, current_section)
+        history.AddIndexToHistory(index, current_section, util)
         StartFile(files(index))
     End Sub
 
