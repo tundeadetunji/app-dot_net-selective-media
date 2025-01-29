@@ -87,10 +87,6 @@ Public Class AppService
 		Return _NightFiles
 	End Function
 
-
-
-
-
 #End Region
 #Region "Exported"
 	Public Function CanStart(dialog As IDialogResource, settings As SettingsService) As Boolean
@@ -99,8 +95,7 @@ Public Class AppService
 	Public Sub Start(dialog As IDialogResource, disk As DiskService, history As HistoryService, settings As SettingsService, state As StateService)
 		Recalibrate(dialog, disk, history, settings)
 		Load(disk, state, settings)
-		dialog.GetDayTimer.Enabled = True
-
+		'dialog.GetDayTimer.Enabled = True
 		dialog.GetMediaTimer.Enabled = True
 	End Sub
 	Public Sub Load(disk As DiskService, state As StateService, settings As SettingsService)
@@ -108,12 +103,24 @@ Public Class AppService
 		disk.Load(settings)
 	End Sub
 	Public Function GetPeriod(disk As DiskService, settings As SettingsService) As Period
-		If Date.Parse(Now.ToShortTimeString) >= Date.Parse(settings.GetBeginTime()).ToShortTimeString And Date.Parse(Now.ToShortTimeString) <= Date.Parse(settings.GetEndTime()).ToShortTimeString Then
+		Dim currentTime As DateTime = DateTime.Now
+		Dim beginTime As DateTime = DateTime.Parse(settings.GetBeginTime())
+		Dim endTime As DateTime = DateTime.Parse(settings.GetEndTime())
+
+		' Compare only the time components
+		If currentTime.TimeOfDay >= beginTime.TimeOfDay AndAlso currentTime.TimeOfDay <= endTime.TimeOfDay Then
 			Return Period.Night
 		Else
 			Return Period.Day
 		End If
 	End Function
+	'Public Function GetPeriod(disk As DiskService, settings As SettingsService) As Period
+	'	If Date.Parse(Now.ToShortTimeString) >= Date.Parse(settings.GetBeginTime()).ToShortTimeString And Date.Parse(Now.ToShortTimeString) <= Date.Parse(settings.GetEndTime()).ToShortTimeString Then
+	'		Return Period.Night
+	'	Else
+	'		Return Period.Day
+	'	End If
+	'End Function
 	Public Sub PrepDay(desktop As DesktopService, disk As DiskService, settings As SettingsService)
 		Dim wallpapers As List(Of String) = disk.GetWallpapers
 		If wallpapers.Count > 0 Then

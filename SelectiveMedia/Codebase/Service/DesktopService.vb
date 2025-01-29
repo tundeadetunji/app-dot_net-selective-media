@@ -32,7 +32,9 @@ Public Class DesktopService
 	End Sub
 
 	Public Sub StartTheApps(file As String)
-		Dim apps As List(Of String) = StringToList(ReadText(file))
+		Dim file_content As String = ReadText(file)
+		If String.IsNullOrEmpty(file_content) Then Return
+		Dim apps As List(Of String) = StringToList(file_content)
 		If apps.Count < 1 Then Return
 		For Each app As String In apps
 			StartFile(app.Trim)

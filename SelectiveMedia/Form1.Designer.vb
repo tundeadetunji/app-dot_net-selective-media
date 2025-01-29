@@ -36,7 +36,9 @@ Partial Class Form1
         Me.NightTimer = New System.Windows.Forms.Timer(Me.components)
         Me.NotifyIcon1 = New System.Windows.Forms.NotifyIcon(Me.components)
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.ShowToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem21 = New System.Windows.Forms.ToolStripSeparator()
+        Me.AllAppsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.FadeOutTimer = New System.Windows.Forms.Timer(Me.components)
         Me.FadeInTimer = New System.Windows.Forms.Timer(Me.components)
         Me.MediaTimer = New System.Windows.Forms.Timer(Me.components)
@@ -46,23 +48,23 @@ Partial Class Form1
         Me.ProgramsFileTextBox = New System.Windows.Forms.TextBox()
         Me.CloseDialogButton = New System.Windows.Forms.Label()
         Me.DialogContextMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
         Me.EditToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
         Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.PictureBox2 = New System.Windows.Forms.PictureBox()
+        Me.Divider = New System.Windows.Forms.PictureBox()
         Me.LeftBorder = New System.Windows.Forms.PictureBox()
         Me.BottomBorder = New System.Windows.Forms.PictureBox()
         Me.TopBorder = New System.Windows.Forms.PictureBox()
         Me.HelpIcon = New System.Windows.Forms.PictureBox()
-        Me.ShowToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.AllAppsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.RightBorder = New System.Windows.Forms.PictureBox()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.DialogContextMenuStrip.SuspendLayout()
-        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Divider, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LeftBorder, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.BottomBorder, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TopBorder, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.HelpIcon, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RightBorder, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'DialogTitle
@@ -161,10 +163,24 @@ Partial Class Form1
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
         Me.ContextMenuStrip1.Size = New System.Drawing.Size(180, 58)
         '
+        'ShowToolStripMenuItem
+        '
+        Me.ShowToolStripMenuItem.Image = Global.SelectiveMedia.My.Resources.Resources.Gartoon_Team_Gartoon_Places_User_home_1024
+        Me.ShowToolStripMenuItem.Name = "ShowToolStripMenuItem"
+        Me.ShowToolStripMenuItem.Size = New System.Drawing.Size(179, 24)
+        Me.ShowToolStripMenuItem.Text = "Show"
+        '
         'ToolStripMenuItem21
         '
         Me.ToolStripMenuItem21.Name = "ToolStripMenuItem21"
         Me.ToolStripMenuItem21.Size = New System.Drawing.Size(176, 6)
+        '
+        'AllAppsToolStripMenuItem
+        '
+        Me.AllAppsToolStripMenuItem.Image = Global.SelectiveMedia.My.Resources.Resources.ICS_client
+        Me.AllAppsToolStripMenuItem.Name = "AllAppsToolStripMenuItem"
+        Me.AllAppsToolStripMenuItem.Size = New System.Drawing.Size(179, 24)
+        Me.AllAppsToolStripMenuItem.Text = "Task Manager"
         '
         'FadeOutTimer
         '
@@ -233,17 +249,17 @@ Partial Class Form1
         Me.DialogContextMenuStrip.Name = "ContextMenuStrip1"
         Me.DialogContextMenuStrip.Size = New System.Drawing.Size(107, 58)
         '
-        'ToolStripMenuItem1
-        '
-        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(103, 6)
-        '
         'EditToolStripMenuItem
         '
         Me.EditToolStripMenuItem.Image = Global.SelectiveMedia.My.Resources.Resources.Gartoon_Team_Gartoon_Action_Draw_freehand_pencil_1024
         Me.EditToolStripMenuItem.Name = "EditToolStripMenuItem"
         Me.EditToolStripMenuItem.Size = New System.Drawing.Size(106, 24)
         Me.EditToolStripMenuItem.Text = "Edit"
+        '
+        'ToolStripMenuItem1
+        '
+        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(103, 6)
         '
         'ExitToolStripMenuItem
         '
@@ -252,14 +268,14 @@ Partial Class Form1
         Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(106, 24)
         Me.ExitToolStripMenuItem.Text = "Exit"
         '
-        'PictureBox2
+        'Divider
         '
-        Me.PictureBox2.BackColor = System.Drawing.Color.Black
-        Me.PictureBox2.Location = New System.Drawing.Point(0, 48)
-        Me.PictureBox2.Name = "PictureBox2"
-        Me.PictureBox2.Size = New System.Drawing.Size(434, 1)
-        Me.PictureBox2.TabIndex = 16777
-        Me.PictureBox2.TabStop = False
+        Me.Divider.BackColor = System.Drawing.Color.Black
+        Me.Divider.Location = New System.Drawing.Point(0, 48)
+        Me.Divider.Name = "Divider"
+        Me.Divider.Size = New System.Drawing.Size(434, 1)
+        Me.Divider.TabIndex = 16777
+        Me.Divider.TabStop = False
         '
         'LeftBorder
         '
@@ -302,19 +318,14 @@ Partial Class Form1
         Me.HelpIcon.TabIndex = 16771
         Me.HelpIcon.TabStop = False
         '
-        'ShowToolStripMenuItem
+        'RightBorder
         '
-        Me.ShowToolStripMenuItem.Image = Global.SelectiveMedia.My.Resources.Resources.Gartoon_Team_Gartoon_Places_User_home_1024
-        Me.ShowToolStripMenuItem.Name = "ShowToolStripMenuItem"
-        Me.ShowToolStripMenuItem.Size = New System.Drawing.Size(179, 24)
-        Me.ShowToolStripMenuItem.Text = "Show"
-        '
-        'AllAppsToolStripMenuItem
-        '
-        Me.AllAppsToolStripMenuItem.Image = Global.SelectiveMedia.My.Resources.Resources.ICS_client
-        Me.AllAppsToolStripMenuItem.Name = "AllAppsToolStripMenuItem"
-        Me.AllAppsToolStripMenuItem.Size = New System.Drawing.Size(179, 24)
-        Me.AllAppsToolStripMenuItem.Text = "Task Manager"
+        Me.RightBorder.BackColor = System.Drawing.Color.Black
+        Me.RightBorder.Location = New System.Drawing.Point(433, 0)
+        Me.RightBorder.Name = "RightBorder"
+        Me.RightBorder.Size = New System.Drawing.Size(1, 630)
+        Me.RightBorder.TabIndex = 16778
+        Me.RightBorder.TabStop = False
         '
         'Form1
         '
@@ -322,7 +333,8 @@ Partial Class Form1
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(434, 630)
         Me.ContextMenuStrip = Me.DialogContextMenuStrip
-        Me.Controls.Add(Me.PictureBox2)
+        Me.Controls.Add(Me.RightBorder)
+        Me.Controls.Add(Me.Divider)
         Me.Controls.Add(Me.CloseDialogButton)
         Me.Controls.Add(Me.LeftBorder)
         Me.Controls.Add(Me.BottomBorder)
@@ -349,14 +361,16 @@ Partial Class Form1
         Me.Name = "Form1"
         Me.Opacity = 0R
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Settings"
+        Me.Text = "Media"
+        Me.TopMost = True
         Me.ContextMenuStrip1.ResumeLayout(False)
         Me.DialogContextMenuStrip.ResumeLayout(False)
-        CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Divider, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LeftBorder, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.BottomBorder, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.TopBorder, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.HelpIcon, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RightBorder, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -388,9 +402,10 @@ Partial Class Form1
     Friend WithEvents BottomBorder As PictureBox
     Friend WithEvents LeftBorder As PictureBox
     Friend WithEvents CloseDialogButton As Label
-    Friend WithEvents PictureBox2 As PictureBox
+    Friend WithEvents Divider As PictureBox
     Friend WithEvents DialogContextMenuStrip As ContextMenuStrip
     Friend WithEvents ExitToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents EditToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem1 As ToolStripSeparator
+    Friend WithEvents RightBorder As PictureBox
 End Class

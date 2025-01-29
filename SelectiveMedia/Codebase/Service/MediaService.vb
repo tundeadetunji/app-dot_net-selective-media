@@ -13,24 +13,51 @@ Public Class MediaService
 #End Region
 
 #Region "Support"
+
     Private Function ChoseRandomFileToPlay(files As List(Of String), history As HistoryService, section As MediaSection) As Long
-        'Todo redo this function. Note that it seems the system is skipping some files
-        Dim index
-        Dim counter As Long = 0
-2:
-        index = Random_(0, files.Count)
-        If Not history.FileAtThisIndexHasAlreadyPlayed(index, section) Then
-            Return index
-        ElseIf counter = files.Count Then
-            history.ClearHistory(section)
-            counter = 0
-            GoTo 2
-        Else
-            counter += 1
-            GoTo 2
+        Dim index As Long
+        Dim attempts As Long = 0
+        Dim totalFiles As Long = files.Count
+
+        If totalFiles = 0 Then
+            ' If there are no files, return 0
+            Return 0
         End If
 
+        Do
+            index = Random_(0, totalFiles) ' Get a random index
+            If Not history.FileAtThisIndexHasAlreadyPlayed(index, section) Then
+                Return index ' Return the index if it hasn't been played
+            End If
+
+            attempts += 1
+            If attempts >= totalFiles Then
+                ' If all files have been played, clear history and return 0
+                history.ClearHistory(section)
+                Return 0
+            End If
+        Loop
+
     End Function
+    '    Private Function ChoseRandomFileToPlay(files As List(Of String), history As HistoryService, section As MediaSection) As Long
+    '        'Todo redo this function. Note that it seems the system is skipping some files
+    '        Dim index
+    '        Dim counter As Long = 0
+    '2:
+    '        'index = Random_(0, files.Count)
+    '        index = Random_(0, files.Count + 1)
+    '        If Not history.FileAtThisIndexHasAlreadyPlayed(index, section) Then
+    '            Return index
+    '        ElseIf counter = files.Count Then
+    '            history.ClearHistory(section)
+    '            counter = 0
+    '            GoTo 2
+    '        Else
+    '            counter += 1
+    '            GoTo 2
+    '        End If
+
+    '    End Function
     Private Function ChoseSequentialFileToPlay(files As List(Of String), history As HistoryService, section As MediaSection) As Long
         If history.GetCurrentSequentialFileIndex > files.Count - 1 Then
             Return 0

@@ -38,7 +38,7 @@ Public Class SettingsService
         If Not IO.Directory.Exists(dialog.GetNightMediaLocationTextBox.Text) Then valid = False
         If Not IO.Directory.Exists(dialog.GetRegularMediaLocationTextBox.Text) Then valid = False
         If Not IO.Directory.Exists(dialog.GetAlternateMediaLocationTextBox.Text) Then valid = False
-        If Not IO.File.Exists(dialog.GetProgramsFileTextBox.Text) Then valid = False
+        'If Not IO.File.Exists(dialog.GetProgramsFileTextBox.Text) Then valid = False
         If Not IO.Directory.Exists(dialog.GetWallpaperLocationTextBox.Text) Then valid = False
         If String.IsNullOrEmpty(dialog.GetModeDropDown.Text) Then valid = False
         If String.IsNullOrEmpty(dialog.GetRateDropDown.Text) Then valid = False
@@ -92,7 +92,8 @@ Public Class SettingsService
     End Sub
 
     Public Function GetDayPrograms() As List(Of String)
-        Return ReadText(DayProgramsFile).StringToList
+        Dim file_content As String = ReadText(DayProgramsFile)
+        Return If(String.IsNullOrEmpty(file_content), New List(Of String), file_content.StringToList)
     End Function
 
     Public Sub SetDayPrograms(programs As String)
@@ -100,7 +101,8 @@ Public Class SettingsService
     End Sub
 
     Public Function GetNightPrograms() As List(Of String)
-        Return ReadText(NightProgramsFile).StringToList
+        Dim file_content As String = ReadText(NightProgramsFile)
+        Return If(String.IsNullOrEmpty(file_content), New List(Of String), file_content.StringToList)
     End Function
 
     Public Sub SetNightPrograms(programs As String)

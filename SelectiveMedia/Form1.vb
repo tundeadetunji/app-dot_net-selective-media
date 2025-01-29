@@ -172,7 +172,7 @@ Public Class Form1 : Implements IDialogResource
 	Private Sub DayTimer_Tick(sender As Object, e As EventArgs) Handles DayTimer.Tick
 		If services.program.GetPeriod(services.disk, services.settings) = Period.Day Then
 			DayTimer.Enabled = False
-			services.program.PrepDay(services.desktop, services.disk, services.settings)
+			services.program.PrepNight(services.desktop, services.settings)
 			NightTimer.Enabled = True
 		End If
 	End Sub
@@ -180,7 +180,7 @@ Public Class Form1 : Implements IDialogResource
 	Private Sub NightTimer_Tick(sender As Object, e As EventArgs) Handles NightTimer.Tick
 		If services.program.GetPeriod(services.disk, services.settings) = Period.Night Then
 			NightTimer.Enabled = False
-			services.program.PrepNight(services.desktop, services.settings)
+			services.program.PrepDay(services.desktop, services.disk, services.settings)
 			DayTimer.Enabled = True
 		End If
 	End Sub
@@ -214,26 +214,26 @@ Public Class Form1 : Implements IDialogResource
 	End Sub
 
 	Private Sub NightMediaLocationTextBox_TextChanged(sender As Object, e As EventArgs) Handles NightMediaLocationTextBox.TextChanged
-		services.ui.SetPlaceholder(NightMediaLocationTextBox, "Videos to play between first and second time fields")
+		'services.ui.SetPlaceholder(NightMediaLocationTextBox, "Videos to play between first and second time fields")
 	End Sub
 
 	Private Sub RegularMediaLocationTextBox_TextChanged(sender As Object, e As EventArgs) Handles RegularMediaLocationTextBox.TextChanged
-		services.ui.SetPlaceholder(RegularMediaLocationTextBox, "Videos to play between second and first time fields initially")
+		'services.ui.SetPlaceholder(RegularMediaLocationTextBox, "Videos to play between second and first time fields initially")
 	End Sub
 
 	Private Sub AlternateMediaLocationTextBox_TextChanged(sender As Object, e As EventArgs) Handles AlternateMediaLocationTextBox.TextChanged
-		services.ui.SetPlaceholder(RegularMediaLocationTextBox, "Videos to play between second and first time fields alternately")
+		'services.ui.SetPlaceholder(RegularMediaLocationTextBox, "Videos to play between second and first time fields alternately")
 	End Sub
 
 	Private Sub ProgramsFileTextBox_TextChanged(sender As Object, e As EventArgs) Handles ProgramsFileTextBox.TextChanged
-		services.ui.SetPlaceholder(ProgramsFileTextBox, "File containing applications to run instead of videos")
+		'services.ui.SetPlaceholder(ProgramsFileTextBox, "File containing applications to run instead of videos")
 	End Sub
 
 	Private Sub WallpaperLocationTextBox_TextChanged(sender As Object, e As EventArgs) Handles WallpaperLocationTextBox.TextChanged
-		services.ui.SetPlaceholder(WallpaperLocationTextBox, "Images to select from for wallpaper")
+		'services.ui.SetPlaceholder(WallpaperLocationTextBox, "Images to select from for wallpaper")
 	End Sub
 
 	Private Sub AnnounceTextBox_TextChanged(sender As Object, e As EventArgs) Handles AnnounceTextBox.TextChanged
-		services.ui.SetPlaceholder(AnnounceTextBox, "Announce when starting sequential play")
+		'services.ui.SetPlaceholder(AnnounceTextBox, "Announce when starting sequential play")
 	End Sub
 End Class

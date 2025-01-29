@@ -68,7 +68,7 @@ Public Class UiService
 		AddHandler dialog.GetDialog.MouseMove, New MouseEventHandler(AddressOf DialogMouseMove)
 
 		SetHelp(dialog.GetHelpIcon)
-		dialog.GetDialog.Text = "PC Transform"
+		dialog.GetDialog.Text = "Media"
 		dialog.GetDialog.BackColor = background_color
 		dialog.GetDialogTitleLabel.Text = "Settings"
 		ShowOrHideInitiallyHiddenControls(dialog, False)
