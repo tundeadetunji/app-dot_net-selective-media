@@ -6,6 +6,10 @@ Imports SelectiveMedia.Constants
 Public Class Form1 : Implements IDialogResource
 
 #Region "Overrides"
+
+	Public Function GetStartWithPCCheckBox() As CheckBox Implements IDialogResource.GetStartWithPCCheckBox
+		Return StartWithPCCheckBox
+	End Function
 	Public Function GetHelpIcon() As PictureBox Implements IDialogResource.GetHelpIcon
 		Return HelpIcon
 	End Function
@@ -137,6 +141,8 @@ Public Class Form1 : Implements IDialogResource
 
 		services.settings.RestoreSettings(Me)
 
+		services.ui.AwaitUserInteraction(Me)
+
 		If Not services.program.CanStart(Me, services.settings) Then
 			FadeInTimer.Enabled = True
 		Else
@@ -235,5 +241,9 @@ Public Class Form1 : Implements IDialogResource
 
 	Private Sub AnnounceTextBox_TextChanged(sender As Object, e As EventArgs) Handles AnnounceTextBox.TextChanged
 		'services.ui.SetPlaceholder(AnnounceTextBox, "Announce when starting sequential play")
+	End Sub
+
+	Private Sub StartWithPCCheckBox_CheckedChanged(sender As Object, e As EventArgs) Handles StartWithPCCheckBox.CheckedChanged
+		services.settings.SetStartWithPC(StartWithPCCheckBox.Checked)
 	End Sub
 End Class

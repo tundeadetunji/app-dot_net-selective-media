@@ -24,6 +24,7 @@ Public Class SettingsService
     Private ReadOnly Property ProgramsFile As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\Programs.txt"
     Private ReadOnly Property RateFile As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\Rate.txt"
     Private ReadOnly Property ModeFile As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\Mode.txt"
+    Private ReadOnly Property StartWithPCFile As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\StartWithPC.txt"
 
 #End Region
 
@@ -60,11 +61,20 @@ Public Class SettingsService
         SetProgramsFile(dialog.GetProgramsFileTextBox.Text)
         SetRate(dialog.GetRateDropDown.Text)
         SetMode(dialog.GetModeDropDown.Text)
+        SetStartWithPC(dialog.GetStartWithPCCheckBox.Checked)
 
         'load
         app.Start(dialog, disk, history, settings, state)
     End Sub
 
+    Public Function GetStartWithPC() As Boolean
+        Return Boolean.Parse(ReadText(StartWithPCFile))
+    End Function
+
+    Public Sub SetStartWithPC(state As Boolean)
+        WriteText(StartWithPCFile, state)
+        ToStartup(If(state, RegistryValue, RegistryValue.Replace(".exe", "")), RegistryKey)
+    End Sub
 
     Public Function GetBeginTime() As String
         Dim b_time_f As String = ReadText(BeginTimeFile)
@@ -168,6 +178,7 @@ Public Class SettingsService
         dialog.GetModeDropDown.Text = GetMode()
         BindProperty(dialog.GetRateDropDown, GetEnum(New Rate))
         dialog.GetRateDropDown.Text = GetRate()
+        dialog.GetStartWithPCCheckBox.Checked = GetStartWithPC()
     End Sub
 
 #End Region

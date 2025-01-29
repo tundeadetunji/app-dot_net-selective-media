@@ -16,4 +16,5 @@
     Function GetDayTimer() As Timer
     Function GetNightTimer() As Timer
     Function GetCloseDialogButton() As Label
+    Function GetStartWithPCCheckBox() As CheckBox
 End Interface

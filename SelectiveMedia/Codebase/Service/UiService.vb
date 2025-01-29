@@ -75,6 +75,16 @@ Public Class UiService
 		dialog.GetCloseDialogButton.Text = ChrW(10539)
 		StyleControls(dialog)
 
+
+	End Sub
+
+	Public Sub AwaitUserInteraction(dialog As IDialogResource)
+		With dialog.GetAnnounceTextBox
+			.Focus()
+			.SelectionStart = .Text.Length
+			.SelectionLength = 0
+		End With
+
 	End Sub
 
 	Public Sub HideDialog(dialog As IDialogResource)
@@ -87,6 +97,7 @@ Public Class UiService
 		dialog.GetEndTime.Visible = visible
 		dialog.GetModeDropDown.Visible = visible
 		dialog.GetRateDropDown.Visible = visible
+		dialog.GetStartWithPCCheckBox.Visible = visible
 	End Sub
 
 	Public Sub SetTextInputControlsReadOnly(dialog As IDialogResource, state As Boolean)
