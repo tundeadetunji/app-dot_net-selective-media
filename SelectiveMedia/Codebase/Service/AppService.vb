@@ -86,23 +86,32 @@ Public Class AppService
 		Next
 		Return _NightFiles
 	End Function
+	Private Sub SetWallpaper(desktop As DesktopService, disk As DiskService)
+		Dim wallpapers As List(Of String) = disk.GetWallpapers
+		If wallpapers.Count > 0 Then
+			Dim wallpaper As String = wallpapers(Random_(0, wallpapers.Count))
+			desktop.SetWallpaper(wallpaper)
+		End If
+	End Sub
+
 
 #End Region
 #Region "Exported"
 	Public Function CanStart(dialog As IDialogResource, settings As SettingsService) As Boolean
 		Return settings.Validated(dialog)
 	End Function
-	Public Sub Start(dialog As IDialogResource, disk As DiskService, history As HistoryService, settings As SettingsService, state As StateService)
+	Public Sub Start(dialog As IDialogResource, desktop As DesktopService, disk As DiskService, history As HistoryService, settings As SettingsService, state As StateService)
 		Recalibrate(dialog, disk, history, settings)
 		Load(disk, state, settings)
-		'dialog.GetDayTimer.Enabled = True
+		SetWallpaper(desktop, disk)
 		dialog.GetMediaTimer.Enabled = True
 	End Sub
+
 	Public Sub Load(disk As DiskService, state As StateService, settings As SettingsService)
-		state.UpdateCurrentSection(If(GetPeriod(disk, settings) = Period.Day, MediaSection.Alternate, MediaSection.Night))
+		state.UpdateCurrentSection(If(GetPeriod(settings) = Period.Day, MediaSection.Alternate, MediaSection.Night))
 		disk.Load(settings)
 	End Sub
-	Public Function GetPeriod(disk As DiskService, settings As SettingsService) As Period
+	Public Function GetPeriod(settings As SettingsService) As Period
 		Dim currentTime As DateTime = DateTime.Now
 		Dim beginTime As DateTime = DateTime.Parse(settings.GetBeginTime())
 		Dim endTime As DateTime = DateTime.Parse(settings.GetEndTime())
@@ -121,17 +130,17 @@ Public Class AppService
 	'		Return Period.Day
 	'	End If
 	'End Function
-	Public Sub PrepDay(desktop As DesktopService, disk As DiskService, settings As SettingsService)
-		Dim wallpapers As List(Of String) = disk.GetWallpapers
-		If wallpapers.Count > 0 Then
-			Dim wallpaper As String = wallpapers(Random_(0, wallpapers.Count))
-			desktop.SetWallpaper(wallpaper)
-		End If
-		desktop.StartTheApps(settings.GetDayPrograms)
-	End Sub
-	Public Sub PrepNight(desktop As DesktopService, settings As SettingsService)
-		desktop.StartTheApps(settings.GetNightPrograms)
-	End Sub
+	'Public Sub PrepDay(desktop As DesktopService, disk As DiskService, settings As SettingsService)
+	'	Dim wallpapers As List(Of String) = disk.GetWallpapers
+	'	If wallpapers.Count > 0 Then
+	'		Dim wallpaper As String = wallpapers(Random_(0, wallpapers.Count))
+	'		desktop.SetWallpaper(wallpaper)
+	'	End If
+	'	desktop.StartTheApps(settings.GetDayPrograms)
+	'End Sub
+	'Public Sub PrepNight(desktop As DesktopService, settings As SettingsService)
+	'	desktop.StartTheApps(settings.GetNightPrograms)
+	'End Sub
 	Public Function PlayerIsOn() As Boolean
 		Dim Players As List(Of String) = ReadText(PlayersFile).StringToList
 		For Each player As String In Players

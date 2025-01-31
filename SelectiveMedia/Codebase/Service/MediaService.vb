@@ -58,7 +58,7 @@ Public Class MediaService
     '        End If
 
     '    End Function
-    Private Function ChoseSequentialFileToPlay(files As List(Of String), history As HistoryService, section As MediaSection) As Long
+    Private Function ChoseSequentialFileToPlay(files As List(Of String), history As HistoryService) As Long
         If history.GetCurrentSequentialFileIndex > files.Count - 1 Then
             Return 0
         Else
@@ -66,7 +66,7 @@ Public Class MediaService
         End If
 
     End Function
-    Private Sub SetTime(dialog As IDialogResource, disk As DiskService, settings As SettingsService)
+    Private Sub SetTime(dialog As IDialogResource, settings As SettingsService)
 
         Select Case settings.GetMode()
             Case SequentialNight, SequentialAlternate, SequentialRegular
@@ -100,12 +100,12 @@ Public Class MediaService
                 desktop.StartTheApps(settings.GetProgramsFile())
         End Select
 
-        SetTime(dialog, disk, settings)
+        SetTime(dialog, settings)
     End Sub
 
     Private Sub StartMediaRandom(app As AppService, disk As DiskService, settings As SettingsService, history As HistoryService, state As StateService, util As Support)
         Dim current_section As MediaSection = state.CurrentSection
-        Dim next_section As MediaSection = state.NextSection(app, disk, settings)
+        Dim next_section As MediaSection = state.NextSection(app, settings)
         Dim files As List(Of String) = disk.GetFiles(next_section)
         If files.Count < 1 Then Return
         Dim index As Long = ChoseRandomFileToPlay(files, history, next_section, util)
@@ -119,7 +119,7 @@ Public Class MediaService
         Dim chosenSection As MediaSection = GetSectionFrom(settings)
         Dim files As List(Of String) = disk.GetFiles(chosenSection)
         If files.Count < 1 Then Return
-        Dim index As Long = ChoseSequentialFileToPlay(files, history, chosenSection)
+        Dim index As Long = ChoseSequentialFileToPlay(files, history)
         history.UpdateIndexOfSequentialPlayback(index)
 
         If Not state.SequentialState Then

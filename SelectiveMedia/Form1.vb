@@ -3,6 +3,7 @@ Imports iNovation.Code.General
 Imports System.IO
 Imports System.Collections.ObjectModel
 Imports SelectiveMedia.Constants
+Imports iNovation.Code.GeneralExtensions
 Public Class Form1 : Implements IDialogResource
 
 #Region "Overrides"
@@ -104,10 +105,10 @@ Public Class Form1 : Implements IDialogResource
 #Region "Control Box Related"
 	Private Sub CloseDialogButton_Click(sender As Object, e As EventArgs) Handles CloseDialogButton.Click
 		If services.settings.Validated(Me) Then
-			services.settings.SaveSettings(Me, services.program, services.disk, services.history, services.settings, services.state)
+			services.settings.SaveSettings(Me, services.program, services.desktop, services.disk, services.history, services.settings, services.state)
 			services.ui.ShowOrHideInitiallyHiddenControls(Me, False)
 			FadeOutTimer.Enabled = True
-			services.program.Start(Me, services.disk, services.history, services.settings, services.state)
+			services.program.Start(Me, services.desktop, services.disk, services.history, services.settings, services.state)
 		End If
 	End Sub
 	Private Sub FadeInTimer_Tick(sender As Object, e As EventArgs) Handles FadeInTimer.Tick
@@ -147,7 +148,7 @@ Public Class Form1 : Implements IDialogResource
 			FadeInTimer.Enabled = True
 		Else
 			FadeInTimer.Enabled = False
-			services.program.Start(Me, services.disk, services.history, services.settings, services.state)
+			services.program.Start(Me, services.desktop, services.disk, services.history, services.settings, services.state)
 		End If
 
 	End Sub
@@ -163,33 +164,33 @@ Public Class Form1 : Implements IDialogResource
 	End Sub
 
 	Private Sub MediaTimer_Tick(sender As Object, e As EventArgs) Handles MediaTimer.Tick
-
+		MediaTimer.Enabled = False
 		If services.program.PlayerIsOn() Then
-			If services.settings.GetMode() = Random Then
+			If services.settings.GetMode().EqualsIgnoreCase(Random) Then
 				MediaTimer.Interval = TwoMinutes
 			End If
 			Exit Sub
 		End If
 
 		services.playback.StartMedia(Me, services.program, services.desktop, services.disk, services.history, services.settings, services.state, services.util)
-
+		MediaTimer.Enabled = True
 	End Sub
 
-	Private Sub DayTimer_Tick(sender As Object, e As EventArgs) Handles DayTimer.Tick
-		If services.program.GetPeriod(services.disk, services.settings) = Period.Day Then
-			DayTimer.Enabled = False
-			services.program.PrepNight(services.desktop, services.settings)
-			NightTimer.Enabled = True
-		End If
-	End Sub
+	'Private Sub DayTimer_Tick(sender As Object, e As EventArgs) Handles DayTimer.Tick
+	'	If services.program.GetPeriod(services.disk, services.settings) = Period.Day Then
+	'		DayTimer.Enabled = False
+	'		services.program.PrepNight(services.desktop, services.settings)
+	'		NightTimer.Enabled = True
+	'	End If
+	'End Sub
 
-	Private Sub NightTimer_Tick(sender As Object, e As EventArgs) Handles NightTimer.Tick
-		If services.program.GetPeriod(services.disk, services.settings) = Period.Night Then
-			NightTimer.Enabled = False
-			services.program.PrepDay(services.desktop, services.disk, services.settings)
-			DayTimer.Enabled = True
-		End If
-	End Sub
+	'Private Sub NightTimer_Tick(sender As Object, e As EventArgs) Handles NightTimer.Tick
+	'	If services.program.GetPeriod(services.disk, services.settings) = Period.Night Then
+	'		NightTimer.Enabled = False
+	'		services.program.PrepDay(services.desktop, services.disk, services.settings)
+	'		DayTimer.Enabled = True
+	'	End If
+	'End Sub
 
 	Private Sub DropDown_KeyPress(sender As Object, e As KeyPressEventArgs) Handles ModeDropDown.KeyPress, RateDropDown.KeyPress
 		AllowNothing(e)

@@ -6397,7 +6397,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Media"
         "ProductCode" = "8:{97135CBD-D1DC-4152-8557-C0EC66FD1721}"
-        "PackageCode" = "8:{C59F55AD-98F5-4DBB-AB91-7F85B42CE89A}"
+        "PackageCode" = "8:{936E1072-F5FD-48F2-9DC2-4887159AD760}"
         "UpgradeCode" = "8:{FBA4AF08-3E6E-4C4E-87D9-327F345C5281}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -6511,6 +6511,14 @@
                                                         }
                                                         "Values"
                                                         {
+                                                            "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_4802CC6BEEE44B80A0B90DD6730C21B9"
+                                                            {
+                                                            "Name" = "8:Media"
+                                                            "Condition" = "8:"
+                                                            "Transitive" = "11:FALSE"
+                                                            "ValueTypes" = "3:1"
+                                                            "Value" = "8:C:\\Program Files (x86)\\iNovation Digital Works\\Media\\Selective Media"
+                                                            }
                                                         }
                                                     }
                                                 }

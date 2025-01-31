@@ -33,12 +33,12 @@ Public Class StateService
         Me.CurrentSection = CurrentSection
         Return Me.CurrentSection
     End Function
-    Public Function NextSection(app As AppService, disk As DiskService, settings As SettingsService) As MediaSection
+    Public Function NextSection(app As AppService, settings As SettingsService) As MediaSection
         Select Case Me.CurrentSection
             Case MediaSection.Regular
-                Return If(app.GetPeriod(disk, settings) = Period.Day, MediaSection.Alternate, MediaSection.Night)
+                Return If(app.GetPeriod(settings) = Period.Day, MediaSection.Alternate, MediaSection.Night)
             Case MediaSection.Alternate
-                Return If(app.GetPeriod(disk, settings) = Period.Day, MediaSection.Regular, MediaSection.Night)
+                Return If(app.GetPeriod(settings) = Period.Day, MediaSection.Regular, MediaSection.Night)
         End Select
         Return MediaSection.Night
     End Function

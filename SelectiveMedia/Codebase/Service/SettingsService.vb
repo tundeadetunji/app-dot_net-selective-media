@@ -15,8 +15,8 @@ Public Class SettingsService
     Private ReadOnly Property BeginTimeFile As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\BeginTime.txt"
     Private ReadOnly Property EndTimeFile As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\EndTime.txt"
     Private ReadOnly Property AnnounceFile As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\Announce.txt"
-    Private ReadOnly Property DayProgramsFile As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\DayPrograms.txt"
-    Private ReadOnly Property NightProgramsFile As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\NightPrograms.txt"
+    'Private ReadOnly Property DayProgramsFile As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\DayPrograms.txt"
+    'Private ReadOnly Property NightProgramsFile As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\NightPrograms.txt"
     Private ReadOnly Property NightMediaLocationFile As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\NightMediaLocation.txt"
     Private ReadOnly Property RegularMediaLocationFile As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\RegularMediaLocation.txt"
     Private ReadOnly Property AlternateMediaLocationFile As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\AlternateMediaLocation.txt"
@@ -46,14 +46,14 @@ Public Class SettingsService
 
         Return valid
     End Function
-    Public Sub SaveSettings(dialog As IDialogResource, app As AppService, disk As DiskService, history As HistoryService, settings As SettingsService, state As StateService)
+    Public Sub SaveSettings(dialog As IDialogResource, app As AppService, desktop As DesktopService, disk As DiskService, history As HistoryService, settings As SettingsService, state As StateService)
 
         'save settings
         SetBeginTime(dialog.GetBeginTime.Value.ToShortTimeString)
         SetEndTime(dialog.GetEndTime.Value.ToShortTimeString)
         SetAnnounce(dialog.GetAnnounceTextBox.Text)
-        SetDayPrograms(String.Empty)
-        SetNightPrograms(String.Empty)
+        'SetDayPrograms(String.Empty)
+        'SetNightPrograms(String.Empty)
         SetNightMediaLocation(dialog.GetNightMediaLocationTextBox.Text)
         SetRegularMediaLocation(dialog.GetRegularMediaLocationTextBox.Text)
         SetAlternateMediaLocation(dialog.GetAlternateMediaLocationTextBox.Text)
@@ -64,7 +64,7 @@ Public Class SettingsService
         SetStartWithPC(dialog.GetStartWithPCCheckBox.Checked)
 
         'load
-        app.Start(dialog, disk, history, settings, state)
+        app.Start(dialog, desktop, disk, history, settings, state)
     End Sub
 
     Public Function GetStartWithPC() As Boolean
@@ -101,23 +101,23 @@ Public Class SettingsService
         WriteText(AnnounceFile, announcement)
     End Sub
 
-    Public Function GetDayPrograms() As List(Of String)
-        Dim file_content As String = ReadText(DayProgramsFile)
-        Return If(String.IsNullOrEmpty(file_content), New List(Of String), file_content.StringToList)
-    End Function
+    'Public Function GetDayPrograms() As List(Of String)
+    '    Dim file_content As String = ReadText(DayProgramsFile)
+    '    Return If(String.IsNullOrEmpty(file_content), New List(Of String), file_content.StringToList)
+    'End Function
 
-    Public Sub SetDayPrograms(programs As String)
-        'Todo
-    End Sub
+    'Public Sub SetDayPrograms(programs As String)
+    '    'Todo
+    'End Sub
 
-    Public Function GetNightPrograms() As List(Of String)
-        Dim file_content As String = ReadText(NightProgramsFile)
-        Return If(String.IsNullOrEmpty(file_content), New List(Of String), file_content.StringToList)
-    End Function
+    'Public Function GetNightPrograms() As List(Of String)
+    '    Dim file_content As String = ReadText(NightProgramsFile)
+    '    Return If(String.IsNullOrEmpty(file_content), New List(Of String), file_content.StringToList)
+    'End Function
 
-    Public Sub SetNightPrograms(programs As String)
-        'Todo
-    End Sub
+    'Public Sub SetNightPrograms(programs As String)
+    '    'Todo
+    'End Sub
     Public Function GetNightMediaLocation() As String
         Return ReadText(NightMediaLocationFile)
     End Function

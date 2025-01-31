@@ -11,10 +11,10 @@ Public Class DiskService
 #End Region
 
 #Region "Properties"
-	Private Property _RegularFiles As List(Of String) = New List(Of String)
-	Private Property _AlternateFiles As List(Of String) = New List(Of String)
-	Private Property _NightFiles As List(Of String) = New List(Of String)
-	Private Property _Wallpapers As List(Of String) = New List(Of String)
+	Private Property RegularFiles_ As List(Of String) = New List(Of String)
+	Private Property AlternateFiles_ As List(Of String) = New List(Of String)
+	Private Property NightFiles_ As List(Of String) = New List(Of String)
+	Private Property Wallpapers_ As List(Of String) = New List(Of String)
 	Private ReadOnly Property RegularFilesCountFile As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\RegularFilesCount.txt"
 	Private ReadOnly Property AlternateFilesCountFile As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\AlternateFilesCount.txt"
 	Private ReadOnly Property NightFilesCountFile As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\NightFilesCount.txt"
@@ -23,32 +23,32 @@ Public Class DiskService
 #Region "Support"
 
 	Private Sub SetRegularFiles(settings As SettingsService)
-		_RegularFiles.Clear()
+		RegularFiles_.Clear()
 		Dim directory As String = settings.GetRegularMediaLocation()
 		For Each fileType As String In SupportedMediaFileTypes
 			Dim files = My.Computer.FileSystem.GetFiles(directory, FileIO.SearchOption.SearchAllSubDirectories, fileType)
 			If files.Count > 0 Then
-				_RegularFiles.AddRange(files)
+				RegularFiles_.AddRange(files)
 			End If
 		Next
 	End Sub
 	Private Sub SetAlternateFiles(settings As SettingsService)
-		_AlternateFiles.Clear()
+		AlternateFiles_.Clear()
 		Dim directory As String = settings.GetAlternateMediaLocation()
 		For Each fileType As String In SupportedMediaFileTypes
 			Dim files = My.Computer.FileSystem.GetFiles(directory, FileIO.SearchOption.SearchAllSubDirectories, fileType)
 			If files.Count > 0 Then
-				_AlternateFiles.AddRange(files)
+				AlternateFiles_.AddRange(files)
 			End If
 		Next
 	End Sub
 	Private Sub SetNightFiles(settings As SettingsService)
-		_NightFiles.Clear()
+		NightFiles_.Clear()
 		Dim directory As String = settings.GetNightMediaLocation()
 		For Each fileType As String In SupportedMediaFileTypes
 			Dim files = My.Computer.FileSystem.GetFiles(directory, FileIO.SearchOption.SearchAllSubDirectories, fileType)
 			If files.Count > 0 Then
-				_NightFiles.AddRange(files)
+				NightFiles_.AddRange(files)
 			End If
 		Next
 	End Sub
@@ -59,12 +59,12 @@ Public Class DiskService
 		SetNightFiles(settings)
 	End Sub
 	Private Sub SetWallpapers(settings As SettingsService)
-		_Wallpapers.Clear()
+		Wallpapers_.Clear()
 		Dim directory As String = settings.GetWallpapersLocation()
 		For Each FileType As String In SupportedImageFileTypes
 			Dim files = My.Computer.FileSystem.GetFiles(directory, FileIO.SearchOption.SearchAllSubDirectories, FileType)
 			If files.Count > 0 Then
-				_Wallpapers.AddRange(files)
+				Wallpapers_.AddRange(files)
 			End If
 		Next
 	End Sub
@@ -106,17 +106,17 @@ Public Class DiskService
 	End Function
 
 	Public Function GetWallpapers() As List(Of String)
-		Return _Wallpapers
+		Return Wallpapers_
 	End Function
 
 	Public Function GetFiles(section As MediaSection) As List(Of String)
 		Select Case section
 			Case MediaSection.Alternate
-				Return _AlternateFiles
+				Return AlternateFiles_
 			Case MediaSection.Regular
-				Return _RegularFiles
+				Return RegularFiles_
 			Case Else
-				Return _NightFiles
+				Return NightFiles_
 		End Select
 	End Function
 
@@ -125,9 +125,9 @@ Public Class DiskService
 		SetFiles(settings)
 		SetWallpapers(settings)
 
-		UpdateRegularFilesCount(_RegularFiles.Count)
-		UpdateAlternateFilesCount(_AlternateFiles.Count)
-		UpdateNightFilesCount(_NightFiles.Count)
+		UpdateRegularFilesCount(RegularFiles_.Count)
+		UpdateAlternateFilesCount(AlternateFiles_.Count)
+		UpdateNightFilesCount(NightFiles_.Count)
 	End Sub
 
 	Public Function GetRegularFilesCount() As Long
