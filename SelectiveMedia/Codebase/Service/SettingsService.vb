@@ -46,7 +46,7 @@ Public Class SettingsService
 
         Return valid
     End Function
-    Public Sub SaveSettings(dialog As IDialogResource, app As AppService, desktop As DesktopService, disk As DiskService, history As HistoryService, settings As SettingsService, state As StateService)
+    Public Sub SaveSettings(dialog As IDialogResource)
 
         'save settings
         SetBeginTime(dialog.GetBeginTime.Value.ToShortTimeString)
@@ -64,7 +64,7 @@ Public Class SettingsService
         SetStartWithPC(dialog.GetStartWithPCCheckBox.Checked)
 
         'load
-        app.Start(dialog, desktop, disk, history, settings, state)
+        'app.Start(dialog, desktop, disk, history, settings, state)
     End Sub
 
     Public Function GetStartWithPC() As Boolean

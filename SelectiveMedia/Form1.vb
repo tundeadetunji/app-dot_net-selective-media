@@ -105,7 +105,7 @@ Public Class Form1 : Implements IDialogResource
 #Region "Control Box Related"
 	Private Sub CloseDialogButton_Click(sender As Object, e As EventArgs) Handles CloseDialogButton.Click
 		If services.settings.Validated(Me) Then
-			services.settings.SaveSettings(Me, services.program, services.desktop, services.disk, services.history, services.settings, services.state)
+			services.settings.SaveSettings(Me)
 			services.ui.ShowOrHideInitiallyHiddenControls(Me, False)
 			FadeOutTimer.Enabled = True
 			services.program.Start(Me, services.desktop, services.disk, services.history, services.settings, services.state)
