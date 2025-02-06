@@ -169,6 +169,7 @@ Public Class Form1 : Implements IDialogResource
 			If services.settings.GetMode().EqualsIgnoreCase(Random) Then
 				MediaTimer.Interval = TwoMinutes
 			End If
+			MediaTimer.Enabled = True
 			Exit Sub
 		End If
 
@@ -247,4 +248,5 @@ Public Class Form1 : Implements IDialogResource
 	Private Sub StartWithPCCheckBox_CheckedChanged(sender As Object, e As EventArgs) Handles StartWithPCCheckBox.CheckedChanged
 		services.settings.SetStartWithPC(StartWithPCCheckBox.Checked)
 	End Sub
+
 End Class

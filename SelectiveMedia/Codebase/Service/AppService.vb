@@ -123,13 +123,6 @@ Public Class AppService
 			Return Period.Day
 		End If
 	End Function
-	'Public Function GetPeriod(disk As DiskService, settings As SettingsService) As Period
-	'	If Date.Parse(Now.ToShortTimeString) >= Date.Parse(settings.GetBeginTime()).ToShortTimeString And Date.Parse(Now.ToShortTimeString) <= Date.Parse(settings.GetEndTime()).ToShortTimeString Then
-	'		Return Period.Night
-	'	Else
-	'		Return Period.Day
-	'	End If
-	'End Function
 	'Public Sub PrepDay(desktop As DesktopService, disk As DiskService, settings As SettingsService)
 	'	Dim wallpapers As List(Of String) = disk.GetWallpapers
 	'	If wallpapers.Count > 0 Then
