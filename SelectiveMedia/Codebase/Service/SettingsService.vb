@@ -61,7 +61,7 @@ Public Class SettingsService
         SetProgramsFile(dialog.GetProgramsFileTextBox.Text)
         SetRate(dialog.GetRateDropDown.Text)
         SetMode(dialog.GetModeDropDown.Text)
-        SetStartWithPC(dialog.GetStartWithPCCheckBox.Checked)
+        SetStartWithPC(dialog.GetStartWithPCCheckBox.Checked, True)
 
         'load
         'app.Start(dialog, desktop, disk, history, settings, state)
@@ -71,9 +71,9 @@ Public Class SettingsService
         Return Boolean.Parse(ReadText(StartWithPCFile))
     End Function
 
-    Public Sub SetStartWithPC(state As Boolean)
+    Public Sub SetStartWithPC(state As Boolean, shouldUpdateRegistry As Boolean)
         WriteText(StartWithPCFile, state)
-        ToStartup(If(state, RegistryValue, RegistryValue.Replace(".exe", "")), RegistryKey)
+        If shouldUpdateRegistry Then ToStartup(If(state, RegistryValue, RegistryValue.Replace(".exe", "")), RegistryKey)
     End Sub
 
     Public Function GetBeginTime() As String

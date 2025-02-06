@@ -246,7 +246,7 @@ Public Class Form1 : Implements IDialogResource
 	End Sub
 
 	Private Sub StartWithPCCheckBox_CheckedChanged(sender As Object, e As EventArgs) Handles StartWithPCCheckBox.CheckedChanged
-		services.settings.SetStartWithPC(StartWithPCCheckBox.Checked)
+		services.settings.SetStartWithPC(StartWithPCCheckBox.Checked, False)
 	End Sub
 
 End Class
