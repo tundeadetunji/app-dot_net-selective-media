@@ -24,6 +24,7 @@ Public Class SettingsService
     Private ReadOnly Property ProgramsFile As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\Programs.txt"
     Private ReadOnly Property RateFile As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\Rate.txt"
     Private ReadOnly Property ModeFile As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\Mode.txt"
+    Private ReadOnly Property ChangeWallpaperFile As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\ChangeWallpaper.txt"
     Private ReadOnly Property StartWithPCFile As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\StartWithPC.txt"
 
 #End Region
@@ -62,11 +63,18 @@ Public Class SettingsService
         SetRate(dialog.GetRateDropDown.Text)
         SetMode(dialog.GetModeDropDown.Text)
         SetStartWithPC(dialog.GetStartWithPCCheckBox.Checked, True)
-
+        SetChangeWallpaper(dialog.GetChangeWallpaperCheckBox.Checked)
         'load
         'app.Start(dialog, desktop, disk, history, settings, state)
     End Sub
 
+    Public Function GetChangeWallpaper() As Boolean
+        Return Boolean.Parse(ReadText(ChangeWallpaperFile))
+    End Function
+
+    Public Sub SetChangeWallpaper(state As Boolean)
+        WriteText(ChangeWallpaperFile, state)
+    End Sub
     Public Function GetStartWithPC() As Boolean
         Return Boolean.Parse(ReadText(StartWithPCFile))
     End Function
@@ -179,6 +187,7 @@ Public Class SettingsService
         BindProperty(dialog.GetRateDropDown, GetEnum(New Rate))
         dialog.GetRateDropDown.Text = GetRate()
         dialog.GetStartWithPCCheckBox.Checked = GetStartWithPC()
+        dialog.GetChangeWallpaperCheckBox.Checked = GetChangeWallpaper()
     End Sub
 
 #End Region

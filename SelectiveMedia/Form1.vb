@@ -7,6 +7,9 @@ Imports iNovation.Code.GeneralExtensions
 Public Class Form1 : Implements IDialogResource
 
 #Region "Overrides"
+	Public Function GetChangeWallpaperCheckBox() As CheckBox Implements IDialogResource.GetChangeWallpaperCheckBox
+		Return ChangeWallpaperCheckBox
+	End Function
 
 	Public Function GetStartWithPCCheckBox() As CheckBox Implements IDialogResource.GetStartWithPCCheckBox
 		Return StartWithPCCheckBox

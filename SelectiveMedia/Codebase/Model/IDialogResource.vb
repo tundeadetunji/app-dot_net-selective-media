@@ -17,4 +17,5 @@
     Function GetNightTimer() As Timer
     Function GetCloseDialogButton() As Label
     Function GetStartWithPCCheckBox() As CheckBox
+    Function GetChangeWallpaperCheckBox() As CheckBox
 End Interface

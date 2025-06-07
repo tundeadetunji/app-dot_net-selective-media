@@ -58,6 +58,7 @@ Partial Class Form1
         Me.HelpIcon = New System.Windows.Forms.PictureBox()
         Me.RightBorder = New System.Windows.Forms.PictureBox()
         Me.StartWithPCCheckBox = New System.Windows.Forms.CheckBox()
+        Me.ChangeWallpaperCheckBox = New System.Windows.Forms.CheckBox()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.DialogContextMenuStrip.SuspendLayout()
         CType(Me.Divider, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -332,11 +333,22 @@ Partial Class Form1
         Me.StartWithPCCheckBox.Text = "Start with the PC"
         Me.StartWithPCCheckBox.UseVisualStyleBackColor = True
         '
+        'ChangeWallpaperCheckBox
+        '
+        Me.ChangeWallpaperCheckBox.AutoSize = True
+        Me.ChangeWallpaperCheckBox.Location = New System.Drawing.Point(15, 257)
+        Me.ChangeWallpaperCheckBox.Name = "ChangeWallpaperCheckBox"
+        Me.ChangeWallpaperCheckBox.Size = New System.Drawing.Size(159, 24)
+        Me.ChangeWallpaperCheckBox.TabIndex = 16779
+        Me.ChangeWallpaperCheckBox.Text = "Change Wallpaper"
+        Me.ChangeWallpaperCheckBox.UseVisualStyleBackColor = True
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(434, 630)
+        Me.Controls.Add(Me.ChangeWallpaperCheckBox)
         Me.Controls.Add(Me.StartWithPCCheckBox)
         Me.Controls.Add(Me.RightBorder)
         Me.Controls.Add(Me.Divider)
@@ -414,4 +426,5 @@ Partial Class Form1
     Friend WithEvents ToolStripMenuItem1 As ToolStripSeparator
     Friend WithEvents RightBorder As PictureBox
     Friend WithEvents StartWithPCCheckBox As CheckBox
+    Friend WithEvents ChangeWallpaperCheckBox As CheckBox
 End Class

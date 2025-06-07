@@ -86,7 +86,8 @@ Public Class AppService
 		Next
 		Return _NightFiles
 	End Function
-	Private Sub SetWallpaper(desktop As DesktopService, disk As DiskService)
+	Private Sub SetWallpaper(desktop As DesktopService, disk As DiskService, settings As SettingsService)
+		If Not settings.GetChangeWallpaper Then Return
 		Dim wallpapers As List(Of String) = disk.GetWallpapers
 		If wallpapers.Count > 0 Then
 			Dim wallpaper As String = wallpapers(Random_(0, wallpapers.Count))
@@ -103,7 +104,7 @@ Public Class AppService
 	Public Sub Start(dialog As IDialogResource, desktop As DesktopService, disk As DiskService, history As HistoryService, settings As SettingsService, state As StateService)
 		Recalibrate(dialog, disk, history, settings)
 		Load(disk, state, settings)
-		SetWallpaper(desktop, disk)
+		SetWallpaper(desktop, disk, settings)
 		dialog.GetMediaTimer.Enabled = True
 	End Sub
 

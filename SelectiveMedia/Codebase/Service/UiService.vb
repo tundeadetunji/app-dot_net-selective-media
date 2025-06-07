@@ -98,6 +98,7 @@ Public Class UiService
 		dialog.GetModeDropDown.Visible = visible
 		dialog.GetRateDropDown.Visible = visible
 		dialog.GetStartWithPCCheckBox.Visible = visible
+		dialog.GetChangeWallpaperCheckBox.Visible = visible
 	End Sub
 
 	Public Sub SetTextInputControlsReadOnly(dialog As IDialogResource, state As Boolean)
