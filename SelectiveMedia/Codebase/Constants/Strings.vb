@@ -1,5 +1,5 @@
 ﻿Imports System.Collections.ObjectModel
-Public Class Constants
+Public Class Strings
 
 #Region "Exported"
 	Public Const Random As String = "Random"
@@ -20,21 +20,13 @@ Public Class Constants
 	Public Const TenMinutes As Integer = 1000 * 10 * 60
 	Public Const FiveMinutes As Integer = 1000 * 5 * 60
 	Public Const ThreeMinutes As Integer = 1000 * 3 * 60
-	Public Shared SupportedMediaFileTypes As New List(Of String) From {
-		"*.avi", "*.mkv", "*.wmv", "*.mov", "*.mp4", "*.3gp", "*.3gpp", "*.flv", "*.mpg", "*.mpeg", "*.vob", "*.dat", "*.amv", "*.m4v", "*.webm", "*.mp3", "*.wav", "*.wma", "*.wpl"
-	}
-	Public Shared SupportedImageFileTypes As New List(Of String) From {
-		"*.jpg", "*.jpeg", "*.bmp, *.png"
-	}
+	Public Const Edit As String = "Edit"
+	Public Const Lock As String = "Lock"
+
 	Public Const RegistryKey As String = "Media"
 	Public Shared ReadOnly Property RegistryValue As String = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) & "\iNovation Digital Works\Media\" & My.Application.Info.AssemblyName & ".exe"
 
-	Public Shared ReadOnly Property HelpFile As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\SelectiveMediaHelp.html"
 
-	Public Const Edit As String = "Edit"
-	Public Const Lock As String = "Lock"
-	Public Shared ReadOnly Property EditIcon As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\EditIcon.png"
-	Public Shared ReadOnly Property LockIcon As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\LockIcon.png"
 
 #End Region
 

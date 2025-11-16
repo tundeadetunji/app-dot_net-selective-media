@@ -135,21 +135,33 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Codebase\Factory\InstanceFactory.vb" />
+    <Compile Include="Codebase\Constants\Colors.vb" />
+    <Compile Include="Codebase\Constants\Files.vb" />
+    <Compile Include="Codebase\Factory\ServiceFactory.vb" />
     <Compile Include="Codebase\Model\IDialogResource.vb" />
     <Compile Include="Codebase\Model\MediaSection.vb" />
     <Compile Include="Codebase\Model\Mode.vb" />
     <Compile Include="Codebase\Model\Period.vb" />
     <Compile Include="Codebase\Model\Rate.vb" />
-    <Compile Include="Codebase\Repository\Constants.vb" />
+    <Compile Include="Codebase\Constants\Lists.vb" />
+    <Compile Include="Codebase\Constants\Strings.vb" />
     <Compile Include="Codebase\Service\DiskService.vb" />
     <Compile Include="Codebase\Service\DesktopService.vb" />
     <Compile Include="Codebase\Service\HistoryService.vb" />
+    <Compile Include="Codebase\Service\IAppService.vb" />
+    <Compile Include="Codebase\Service\IDesktopService.vb" />
+    <Compile Include="Codebase\Service\IDiskService.vb" />
+    <Compile Include="Codebase\Service\IHistoryService.vb" />
+    <Compile Include="Codebase\Service\IMediaService.vb" />
+    <Compile Include="Codebase\Service\ISettingsService.vb" />
+    <Compile Include="Codebase\Service\IStateService.vb" />
+    <Compile Include="Codebase\Service\IUiService.vb" />
     <Compile Include="Codebase\Service\MediaService.vb" />
     <Compile Include="Codebase\Service\SettingsService.vb" />
     <Compile Include="Codebase\Service\AppService.vb" />
     <Compile Include="Codebase\Service\StateService.vb" />
     <Compile Include="Codebase\Service\UiService.vb" />
+    <Compile Include="Codebase\Utility\Logger.vb" />
     <Compile Include="Codebase\Utility\Support.vb" />
     <Compile Include="Form1.vb">
       <SubType>Form</SubType>

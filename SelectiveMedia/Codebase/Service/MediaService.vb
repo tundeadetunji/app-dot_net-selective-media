@@ -1,9 +1,11 @@
-﻿Imports SelectiveMedia.Constants
-Imports iNovation.Code.General
-Imports iNovation.Code.FeedbackExtensions
+﻿Imports System.Security
 Imports iNovation.Code.Desktop
-
+Imports iNovation.Code.FeedbackExtensions
+Imports iNovation.Code.General
+Imports SelectiveMedia.Strings
+Imports SelectiveMedia.Logger
 Public Class MediaService
+    Implements IMediaService
 
 #Region "Initialization"
     Public Shared ReadOnly Property Instance As MediaService = New MediaService
@@ -12,61 +14,138 @@ Public Class MediaService
     End Sub
 #End Region
 
-#Region "Support"
+#Region "Exported"
 
-    Private Function ChoseRandomFileToPlay(files As List(Of String), history As HistoryService, section As MediaSection, util As Support) As Long
-        Dim index As Long
-        Dim attempts As Long = 0
-        Dim totalFiles As Long = files.Count
+    Public Sub StartMedia(dialog As IDialogResource, app As IAppService, desktop As IDesktopService, disk As IDiskService, history As IHistoryService, settings As ISettingsService, state As IStateService) Implements IMediaService.StartMedia
+        Select Case settings.GetMode().Trim()
+            Case SequentialNight, SequentialRegular, SequentialAlternate
+                StartMediaSequential(state, disk, history, settings)
+            Case Random
+                StartMediaRandom(app, disk, settings, history, state)
+            Case Strings.App
+                desktop.StartTheApps(settings.GetProgramsFile())
+        End Select
 
-        If totalFiles = 0 Then
-            ' If there are no files, return 0
-            Return 0
+        SetTime(dialog, settings)
+    End Sub
+
+#End Region
+
+#Region "Intermediate"
+
+
+    Private Sub StartMediaRandom(app As IAppService, disk As IDiskService, settings As ISettingsService, history As IHistoryService, state As IStateService)
+        Dim current_section As MediaSection = state.CurrentSection
+        Dim next_section As MediaSection = state.NextSection(settings)
+        Dim folders As List(Of String) = disk.GetMediaFolders(next_section, settings)
+        'Debug.WriteLine("*** " & folders.Count)
+        If folders.Count < 1 Then Return
+        Dim selectedMediaFile As String = ChoseRandomFileToPlay(folders, disk, history, next_section)
+        state.UpdateCurrentSection(next_section)
+        history.AddFileToHistory(selectedMediaFile)
+        StartFile(selectedMediaFile)
+    End Sub
+
+    Private Sub StartMediaSequential(state As IStateService, disk As IDiskService, history As IHistoryService, settings As ISettingsService)
+
+        Dim files As List(Of String) = New List(Of String)
+        'Dim chosenSection As MediaSection = GetSectionFromMode(settings.GetMode())
+        Select Case GetSectionFromMode(settings.GetMode())
+            Case MediaSection.Regular
+                files = disk.GetMediaFiles(settings.GetRegularMediaLocation())
+            Case MediaSection.Alternate
+                files = disk.GetMediaFiles(settings.GetAlternateMediaLocation())
+            Case Else
+                files = disk.GetMediaFiles(settings.GetNightMediaLocation())
+        End Select
+
+        If files.Count < 1 Then Return
+        files.Sort()
+
+        Dim index As Long = state.IndexOfSequentialPlayback() + 1
+
+        If (index > files.Count - 1) Then
+            index = 0
         End If
 
-        Do
-            index = Random_(0, totalFiles) ' Get a random index
-            If Not history.FileAtThisIndexHasAlreadyPlayed(index, section, util) Then
-                Return index ' Return the index if it hasn't been played
-            End If
+        state.UpdateIndexOfSequentialPlayback(index)
 
-            attempts += 1
-            If attempts >= totalFiles Then
-                ' If all files have been played, clear history and return 0
-                history.ClearHistory(section)
-                Return 0
-            End If
-        Loop
+        If Not state.SequentialState Then
+            state.UpdateSequentialState(True)
+            settings.GetAnnounce().Inform
+        End If
 
+        Try
+            StartFile(files(index))
+        Catch ignored As Exception
+        End Try
+    End Sub
+
+#End Region
+
+#Region "Support"
+    Private Function ChoseRandomFileToPlay(folders As List(Of String), disk As IDiskService, history As IHistoryService, section As MediaSection) As String
+        Dim attempts As Integer = 0
+
+        ' Collect ALL media files across ALL folders
+        Dim mediaFiles As New List(Of String)
+        For Each folder In folders
+            mediaFiles.AddRange(disk.GetMediaFiles(folder))
+        Next
+
+        If mediaFiles.Count = 0 Then Return ""
+
+        ' Filter unplayed files first
+        Dim unplayed = mediaFiles.
+                   Select(Function(f) f.Trim()).
+                   Where(Function(f) Not history.ThisFileHasAlreadyPlayed(f)).
+                   ToList()
+
+        ' Case 1: There are unplayed files
+        If unplayed.Count > 0 Then
+            Return unplayed(Random_(0, unplayed.Count))
+        End If
+
+        ' Case 2: All files have been played → reset history and start fresh
+        history.ClearHistory()
+        Return mediaFiles(Random_(0, mediaFiles.Count))
     End Function
-    '    Private Function ChoseRandomFileToPlay(files As List(Of String), history As HistoryService, section As MediaSection) As Long
-    '        'Todo redo this function. Note that it seems the system is skipping some files
-    '        Dim index
-    '        Dim counter As Long = 0
-    '2:
-    '        'index = Random_(0, files.Count)
-    '        index = Random_(0, files.Count + 1)
-    '        If Not history.FileAtThisIndexHasAlreadyPlayed(index, section) Then
-    '            Return index
-    '        ElseIf counter = files.Count Then
-    '            history.ClearHistory(section)
-    '            counter = 0
-    '            GoTo 2
-    '        Else
-    '            counter += 1
-    '            GoTo 2
+
+
+    'Private Function ChoseRandomFileToPlay(folders As List(Of String), disk As IDiskService, history As IHistoryService, section As MediaSection) As String
+    '    Dim selectedFile As String
+    '    Dim attempts As Long = 0
+
+    '    If folders.Count = 0 Then
+    '        Return ""
+    '    End If
+
+    '    Dim selectedFolder As String = folders(Random_(0, folders.Count))
+
+    '    Dim mediaFiles As List(Of String) = disk.GetMediaFiles(selectedFolder)
+
+    '    If mediaFiles.Count = 0 Then Return ""
+
+    '    Do
+    '        selectedFile = mediaFiles(Random_(0, mediaFiles.Count)) ' Get a random index
+    '        Log("selectedFile: " & selectedFile)
+    '        Log("ThisFileHasAlreadyPlayed: " & history.ThisFileHasAlreadyPlayed(selectedFile))
+
+    '        If Not history.ThisFileHasAlreadyPlayed(selectedFile.Trim) Then
+    '            Return selectedFile
     '        End If
 
-    '    End Function
-    Private Function ChoseSequentialFileToPlay(files As List(Of String), history As HistoryService) As Long
-        If history.GetCurrentSequentialFileIndex > files.Count - 1 Then
-            Return 0
-        Else
-            Return history.GetCurrentSequentialFileIndex + 1
-        End If
+    '        attempts += 1
+    '        If attempts >= mediaFiles.Count Then
+    '            ' If all files have been played, clear history and return 0
+    '            history.ClearHistory()
+    '            Return mediaFiles(0)
+    '        End If
+    '    Loop
 
-    End Function
-    Private Sub SetTime(dialog As IDialogResource, settings As SettingsService)
+    'End Function
+
+    Private Sub SetTime(dialog As IDialogResource, settings As ISettingsService)
 
         Select Case settings.GetMode()
             Case SequentialNight, SequentialAlternate, SequentialRegular
@@ -85,52 +164,8 @@ Public Class MediaService
 
     End Sub
 
-#End Region
-
-#Region "Exported"
-
-    Public Sub StartMedia(dialog As IDialogResource, program As AppService, desktop As DesktopService, disk As DiskService, history As HistoryService, settings As SettingsService, state As StateService, util As Support)
-
-        Select Case settings.GetMode()
-            Case SequentialNight, SequentialRegular, SequentialAlternate
-                StartMediaSequential(state, disk, history, settings)
-            Case Random
-                StartMediaRandom(program, disk, settings, history, state, util)
-            Case App
-                desktop.StartTheApps(settings.GetProgramsFile())
-        End Select
-
-        SetTime(dialog, settings)
-    End Sub
-
-    Private Sub StartMediaRandom(app As AppService, disk As DiskService, settings As SettingsService, history As HistoryService, state As StateService, util As Support)
-        Dim current_section As MediaSection = state.CurrentSection
-        Dim next_section As MediaSection = state.NextSection(app, settings)
-        Dim files As List(Of String) = disk.GetFiles(next_section)
-        If files.Count < 1 Then Return
-        Dim index As Long = ChoseRandomFileToPlay(files, history, next_section, util)
-        state.UpdateCurrentSection(next_section)
-        history.AddIndexToHistory(index, current_section, util)
-        StartFile(files(index))
-    End Sub
-
-    Private Sub StartMediaSequential(state As StateService, disk As DiskService, history As HistoryService, settings As SettingsService)
-
-        Dim chosenSection As MediaSection = GetSectionFrom(settings)
-        Dim files As List(Of String) = disk.GetFiles(chosenSection)
-        If files.Count < 1 Then Return
-        Dim index As Long = ChoseSequentialFileToPlay(files, history)
-        history.UpdateIndexOfSequentialPlayback(index)
-
-        If Not state.SequentialState Then
-            state.UpdateSequentialState(True)
-            settings.GetAnnounce().Inform
-        End If
-        StartFile(files(index))
-    End Sub
-
-    Private Function GetSectionFrom(settings As SettingsService) As MediaSection
-        Select Case settings.GetMode.ToLower
+    Private Function GetSectionFromMode(modeValue As String) As MediaSection
+        Select Case modeValue.ToLower
             Case SequentialRegular.ToLower
                 Return MediaSection.Regular
             Case SequentialAlternate.ToLower
@@ -141,5 +176,6 @@ Public Class MediaService
     End Function
 
 #End Region
+
 
 End Class

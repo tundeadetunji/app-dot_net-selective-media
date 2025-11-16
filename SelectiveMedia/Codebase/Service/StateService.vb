@@ -1,5 +1,6 @@
-﻿Imports SelectiveMedia.Constants
+﻿Imports SelectiveMedia.Strings
 Public Class StateService
+    Implements IStateService
 
 #Region "Initialization"
     Public Shared ReadOnly Property Instance(SequentialState As Boolean, CurrentSection As MediaSection) As StateService
@@ -9,38 +10,59 @@ Public Class StateService
     End Property
 
     Private Sub New(SequentialState As Boolean, CurrentSection As MediaSection)
-        Me.SequentialState = SequentialState
-        Me.CurrentSection = CurrentSection
+        Me._SequentialState = SequentialState
+        Me._CurrentSection = CurrentSection
     End Sub
 
 #End Region
 
 #Region "Properties"
-    Public Property SequentialState As Boolean
-    Public Property CurrentSection As MediaSection
-#End Region
-
-#Region "Support"
+    Private Property _SequentialState As Boolean
+    Private Property _CurrentSection As MediaSection
+    Private Property _IndexOfSequentialPlayback As Long = 0L
 #End Region
 
 #Region "Exported"
-    Public Function UpdateSequentialState(SequentialState As Boolean) As Boolean
-        Me.SequentialState = SequentialState
-        Return Me.SequentialState
+    Public Function IndexOfSequentialPlayback() As Long Implements IStateService.IndexOfSequentialPlayback
+        Return _IndexOfSequentialPlayback
     End Function
 
-    Public Function UpdateCurrentSection(CurrentSection As MediaSection) As MediaSection
-        Me.CurrentSection = CurrentSection
-        Return Me.CurrentSection
+    Public Sub UpdateIndexOfSequentialPlayback(value As Long) Implements IStateService.UpdateIndexOfSequentialPlayback
+        _IndexOfSequentialPlayback = value
+    End Sub
+
+    Public Function SequentialState() As Boolean Implements IStateService.SequentialState
+        Return _SequentialState
     End Function
-    Public Function NextSection(app As AppService, settings As SettingsService) As MediaSection
-        Select Case Me.CurrentSection
-            Case MediaSection.Regular
-                Return If(app.GetPeriod(settings) = Period.Day, MediaSection.Alternate, MediaSection.Night)
-            Case MediaSection.Alternate
-                Return If(app.GetPeriod(settings) = Period.Day, MediaSection.Regular, MediaSection.Night)
-        End Select
+
+    Public Function CurrentSection() As MediaSection Implements IStateService.CurrentSection
+        Return _CurrentSection
+    End Function
+
+    Public Sub UpdateSequentialState(SequentialState As Boolean) Implements IStateService.UpdateSequentialState
+
+        _SequentialState = SequentialState
+        'Return Me.SequentialState
+    End Sub
+
+    Public Sub UpdateCurrentSection(CurrentSection As MediaSection) Implements IStateService.UpdateCurrentSection
+
+        _CurrentSection = CurrentSection
+        'Return Me.CurrentSection
+    End Sub
+    Public Function NextSection(settings As SettingsService) As MediaSection Implements IStateService.NextSection
+        If Support.GetPeriod(settings) = Period.Day Then
+            Return If(CurrentSection() = MediaSection.Regular, MediaSection.Alternate, MediaSection.Regular)
+        End If
         Return MediaSection.Night
+
+        'Select Case CurrentSection
+        '    Case MediaSection.Regular
+        '        Return If(Support.GetPeriod(settings) = Period.Day, MediaSection.Alternate, MediaSection.Night)
+        '    Case MediaSection.Alternate
+        '        Return If(Support.GetPeriod(settings) = Period.Day, MediaSection.Regular, MediaSection.Night)
+        'End Select
+        'Return MediaSection.Night
     End Function
 
 

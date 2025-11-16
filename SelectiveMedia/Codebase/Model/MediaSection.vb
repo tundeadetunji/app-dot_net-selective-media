@@ -1,5 +1,5 @@
 ﻿Public Enum MediaSection
-    Night = 1
-    Regular = 2
-    Alternate = 3
+    Regular = 1
+    Alternate = 2
+    Night = 3
 End Enum

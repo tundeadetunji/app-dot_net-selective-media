@@ -1,11 +1,13 @@
 ﻿Imports iNovation.Code.General
 Imports iNovation.Code.Desktop
 Imports iNovation.Code.GeneralExtensions
-Imports SelectiveMedia.Constants
+Imports SelectiveMedia.Strings
 Public Class SettingsService
+    Implements ISettingsService
 
 #Region "Initialization"
     Public Shared ReadOnly Property Instance As SettingsService = New SettingsService
+
     Private Sub New()
 
     End Sub
@@ -34,7 +36,9 @@ Public Class SettingsService
     ''' All files are in place and locations are valid
     ''' </summary>
     ''' <returns></returns>
-    Public Function Validated(dialog As IDialogResource) As Boolean
+    Public Function Validated(dialog As IDialogResource) As Boolean Implements ISettingsService.Validated
+
+
         Dim valid As Boolean = True
 
         If Not IO.Directory.Exists(dialog.GetNightMediaLocationTextBox.Text) Then valid = False
@@ -47,7 +51,7 @@ Public Class SettingsService
 
         Return valid
     End Function
-    Public Sub SaveSettings(dialog As IDialogResource)
+    Public Sub SaveSettings(dialog As IDialogResource) Implements ISettingsService.SaveSettings
 
         'save settings
         SetBeginTime(dialog.GetBeginTime.Value.ToShortTimeString)
@@ -62,118 +66,101 @@ Public Class SettingsService
         SetProgramsFile(dialog.GetProgramsFileTextBox.Text)
         SetRate(dialog.GetRateDropDown.Text)
         SetMode(dialog.GetModeDropDown.Text)
-        SetStartWithPC(dialog.GetStartWithPCCheckBox.Checked, True)
-        SetChangeWallpaper(dialog.GetChangeWallpaperCheckBox.Checked)
+        SetShouldStartWithPC(dialog.GetStartWithPCCheckBox.Checked, True)
+        SetShouldChangeWallpaper(dialog.GetChangeWallpaperCheckBox.Checked)
         'load
         'app.Start(dialog, desktop, disk, history, settings, state)
     End Sub
 
-    Public Function GetChangeWallpaper() As Boolean
+    Public Function ShouldChangeWallpaper() As Boolean Implements ISettingsService.ShouldChangeWallpaper
         Return Boolean.Parse(ReadText(ChangeWallpaperFile))
     End Function
 
-    Public Sub SetChangeWallpaper(state As Boolean)
+    Public Sub SetShouldChangeWallpaper(state As Boolean) Implements ISettingsService.SetShouldChangeWallpaper
         WriteText(ChangeWallpaperFile, state)
     End Sub
-    Public Function GetStartWithPC() As Boolean
+    Public Function ShouldStartWithPC() As Boolean Implements ISettingsService.ShouldStartWithPC
         Return Boolean.Parse(ReadText(StartWithPCFile))
     End Function
 
-    Public Sub SetStartWithPC(state As Boolean, shouldUpdateRegistry As Boolean)
+    Public Sub SetShouldStartWithPC(state As Boolean, shouldUpdateRegistry As Boolean) Implements ISettingsService.SetShouldStartWithPC
         WriteText(StartWithPCFile, state)
         If shouldUpdateRegistry Then ToStartup(If(state, RegistryValue, RegistryValue.Replace(".exe", "")), RegistryKey)
     End Sub
 
-    Public Function GetBeginTime() As String
+    Public Function GetBeginTime() As String Implements ISettingsService.GetBeginTime
         Dim b_time_f As String = ReadText(BeginTimeFile)
         Return If(Not String.IsNullOrEmpty(b_time_f), b_time_f, "12:00 AM")
     End Function
 
-    Public Sub SetBeginTime(begin_time As String)
+    Public Sub SetBeginTime(begin_time As String) Implements ISettingsService.SetBeginTime
         WriteText(BeginTimeFile, begin_time)
     End Sub
 
-    Public Function GetEndTime() As String
+    Public Function GetEndTime() As String Implements ISettingsService.GetEndTime
         Dim e_time_f As String = ReadText(EndTimeFile)
         Return If(Not String.IsNullOrEmpty(e_time_f), e_time_f, "6:00 AM")
     End Function
 
-    Public Sub SetEndTime(end_time As String)
+    Public Sub SetEndTime(end_time As String) Implements ISettingsService.SetEndTime
         WriteText(EndTimeFile, end_time)
     End Sub
 
-    Public Function GetAnnounce() As String
+    Public Function GetAnnounce() As String Implements ISettingsService.GetAnnounce
         Return ReadText(AnnounceFile)
     End Function
-    Public Sub SetAnnounce(announcement As String)
+    Public Sub SetAnnounce(announcement As String) Implements ISettingsService.SetAnnounce
         WriteText(AnnounceFile, announcement)
     End Sub
 
-    'Public Function GetDayPrograms() As List(Of String)
-    '    Dim file_content As String = ReadText(DayProgramsFile)
-    '    Return If(String.IsNullOrEmpty(file_content), New List(Of String), file_content.StringToList)
-    'End Function
-
-    'Public Sub SetDayPrograms(programs As String)
-    '    'Todo
-    'End Sub
-
-    'Public Function GetNightPrograms() As List(Of String)
-    '    Dim file_content As String = ReadText(NightProgramsFile)
-    '    Return If(String.IsNullOrEmpty(file_content), New List(Of String), file_content.StringToList)
-    'End Function
-
-    'Public Sub SetNightPrograms(programs As String)
-    '    'Todo
-    'End Sub
-    Public Function GetNightMediaLocation() As String
+    Public Function GetNightMediaLocation() As String Implements ISettingsService.GetNightMediaLocation
         Return ReadText(NightMediaLocationFile)
     End Function
-    Public Sub SetNightMediaLocation(location As String)
+    Public Sub SetNightMediaLocation(location As String) Implements ISettingsService.SetNightMediaLocation
         WriteText(NightMediaLocationFile, location)
     End Sub
 
-    Public Function GetRegularMediaLocation() As String
+    Public Function GetRegularMediaLocation() As String Implements ISettingsService.GetRegularMediaLocation
         Return ReadText(RegularMediaLocationFile)
     End Function
-    Public Sub SetRegularMediaLocation(location As String)
+    Public Sub SetRegularMediaLocation(location As String) Implements ISettingsService.SetRegularMediaLocation
         WriteText(RegularMediaLocationFile, location)
     End Sub
-    Public Function GetAlternateMediaLocation() As String
+    Public Function GetAlternateMediaLocation() As String Implements ISettingsService.GetAlternateMediaLocation
         Return ReadText(AlternateMediaLocationFile)
     End Function
-    Public Sub SetAlternateMediaLocation(location As String)
+    Public Sub SetAlternateMediaLocation(location As String) Implements ISettingsService.SetAlternateMediaLocation
         WriteText(AlternateMediaLocationFile, location)
     End Sub
-    Public Function GetWallpapersLocation() As String
+    Public Function GetWallpapersLocation() As String Implements ISettingsService.GetWallpapersLocation
         Return ReadText(WallpapersLocationFile)
     End Function
-    Public Sub SetWallpapersLocation(location As String)
+    Public Sub SetWallpapersLocation(location As String) Implements ISettingsService.SetWallpapersLocation
         WriteText(WallpapersLocationFile, location)
     End Sub
-    Public Function GetProgramsFile() As String
+    Public Function GetProgramsFile() As String Implements ISettingsService.GetProgramsFile
         Return ReadText(ProgramsFile)
     End Function
 
-    Public Sub SetProgramsFile(value As String)
+    Public Sub SetProgramsFile(value As String) Implements ISettingsService.SetProgramsFile
         WriteText(ProgramsFile, value)
     End Sub
-    Public Function GetRate() As String
+    Public Function GetRate() As String Implements ISettingsService.GetRate
         Return ReadText(RateFile)
     End Function
 
-    Public Sub SetRate(_rate As String)
+    Public Sub SetRate(_rate As String) Implements ISettingsService.SetRate
         WriteText(RateFile, _rate)
     End Sub
-    Public Function GetMode() As String
+    Public Function GetMode() As String Implements ISettingsService.GetMode
         Return ReadText(ModeFile)
     End Function
 
-    Public Sub SetMode(_mode As String)
+    Public Sub SetMode(_mode As String) Implements ISettingsService.SetMode
         WriteText(ModeFile, _mode)
     End Sub
 
-    Friend Sub RestoreSettings(dialog As IDialogResource)
+    Public Sub RestoreSettings(dialog As IDialogResource) Implements ISettingsService.RestoreSettings
         dialog.GetNightMediaLocationTextBox.Text = GetNightMediaLocation()
         dialog.GetRegularMediaLocationTextBox.Text = GetRegularMediaLocation()
         dialog.GetAlternateMediaLocationTextBox.Text = GetAlternateMediaLocation()
@@ -186,8 +173,8 @@ Public Class SettingsService
         dialog.GetModeDropDown.Text = GetMode()
         BindProperty(dialog.GetRateDropDown, GetEnum(New Rate))
         dialog.GetRateDropDown.Text = GetRate()
-        dialog.GetStartWithPCCheckBox.Checked = GetStartWithPC()
-        dialog.GetChangeWallpaperCheckBox.Checked = GetChangeWallpaper()
+        dialog.GetStartWithPCCheckBox.Checked = ShouldStartWithPC()
+        dialog.GetChangeWallpaperCheckBox.Checked = ShouldChangeWallpaper()
     End Sub
 
 #End Region
