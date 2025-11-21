@@ -3,7 +3,7 @@ Imports iNovation.Code.Desktop
 Imports iNovation.Code.FeedbackExtensions
 Imports iNovation.Code.General
 Imports SelectiveMedia.Strings
-Imports SelectiveMedia.Logger
+Imports SelectiveMedia.FileLogger
 Public Class MediaService
     Implements IMediaService
 

@@ -1,8 +1,10 @@
-﻿Imports iNovation.Code.General
-Imports iNovation.Code.GeneralExtensions
+﻿Imports iNovation.Code
 Imports iNovation.Code.Desktop
+Imports iNovation.Code.General
+Imports iNovation.Code.GeneralExtensions
+Imports iNovation.Variant
 Imports SelectiveMedia.Strings
-Imports iNovation.Code
+'Imports iNovation.Variant
 Public Class AppService
     Implements IAppService
 
@@ -11,6 +13,11 @@ Public Class AppService
     Private Sub New()
 
     End Sub
+
+#End Region
+
+#Region "Properties"
+    Private ReadOnly Property Logger As Logger(Of LogEntry) = FileLogger.Create(Files.LogFile)
 
 #End Region
 
@@ -24,35 +31,45 @@ Public Class AppService
 
     Private Sub Recalibrate(dialog As IDialogResource, disk As IDiskService, history As IHistoryService, settings As ISettingsService)
 
+        Dim Reason As String = ""
+
         Dim shouldClearHistory As Boolean = False
+
         If Not dialog.GetNightMediaLocationTextBox.Text.EqualsIgnoreCase(settings.GetNightMediaLocation) Then
+            Reason = "User changed NightMediaLocation"
             shouldClearHistory = True
         End If
 
         Dim NightFileCount = disk.FileCount(MediaSection.Night, settings)
         If NightFileCount <> disk.RecordedFileCount(MediaSection.Night) Then
+            Reason = "User added or removed media files from NightMediaLocation"
             shouldClearHistory = True
         End If
 
         If Not dialog.GetRegularMediaLocationTextBox.Text.EqualsIgnoreCase(settings.GetRegularMediaLocation) Then
+            Reason = "User changed RegularMediaLocation"
             shouldClearHistory = True
         End If
 
         Dim RegularFileCount = disk.FileCount(MediaSection.Regular, settings)
         If RegularFileCount <> disk.RecordedFileCount(MediaSection.Regular) Then
+            Reason = "User added or removed media files from RegularMediaLocation"
             shouldClearHistory = True
         End If
 
         If Not dialog.GetAlternateMediaLocationTextBox.Text.EqualsIgnoreCase(settings.GetAlternateMediaLocation) Then
+            Reason = "User changed AlternateMediaLocation"
             shouldClearHistory = True
         End If
 
         Dim AlternateFileCount = disk.FileCount(MediaSection.Alternate, settings)
         If AlternateFileCount <> disk.RecordedFileCount(MediaSection.Alternate) Then
+            Reason = "User added or removed media files from AlternateMediaLocation"
             shouldClearHistory = True
         End If
 
         If shouldClearHistory Then
+            Logger.Log(LogEntry.Create(LogEvent.ClearHistory.ToString, Reason))
             history.ClearHistory()
             disk.RecordFileCount(MediaSection.Regular, RegularFileCount)
             disk.RecordFileCount(MediaSection.Alternate, AlternateFileCount)

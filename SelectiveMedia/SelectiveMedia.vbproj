@@ -11,7 +11,7 @@
     <AssemblyName>Selective Media</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <TargetFrameworkProfile />
@@ -120,6 +120,9 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="Variants">
+      <HintPath>..\..\..\Running\Variants\Variants\bin\Debug\Variants.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -139,6 +142,9 @@
     <Compile Include="Codebase\Constants\Files.vb" />
     <Compile Include="Codebase\Factory\ServiceFactory.vb" />
     <Compile Include="Codebase\Model\IDialogResource.vb" />
+    <Compile Include="Codebase\Model\LogEvent.vb" />
+    <Compile Include="Codebase\Model\Logger\LogEntry.vb" />
+    <Compile Include="Codebase\Model\Logger\FileLogger.vb" />
     <Compile Include="Codebase\Model\MediaSection.vb" />
     <Compile Include="Codebase\Model\Mode.vb" />
     <Compile Include="Codebase\Model\Period.vb" />
@@ -161,7 +167,6 @@
     <Compile Include="Codebase\Service\AppService.vb" />
     <Compile Include="Codebase\Service\StateService.vb" />
     <Compile Include="Codebase\Service\UiService.vb" />
-    <Compile Include="Codebase\Utility\Logger.vb" />
     <Compile Include="Codebase\Utility\Support.vb" />
     <Compile Include="Form1.vb">
       <SubType>Form</SubType>

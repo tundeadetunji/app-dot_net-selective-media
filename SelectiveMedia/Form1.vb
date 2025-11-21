@@ -5,7 +5,7 @@ Imports System.Collections.ObjectModel
 Imports SelectiveMedia.Strings
 Imports iNovation.Code.GeneralExtensions
 Imports SelectiveMedia.Files
-
+Imports iNovation.Variant
 Public Class Form1 : Implements IDialogResource
 
 #Region "Overrides"

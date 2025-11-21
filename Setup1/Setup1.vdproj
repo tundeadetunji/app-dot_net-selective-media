@@ -303,6 +303,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_3D9AB03A53104F98A09ADE67F0EDCEDF"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_3D9FB72BB89B4DDABB33888E3AAFAA1A"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -3534,6 +3540,26 @@
             {
             "SourcePath" = "8:..\\InstallationFiles\\AppData\\iNovation Digital Works\\Media\\AlternateMediaLocation.txt"
             "TargetName" = "8:AlternateMediaLocation.txt"
+            "Tag" = "8:"
+            "Folder" = "8:_3AD23516DEDC444FA6E8698598831C14"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_3D9AB03A53104F98A09ADE67F0EDCEDF"
+            {
+            "SourcePath" = "8:..\\InstallationFiles\\AppData\\iNovation Digital Works\\Media\\LogFile.txt"
+            "TargetName" = "8:LogFile.txt"
             "Tag" = "8:"
             "Folder" = "8:_3AD23516DEDC444FA6E8698598831C14"
             "Condition" = "8:"
