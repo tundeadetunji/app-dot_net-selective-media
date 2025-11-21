@@ -6,6 +6,7 @@ Public Class FileLogger
     Implements Logger(Of LogEntry)
 
     Private ReadOnly Property LogFile As String
+    Private Shared ReadOnly logLock As New Object()
     Private Sub New(LogFile As String)
         Me.LogFile = LogFile
     End Sub
@@ -13,11 +14,9 @@ Public Class FileLogger
         Return New FileLogger(LogFile)
     End Function
 
-    Private Sub Logger_Log(Entry As LogEntry) Implements Logger(Of LogEntry).Log
-        Dim savedEntries As String = ReadText(LogFile)
-        Dim Entries As HashSet(Of LogEntry) = If(String.IsNullOrEmpty(savedEntries), New HashSet(Of LogEntry), New HashSet(Of LogEntry)(JsonConvert.DeserializeObject(Of List(Of LogEntry))(savedEntries)))
-        Entries.Add(Entry)
-        Dim EntriesAsList As List(Of LogEntry) = New List(Of LogEntry)(Entries)
-        WriteText(LogFile, JsonConvert.SerializeObject(New List(Of LogEntry)(Entries)))
+    Private Sub Log(Entry As LogEntry) Implements Logger(Of LogEntry).Log
+        SyncLock logLock
+            WriteText(LogFile, JsonConvert.SerializeObject(Entry) & Environment.NewLine)
+        End SyncLock
     End Sub
 End Class
