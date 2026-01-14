@@ -133,6 +133,26 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
+        Friend ReadOnly Property Google_Noto_Emoji_Objects_62931_pushpin() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Google-Noto-Emoji-Objects-62931-pushpin", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property Google_Noto_Emoji_Objects_62931_pushpin_1024() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Google-Noto-Emoji-Objects-62931-pushpin.1024", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
         Friend ReadOnly Property Icons_Land_Medical_Documents_CardiacMonitor_256() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Icons-Land-Medical-Documents-CardiacMonitor.256", resourceCulture)

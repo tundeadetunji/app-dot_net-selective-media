@@ -36,6 +36,8 @@ Partial Class Form1
         Me.NightTimer = New System.Windows.Forms.Timer(Me.components)
         Me.NotifyIcon1 = New System.Windows.Forms.NotifyIcon(Me.components)
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.PinMediaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripSeparator()
         Me.ShowToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem21 = New System.Windows.Forms.ToolStripSeparator()
         Me.AllAppsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -51,22 +53,22 @@ Partial Class Form1
         Me.EditToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
         Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.StartWithPCCheckBox = New System.Windows.Forms.CheckBox()
+        Me.ChangeWallpaperCheckBox = New System.Windows.Forms.CheckBox()
+        Me.RightBorder = New System.Windows.Forms.PictureBox()
         Me.Divider = New System.Windows.Forms.PictureBox()
         Me.LeftBorder = New System.Windows.Forms.PictureBox()
         Me.BottomBorder = New System.Windows.Forms.PictureBox()
         Me.TopBorder = New System.Windows.Forms.PictureBox()
         Me.HelpIcon = New System.Windows.Forms.PictureBox()
-        Me.RightBorder = New System.Windows.Forms.PictureBox()
-        Me.StartWithPCCheckBox = New System.Windows.Forms.CheckBox()
-        Me.ChangeWallpaperCheckBox = New System.Windows.Forms.CheckBox()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.DialogContextMenuStrip.SuspendLayout()
+        CType(Me.RightBorder, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Divider, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.LeftBorder, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.BottomBorder, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.TopBorder, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.HelpIcon, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.RightBorder, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'DialogTitle
@@ -157,27 +159,41 @@ Partial Class Form1
         'ContextMenuStrip1
         '
         Me.ContextMenuStrip1.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ShowToolStripMenuItem, Me.ToolStripMenuItem21, Me.AllAppsToolStripMenuItem})
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PinMediaToolStripMenuItem, Me.ToolStripMenuItem2, Me.ShowToolStripMenuItem, Me.ToolStripMenuItem21, Me.AllAppsToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(180, 58)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(181, 110)
+        '
+        'PinMediaToolStripMenuItem
+        '
+        Me.PinMediaToolStripMenuItem.Image = Global.SelectiveMedia.My.Resources.Resources.Google_Noto_Emoji_Objects_62931_pushpin_1024
+        Me.PinMediaToolStripMenuItem.Name = "PinMediaToolStripMenuItem"
+        Me.PinMediaToolStripMenuItem.Size = New System.Drawing.Size(180, 24)
+        Me.PinMediaToolStripMenuItem.Text = "Pin Media"
+        Me.PinMediaToolStripMenuItem.Visible = False
+        '
+        'ToolStripMenuItem2
+        '
+        Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
+        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(177, 6)
+        Me.ToolStripMenuItem2.Visible = False
         '
         'ShowToolStripMenuItem
         '
         Me.ShowToolStripMenuItem.Image = Global.SelectiveMedia.My.Resources.Resources.Gartoon_Team_Gartoon_Places_User_home_1024
         Me.ShowToolStripMenuItem.Name = "ShowToolStripMenuItem"
-        Me.ShowToolStripMenuItem.Size = New System.Drawing.Size(179, 24)
+        Me.ShowToolStripMenuItem.Size = New System.Drawing.Size(180, 24)
         Me.ShowToolStripMenuItem.Text = "Show"
         '
         'ToolStripMenuItem21
         '
         Me.ToolStripMenuItem21.Name = "ToolStripMenuItem21"
-        Me.ToolStripMenuItem21.Size = New System.Drawing.Size(176, 6)
+        Me.ToolStripMenuItem21.Size = New System.Drawing.Size(177, 6)
         '
         'AllAppsToolStripMenuItem
         '
         Me.AllAppsToolStripMenuItem.Image = Global.SelectiveMedia.My.Resources.Resources.ICS_client
         Me.AllAppsToolStripMenuItem.Name = "AllAppsToolStripMenuItem"
-        Me.AllAppsToolStripMenuItem.Size = New System.Drawing.Size(179, 24)
+        Me.AllAppsToolStripMenuItem.Size = New System.Drawing.Size(180, 24)
         Me.AllAppsToolStripMenuItem.Text = "Task Manager"
         '
         'FadeOutTimer
@@ -264,6 +280,35 @@ Partial Class Form1
         Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(106, 24)
         Me.ExitToolStripMenuItem.Text = "Exit"
         '
+        'StartWithPCCheckBox
+        '
+        Me.StartWithPCCheckBox.AutoSize = True
+        Me.StartWithPCCheckBox.Location = New System.Drawing.Point(14, 420)
+        Me.StartWithPCCheckBox.Name = "StartWithPCCheckBox"
+        Me.StartWithPCCheckBox.Size = New System.Drawing.Size(147, 24)
+        Me.StartWithPCCheckBox.TabIndex = 10
+        Me.StartWithPCCheckBox.Text = "Start with the PC"
+        Me.StartWithPCCheckBox.UseVisualStyleBackColor = True
+        '
+        'ChangeWallpaperCheckBox
+        '
+        Me.ChangeWallpaperCheckBox.AutoSize = True
+        Me.ChangeWallpaperCheckBox.Location = New System.Drawing.Point(15, 257)
+        Me.ChangeWallpaperCheckBox.Name = "ChangeWallpaperCheckBox"
+        Me.ChangeWallpaperCheckBox.Size = New System.Drawing.Size(159, 24)
+        Me.ChangeWallpaperCheckBox.TabIndex = 16779
+        Me.ChangeWallpaperCheckBox.Text = "Change Wallpaper"
+        Me.ChangeWallpaperCheckBox.UseVisualStyleBackColor = True
+        '
+        'RightBorder
+        '
+        Me.RightBorder.BackColor = System.Drawing.Color.Black
+        Me.RightBorder.Location = New System.Drawing.Point(433, 0)
+        Me.RightBorder.Name = "RightBorder"
+        Me.RightBorder.Size = New System.Drawing.Size(1, 630)
+        Me.RightBorder.TabIndex = 16778
+        Me.RightBorder.TabStop = False
+        '
         'Divider
         '
         Me.Divider.BackColor = System.Drawing.Color.Black
@@ -314,35 +359,6 @@ Partial Class Form1
         Me.HelpIcon.TabIndex = 16771
         Me.HelpIcon.TabStop = False
         '
-        'RightBorder
-        '
-        Me.RightBorder.BackColor = System.Drawing.Color.Black
-        Me.RightBorder.Location = New System.Drawing.Point(433, 0)
-        Me.RightBorder.Name = "RightBorder"
-        Me.RightBorder.Size = New System.Drawing.Size(1, 630)
-        Me.RightBorder.TabIndex = 16778
-        Me.RightBorder.TabStop = False
-        '
-        'StartWithPCCheckBox
-        '
-        Me.StartWithPCCheckBox.AutoSize = True
-        Me.StartWithPCCheckBox.Location = New System.Drawing.Point(14, 420)
-        Me.StartWithPCCheckBox.Name = "StartWithPCCheckBox"
-        Me.StartWithPCCheckBox.Size = New System.Drawing.Size(147, 24)
-        Me.StartWithPCCheckBox.TabIndex = 10
-        Me.StartWithPCCheckBox.Text = "Start with the PC"
-        Me.StartWithPCCheckBox.UseVisualStyleBackColor = True
-        '
-        'ChangeWallpaperCheckBox
-        '
-        Me.ChangeWallpaperCheckBox.AutoSize = True
-        Me.ChangeWallpaperCheckBox.Location = New System.Drawing.Point(15, 257)
-        Me.ChangeWallpaperCheckBox.Name = "ChangeWallpaperCheckBox"
-        Me.ChangeWallpaperCheckBox.Size = New System.Drawing.Size(159, 24)
-        Me.ChangeWallpaperCheckBox.TabIndex = 16779
-        Me.ChangeWallpaperCheckBox.Text = "Change Wallpaper"
-        Me.ChangeWallpaperCheckBox.UseVisualStyleBackColor = True
-        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
@@ -382,12 +398,12 @@ Partial Class Form1
         Me.TopMost = True
         Me.ContextMenuStrip1.ResumeLayout(False)
         Me.DialogContextMenuStrip.ResumeLayout(False)
+        CType(Me.RightBorder, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Divider, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.LeftBorder, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.BottomBorder, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.TopBorder, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.HelpIcon, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.RightBorder, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -427,4 +443,6 @@ Partial Class Form1
     Friend WithEvents RightBorder As PictureBox
     Friend WithEvents StartWithPCCheckBox As CheckBox
     Friend WithEvents ChangeWallpaperCheckBox As CheckBox
+    Friend WithEvents PinMediaToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem2 As ToolStripSeparator
 End Class

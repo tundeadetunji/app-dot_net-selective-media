@@ -6,5 +6,6 @@
     Public Shared ReadOnly Property EditIcon As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\EditIcon.png"
     Public Shared ReadOnly Property LockIcon As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\LockIcon.png"
 
+
 #End Region
 End Class

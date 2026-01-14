@@ -140,6 +140,7 @@
   <ItemGroup>
     <Compile Include="Codebase\Constants\Colors.vb" />
     <Compile Include="Codebase\Constants\Files.vb" />
+    <Compile Include="Codebase\Constants\Values.vb" />
     <Compile Include="Codebase\Factory\ServiceFactory.vb" />
     <Compile Include="Codebase\Model\IDialogResource.vb" />
     <Compile Include="Codebase\Model\LogEvent.vb" />
@@ -232,6 +233,8 @@
     <Content Include="Gartoon-Team-Gartoon-Places-User-home.ico" />
     <Content Include="homenet.ico" />
     <Content Include="ICS client.ico" />
+    <None Include="Resources\Google-Noto-Emoji-Objects-62931-pushpin.1024.png" />
+    <None Include="Resources\Google-Noto-Emoji-Objects-62931-pushpin.ico" />
     <None Include="Resources\ICS client.ico" />
     <None Include="Resources\Gartoon-Team-Gartoon-Places-User-home.1024.png" />
     <None Include="Resources\Gartoon-Team-Gartoon-Action-Draw-freehand-pencil.1024.png" />
@@ -256,7 +259,12 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\SelectiveMediaService\SelectiveMediaService.csproj">
+      <Project>{e0beb8e2-2ad9-4ca5-b718-aa95eae01a37}</Project>
+      <Name>SelectiveMediaService</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

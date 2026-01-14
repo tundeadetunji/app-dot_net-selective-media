@@ -6,6 +6,7 @@ Imports SelectiveMedia.Strings
 Imports iNovation.Code.GeneralExtensions
 Imports SelectiveMedia.Files
 Imports iNovation.Variant
+
 Public Class Form1 : Implements IDialogResource
 
 #Region "Overrides"
@@ -249,4 +250,7 @@ Public Class Form1 : Implements IDialogResource
         MediaTimer.Enabled = True
     End Sub
 
+    Private Sub PinMediaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PinMediaToolStripMenuItem.Click
+
+    End Sub
 End Class

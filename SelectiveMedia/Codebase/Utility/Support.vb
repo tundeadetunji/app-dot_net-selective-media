@@ -3,6 +3,7 @@ Imports System.Linq
 Imports System.Text
 Imports iNovation.Code.Desktop
 Imports iNovation.Code.General
+Imports SelectiveMediaService.Service
 Public Class Support
 
 	Public Shared Function GetPeriod(settings As SettingsService) As Period
@@ -22,7 +23,11 @@ Public Class Support
 
 		Dim Players As List(Of String) = CType(SplitTextInSplits(ReadText(PlayersFile), vbCrLf, SideToReturn.AsListOfString), List(Of String))
 		For Each player As String In Players
-			If AppIsOn(player) Then Return True
+			'If AppIsOn(player) Then Return True
+
+			Dim p() As Process = Process.GetProcessesByName(Path.GetFileNameWithoutExtension(player.Trim))
+			If p.Count > (If(MediaIsPinned(), 1, 0)) Then Return True
+
 		Next
 		Return False
 	End Function

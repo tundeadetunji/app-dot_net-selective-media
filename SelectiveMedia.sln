@@ -7,6 +7,8 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "SelectiveMedia", "Selective
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup1", "Setup1\Setup1.vdproj", "{6427E171-536A-46D3-82D6-0A46AFF09C57}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SelectiveMediaService", "SelectiveMediaService\SelectiveMediaService.csproj", "{E0BEB8E2-2AD9-4CA5-B718-AA95EAE01A37}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		CD_ROM|Any CPU = CD_ROM|Any CPU
@@ -36,6 +38,16 @@ Global
 		{6427E171-536A-46D3-82D6-0A46AFF09C57}.Release|Any CPU.Build.0 = Release
 		{6427E171-536A-46D3-82D6-0A46AFF09C57}.SingleImage|Any CPU.ActiveCfg = Debug
 		{6427E171-536A-46D3-82D6-0A46AFF09C57}.SingleImage|Any CPU.Build.0 = Debug
+		{E0BEB8E2-2AD9-4CA5-B718-AA95EAE01A37}.CD_ROM|Any CPU.ActiveCfg = Release|Any CPU
+		{E0BEB8E2-2AD9-4CA5-B718-AA95EAE01A37}.CD_ROM|Any CPU.Build.0 = Release|Any CPU
+		{E0BEB8E2-2AD9-4CA5-B718-AA95EAE01A37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0BEB8E2-2AD9-4CA5-B718-AA95EAE01A37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0BEB8E2-2AD9-4CA5-B718-AA95EAE01A37}.DVD-5|Any CPU.ActiveCfg = Release|Any CPU
+		{E0BEB8E2-2AD9-4CA5-B718-AA95EAE01A37}.DVD-5|Any CPU.Build.0 = Release|Any CPU
+		{E0BEB8E2-2AD9-4CA5-B718-AA95EAE01A37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0BEB8E2-2AD9-4CA5-B718-AA95EAE01A37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0BEB8E2-2AD9-4CA5-B718-AA95EAE01A37}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
+		{E0BEB8E2-2AD9-4CA5-B718-AA95EAE01A37}.SingleImage|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
