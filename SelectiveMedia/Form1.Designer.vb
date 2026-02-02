@@ -161,39 +161,39 @@ Partial Class Form1
         Me.ContextMenuStrip1.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PinMediaToolStripMenuItem, Me.ToolStripMenuItem2, Me.ShowToolStripMenuItem, Me.ToolStripMenuItem21, Me.AllAppsToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(181, 110)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(180, 88)
         '
         'PinMediaToolStripMenuItem
         '
         Me.PinMediaToolStripMenuItem.Image = Global.SelectiveMedia.My.Resources.Resources.Google_Noto_Emoji_Objects_62931_pushpin_1024
         Me.PinMediaToolStripMenuItem.Name = "PinMediaToolStripMenuItem"
-        Me.PinMediaToolStripMenuItem.Size = New System.Drawing.Size(180, 24)
+        Me.PinMediaToolStripMenuItem.Size = New System.Drawing.Size(179, 24)
         Me.PinMediaToolStripMenuItem.Text = "Pin Media"
         Me.PinMediaToolStripMenuItem.Visible = False
         '
         'ToolStripMenuItem2
         '
         Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
-        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(177, 6)
+        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(176, 6)
         Me.ToolStripMenuItem2.Visible = False
         '
         'ShowToolStripMenuItem
         '
         Me.ShowToolStripMenuItem.Image = Global.SelectiveMedia.My.Resources.Resources.Gartoon_Team_Gartoon_Places_User_home_1024
         Me.ShowToolStripMenuItem.Name = "ShowToolStripMenuItem"
-        Me.ShowToolStripMenuItem.Size = New System.Drawing.Size(180, 24)
+        Me.ShowToolStripMenuItem.Size = New System.Drawing.Size(179, 24)
         Me.ShowToolStripMenuItem.Text = "Show"
         '
         'ToolStripMenuItem21
         '
         Me.ToolStripMenuItem21.Name = "ToolStripMenuItem21"
-        Me.ToolStripMenuItem21.Size = New System.Drawing.Size(177, 6)
+        Me.ToolStripMenuItem21.Size = New System.Drawing.Size(176, 6)
         '
         'AllAppsToolStripMenuItem
         '
         Me.AllAppsToolStripMenuItem.Image = Global.SelectiveMedia.My.Resources.Resources.ICS_client
         Me.AllAppsToolStripMenuItem.Name = "AllAppsToolStripMenuItem"
-        Me.AllAppsToolStripMenuItem.Size = New System.Drawing.Size(180, 24)
+        Me.AllAppsToolStripMenuItem.Size = New System.Drawing.Size(179, 24)
         Me.AllAppsToolStripMenuItem.Text = "Task Manager"
         '
         'FadeOutTimer
@@ -393,6 +393,7 @@ Partial Class Form1
         Me.MinimumSize = New System.Drawing.Size(434, 630)
         Me.Name = "Form1"
         Me.Opacity = 0R
+        Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Media"
         Me.TopMost = True

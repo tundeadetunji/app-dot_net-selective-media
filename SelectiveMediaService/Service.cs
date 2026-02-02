@@ -11,10 +11,6 @@ namespace SelectiveMediaService {
     public class Service {
         private static string StatusFile { get; set; } = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\iNovation Digital Works\Media\Status.txt";
 
-        /*public static Service Instance { get; private set; } = new Service();
-
-        private Service() { }*/
-
         public static bool MediaIsPinned()
         {
             if (File.Exists(StatusFile))

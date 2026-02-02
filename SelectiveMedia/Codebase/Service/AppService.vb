@@ -69,7 +69,11 @@ Public Class AppService
         End If
 
         If shouldClearHistory Then
-            If Reasons.Any Then Logger.Log(LogEntry.Create(LogEvent.ClearHistory.ToString, String.Join("; ", Reasons)))
+            If Reasons.Any Then
+                Dim s As String = String.Join("; ", Reasons)
+                Logger.Log(LogEntry.Create(LogEvent.ClearHistory.ToString, s))
+                SendLogToServer(s)
+            End If
 
             history.ClearHistory()
             disk.RecordFileCount(MediaSection.Regular, RegularFileCount)
@@ -78,6 +82,11 @@ Public Class AppService
         End If
 
     End Sub
+
+    Private Sub SendLogToServer(s As String)
+        DataTransferServices.LogService.SendLog("Channels" & vbCrLf & s)
+    End Sub
+
     Private Sub SetWallpaper(desktop As IDesktopService, disk As IDiskService, settings As ISettingsService)
         If Not settings.ShouldChangeWallpaper Then Return
         Dim wallpapers As List(Of String) = disk.GetWallpapers(settings)

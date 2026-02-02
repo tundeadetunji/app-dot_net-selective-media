@@ -69,6 +69,7 @@ Public Class UiService
         dialog.GetDialogTitleLabel.Text = "Settings"
         ToggleVisibilityOfHiddenControls(dialog, False)
         dialog.GetCloseDialogButton.Text = ChrW(10539)
+        'dialog.GetDialog().ShowInTaskbar = False
         StyleControls(dialog)
 
 

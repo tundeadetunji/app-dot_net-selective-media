@@ -106,6 +106,7 @@ Public Class Form1 : Implements IDialogResource
         With Me
             .Opacity = 0
             .TopMost = True
+            .ShowInTaskbar = True
             .FadeInTimer.Enabled = True
         End With
     End Sub
@@ -126,6 +127,7 @@ Public Class Form1 : Implements IDialogResource
         Me.Visible = True
         If Me.Opacity >= 1 Then
             FadeInTimer.Enabled = False
+            ShowInTaskbar = True
             Exit Sub
         End If
         Me.Opacity += 0.2
@@ -134,6 +136,7 @@ Public Class Form1 : Implements IDialogResource
         If Me.Opacity <= 0 Then
             FadeOutTimer.Enabled = False
             Me.Visible = False
+            ShowInTaskbar = False
             Return
         End If
         Me.Opacity -= 0.2
