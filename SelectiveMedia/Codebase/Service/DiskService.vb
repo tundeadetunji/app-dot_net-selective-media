@@ -2,6 +2,7 @@
 Imports iNovation.Code.Desktop
 Imports iNovation.Code.General
 Imports SelectiveMedia.Lists
+Imports System.Collections.ObjectModel
 Public Class DiskService
     Implements IDiskService
 
@@ -149,6 +150,7 @@ Public Class DiskService
     Public Function GetWallpapers(settings As ISettingsService) As List(Of String) Implements IDiskService.GetWallpapers
         Dim Wallpapers_ As List(Of String) = New List(Of String)
         Dim directory As String = settings.GetWallpapersLocation()
+        If String.IsNullOrEmpty(directory) Then Return Wallpapers_
         For Each FileType As String In SupportedImageFileTypes
             Dim files = My.Computer.FileSystem.GetFiles(directory, FileIO.SearchOption.SearchAllSubDirectories, FileType)
             If files.Count > 0 Then
@@ -169,9 +171,17 @@ Public Class DiskService
             Case MediaSection.Night
                 folder = settings.GetNightMediaLocation()
         End Select
-        Dim folders As List(Of String) = New List(Of String)
-        'Todo check if folder exists first
-        folders = New List(Of String)(GetDirectories(folder, FileIO.SearchOption.SearchAllSubDirectories))
+
+        'Dim folders As List(Of String) = New List(Of String)
+        'folders = New List(Of String)(GetDirectories(folder, FileIO.SearchOption.SearchAllSubDirectories))
+
+        'Dim foldersAsReadOnly As ReadOnlyCollection(Of String) = GetDirectories(folder, FileIO.SearchOption.SearchAllSubDirectories)
+        Dim foldersAsReadOnly As ReadOnlyCollection(Of String) = My.Computer.FileSystem.GetDirectories(folder, FileIO.SearchOption.SearchAllSubDirectories)
+        If foldersAsReadOnly.Count = 0 Then Return New List(Of String)
+
+        Dim folders As List(Of String) = New List(Of String)(foldersAsReadOnly)
+
+        If folders.Count = 0 Then Return New List(Of String)
 
         Dim finalList As New List(Of String)
 
@@ -243,6 +253,13 @@ Public Class DiskService
             Case Else
                 Return Long.Parse(CType(ConstructNightFiles(settings), List(Of String)).Count.ToString())
         End Select
+    End Function
+
+    Public Function FolderContainsAnySupportedFile(directory As String) As Boolean Implements IDiskService.FolderContainsAnySupportedFile
+        For Each fileType As String In SupportedMediaFileTypes
+            If My.Computer.FileSystem.GetFiles(directory, FileIO.SearchOption.SearchAllSubDirectories, fileType).Count = 0 Then Return False
+        Next
+        Return True
     End Function
 
 #End Region

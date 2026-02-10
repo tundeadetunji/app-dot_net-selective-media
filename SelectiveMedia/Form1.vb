@@ -256,4 +256,8 @@ Public Class Form1 : Implements IDialogResource
     Private Sub PinMediaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PinMediaToolStripMenuItem.Click
 
     End Sub
+
+    Private Sub NightMediaLocationTextBox_MouseHover(sender As Object, e As EventArgs) Handles NightMediaLocationTextBox.MouseHover, RegularMediaLocationTextBox.MouseHover, AlternateMediaLocationTextBox.MouseHover, ProgramsFileTextBox.MouseHover, WallpaperLocationTextBox.MouseHover, AnnounceTextBox.MouseHover
+        service.ui.ShowTip(Me, DirectCast(sender, TextBox))
+    End Sub
 End Class

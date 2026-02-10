@@ -1,16 +1,34 @@
-﻿Imports iNovation.Code.General
-Imports iNovation.Code.Desktop
-Imports System.Runtime.Remoting
+﻿Imports System.Runtime.Remoting
 Imports System.Windows.Forms.VisualStyles.VisualStyleElement.Window
+Imports iNovation.Code.Desktop
+Imports iNovation.Code.General
 Imports SelectiveMedia.Strings
+Imports SelectiveMediaService
 Public Class UiService
     Implements IUiService
 
 #Region "Initialization"
-    Public Shared ReadOnly Property Instance As UiService = New UiService
-    Private Sub New()
+    Public Shared ReadOnly Property Instance(settings As ISettingsService) As UiService
+        Get
+            Return New UiService(settings)
+        End Get
+    End Property
 
+    Private Sub New(settings As ISettingsService)
+        Me.settings = settings
     End Sub
+
+    Private Property settings As ISettingsService
+#End Region
+
+#Region "Properties"
+    Private ReadOnly Property tip As ToolTip = New ToolTip() With {.UseFading = True, .IsBalloon = True, .ToolTipIcon = ToolTipIcon.Info, .BackColor = Color.White}
+
+    Private ReadOnly Property SHOWS As String = "Shows"
+    Private ReadOnly Property ANNOUNCE As String = "Announcement"
+    Private ReadOnly Property WALLPAPERS As String = "Wallpapers"
+    Private ReadOnly Property PROGRAMS_TO_RUN As String = "Programs to run"
+
 #End Region
 
 
@@ -105,6 +123,46 @@ Public Class UiService
         dialog.GetProgramsFileTextBox.ReadOnly = state
         dialog.GetWallpaperLocationTextBox.ReadOnly = state
         dialog.GetAnnounceTextBox.ReadOnly = state
+    End Sub
+
+    Public Sub ShowTip(dialog As IDialogResource, t As TextBox) Implements IUiService.ShowTip
+
+        If t Is dialog.GetNightMediaLocationTextBox Then
+            tip.ToolTipTitle = SHOWS
+            tip.SetToolTip(t, "Shows between " & settings.GetBeginTime() & " and " & settings.GetEndTime())
+            Return
+        End If
+
+        If t Is dialog.GetRegularMediaLocationTextBox Then
+            tip.ToolTipTitle = SHOWS
+            tip.SetToolTip(t, "Shows between " & settings.GetEndTime() & " and " & settings.GetBeginTime() & " regularly")
+            Return
+        End If
+
+        If t Is dialog.GetAlternateMediaLocationTextBox Then
+            tip.ToolTipTitle = SHOWS
+            tip.SetToolTip(t, "Shows between " & settings.GetEndTime() & " and " & settings.GetBeginTime() & " alternately")
+            Return
+        End If
+
+        If t Is dialog.GetProgramsFileTextBox Then
+            tip.ToolTipTitle = PROGRAMS_TO_RUN
+            tip.SetToolTip(t, "Select file containing programs to run")
+            Return
+        End If
+
+        If t Is dialog.GetWallpaperLocationTextBox Then
+            tip.ToolTipTitle = WALLPAPERS
+            tip.SetToolTip(t, "Select folder containing wallpapers")
+            Return
+        End If
+
+        If t Is dialog.GetAnnounceTextBox Then
+            tip.ToolTipTitle = ANNOUNCE
+            tip.SetToolTip(t, "Announces start of session")
+            Return
+        End If
+
     End Sub
 
 #End Region

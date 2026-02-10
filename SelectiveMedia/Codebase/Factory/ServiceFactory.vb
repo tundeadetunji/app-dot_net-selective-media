@@ -9,7 +9,7 @@
 		history = HistoryService.Instance
 		playback = MediaService.Instance
 		settings = SettingsService.Instance
-		ui = UiService.Instance
+		ui = UiService.Instance(settings)
 	End Sub
 #End Region
 

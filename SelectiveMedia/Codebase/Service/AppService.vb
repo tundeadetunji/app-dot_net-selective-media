@@ -84,7 +84,11 @@ Public Class AppService
     End Sub
 
     Private Sub SendLogToServer(s As String)
-        DataTransferServices.LogService.SendLog("Channels" & vbCrLf & s)
+        Try
+            DataTransferServices.LogService.SendLog("Channels" & vbCrLf & s)
+        Catch ex As Exception
+
+        End Try
     End Sub
 
     Private Sub SetWallpaper(desktop As IDesktopService, disk As IDiskService, settings As ISettingsService)

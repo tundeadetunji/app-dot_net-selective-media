@@ -44,8 +44,11 @@ Public Class SettingsService
         If Not IO.Directory.Exists(dialog.GetNightMediaLocationTextBox.Text) Then valid = False
         If Not IO.Directory.Exists(dialog.GetRegularMediaLocationTextBox.Text) Then valid = False
         If Not IO.Directory.Exists(dialog.GetAlternateMediaLocationTextBox.Text) Then valid = False
+
+        'If Not ServiceFactory.Instance.disk.FolderContainsAnySupportedFile(dialog.GetNightMediaLocationTextBox.Text) Then valid = False
+
         'If Not IO.File.Exists(dialog.GetProgramsFileTextBox.Text) Then valid = False
-        If Not IO.Directory.Exists(dialog.GetWallpaperLocationTextBox.Text) Then valid = False
+        'If Not IO.Directory.Exists(dialog.GetWallpaperLocationTextBox.Text) Then valid = False
         If String.IsNullOrEmpty(dialog.GetModeDropDown.Text) Then valid = False
         If String.IsNullOrEmpty(dialog.GetRateDropDown.Text) Then valid = False
 

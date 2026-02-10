@@ -2,6 +2,7 @@
     Sub RecordFileCount(section As MediaSection, count As Long)
     Sub SetPermissions()
     Function FileCount(section As MediaSection, settings As ISettingsService) As Long
+    Function FolderContainsAnySupportedFile(directory As String) As Boolean
     Function GetMediaFiles(directory As String) As List(Of String)
     Function GetMediaFolders(section As MediaSection, settings As ISettingsService) As List(Of String)
     Function GetWallpapers(settings As ISettingsService) As List(Of String)
