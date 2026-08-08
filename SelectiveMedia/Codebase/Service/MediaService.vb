@@ -43,7 +43,10 @@ Public Class MediaService
         Dim selectedMediaFile As String = ChoseRandomFileToPlay(folders, disk, history, next_section)
         state.UpdateCurrentSection(next_section)
         history.AddFileToHistory(selectedMediaFile)
-        StartFile(selectedMediaFile)
+
+
+        'StartFile(selectedMediaFile)
+        PlayMedia(selectedMediaFile)
     End Sub
 
     Private Sub StartMediaSequential(state As IStateService, disk As IDiskService, history As IHistoryService, settings As ISettingsService)
@@ -75,8 +78,11 @@ Public Class MediaService
             settings.GetAnnounce().Inform
         End If
 
+
+
         Try
             StartFile(files(index))
+            PlayMedia(files(index))
         Catch ignored As Exception
         End Try
     End Sub
@@ -175,6 +181,17 @@ Public Class MediaService
         End Select
     End Function
 
+    Public Sub PlayMedia(media As String)
+
+        Dim psi As New ProcessStartInfo With {
+        .FileName = "C:\Program Files\VideoLAN\VLC\vlc.exe",
+        .Arguments = $"--play-and-exit ""{media}""",
+        .UseShellExecute = False
+    }
+
+        Process.Start(psi)
+
+    End Sub
 #End Region
 
 

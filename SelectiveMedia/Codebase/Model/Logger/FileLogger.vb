@@ -19,4 +19,12 @@ Public Class FileLogger
             WriteText(LogFile, JsonConvert.SerializeObject(Entry) & Environment.NewLine)
         End SyncLock
     End Sub
+
+    Public Sub Log(key As String, value As String) Implements Logger(Of LogEntry).Log
+        'Todo
+    End Sub
+
+    Public Sub Log(value As String) Implements Logger(Of LogEntry).Log
+        'Todo
+    End Sub
 End Class
