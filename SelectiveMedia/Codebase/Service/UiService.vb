@@ -114,6 +114,7 @@ Public Class UiService
         dialog.GetRateDropDown.Visible = visible
         dialog.GetStartWithPCCheckBox.Visible = visible
         dialog.GetChangeWallpaperCheckBox.Visible = visible
+        dialog.GetFullScreenCheckBox.Visible = visible
     End Sub
 
     Public Sub ToggleEditingTextBoxes(dialog As IDialogResource, state As Boolean) Implements IUiService.ToggleEditingTextBoxes

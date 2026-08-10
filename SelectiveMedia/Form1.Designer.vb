@@ -61,6 +61,7 @@ Partial Class Form1
         Me.BottomBorder = New System.Windows.Forms.PictureBox()
         Me.TopBorder = New System.Windows.Forms.PictureBox()
         Me.HelpIcon = New System.Windows.Forms.PictureBox()
+        Me.FullScreenCheckBox = New System.Windows.Forms.CheckBox()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.DialogContextMenuStrip.SuspendLayout()
         CType(Me.RightBorder, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -118,7 +119,7 @@ Partial Class Form1
         'EndTime
         '
         Me.EndTime.Format = System.Windows.Forms.DateTimePickerFormat.Time
-        Me.EndTime.Location = New System.Drawing.Point(14, 320)
+        Me.EndTime.Location = New System.Drawing.Point(14, 317)
         Me.EndTime.Name = "EndTime"
         Me.EndTime.Size = New System.Drawing.Size(200, 26)
         Me.EndTime.TabIndex = 7
@@ -127,7 +128,7 @@ Partial Class Form1
         'BeginTime
         '
         Me.BeginTime.Format = System.Windows.Forms.DateTimePickerFormat.Time
-        Me.BeginTime.Location = New System.Drawing.Point(14, 288)
+        Me.BeginTime.Location = New System.Drawing.Point(14, 285)
         Me.BeginTime.Name = "BeginTime"
         Me.BeginTime.Size = New System.Drawing.Size(200, 26)
         Me.BeginTime.TabIndex = 6
@@ -209,7 +210,7 @@ Partial Class Form1
         'ModeDropDown
         '
         Me.ModeDropDown.FormattingEnabled = True
-        Me.ModeDropDown.Location = New System.Drawing.Point(14, 352)
+        Me.ModeDropDown.Location = New System.Drawing.Point(14, 349)
         Me.ModeDropDown.Name = "ModeDropDown"
         Me.ModeDropDown.Size = New System.Drawing.Size(202, 28)
         Me.ModeDropDown.TabIndex = 8
@@ -218,7 +219,7 @@ Partial Class Form1
         'RateDropDown
         '
         Me.RateDropDown.FormattingEnabled = True
-        Me.RateDropDown.Location = New System.Drawing.Point(14, 386)
+        Me.RateDropDown.Location = New System.Drawing.Point(14, 383)
         Me.RateDropDown.Name = "RateDropDown"
         Me.RateDropDown.Size = New System.Drawing.Size(202, 28)
         Me.RateDropDown.TabIndex = 9
@@ -283,7 +284,7 @@ Partial Class Form1
         'StartWithPCCheckBox
         '
         Me.StartWithPCCheckBox.AutoSize = True
-        Me.StartWithPCCheckBox.Location = New System.Drawing.Point(14, 420)
+        Me.StartWithPCCheckBox.Location = New System.Drawing.Point(15, 255)
         Me.StartWithPCCheckBox.Name = "StartWithPCCheckBox"
         Me.StartWithPCCheckBox.Size = New System.Drawing.Size(147, 24)
         Me.StartWithPCCheckBox.TabIndex = 10
@@ -293,7 +294,7 @@ Partial Class Form1
         'ChangeWallpaperCheckBox
         '
         Me.ChangeWallpaperCheckBox.AutoSize = True
-        Me.ChangeWallpaperCheckBox.Location = New System.Drawing.Point(15, 257)
+        Me.ChangeWallpaperCheckBox.Location = New System.Drawing.Point(15, 417)
         Me.ChangeWallpaperCheckBox.Name = "ChangeWallpaperCheckBox"
         Me.ChangeWallpaperCheckBox.Size = New System.Drawing.Size(159, 24)
         Me.ChangeWallpaperCheckBox.TabIndex = 16779
@@ -351,7 +352,7 @@ Partial Class Form1
         Me.HelpIcon.BackgroundImage = Global.SelectiveMedia.My.Resources.Resources.girl_idea_icon_128
         Me.HelpIcon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
         Me.HelpIcon.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.HelpIcon.Location = New System.Drawing.Point(14, 452)
+        Me.HelpIcon.Location = New System.Drawing.Point(13, 479)
         Me.HelpIcon.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.HelpIcon.Name = "HelpIcon"
         Me.HelpIcon.Size = New System.Drawing.Size(90, 90)
@@ -359,11 +360,22 @@ Partial Class Form1
         Me.HelpIcon.TabIndex = 16771
         Me.HelpIcon.TabStop = False
         '
+        'FullScreenCheckBox
+        '
+        Me.FullScreenCheckBox.AutoSize = True
+        Me.FullScreenCheckBox.Location = New System.Drawing.Point(15, 447)
+        Me.FullScreenCheckBox.Name = "FullScreenCheckBox"
+        Me.FullScreenCheckBox.Size = New System.Drawing.Size(108, 24)
+        Me.FullScreenCheckBox.TabIndex = 16780
+        Me.FullScreenCheckBox.Text = "Full Screen"
+        Me.FullScreenCheckBox.UseVisualStyleBackColor = True
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(434, 630)
+        Me.Controls.Add(Me.FullScreenCheckBox)
         Me.Controls.Add(Me.ChangeWallpaperCheckBox)
         Me.Controls.Add(Me.StartWithPCCheckBox)
         Me.Controls.Add(Me.RightBorder)
@@ -446,4 +458,5 @@ Partial Class Form1
     Friend WithEvents ChangeWallpaperCheckBox As CheckBox
     Friend WithEvents PinMediaToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem2 As ToolStripSeparator
+    Friend WithEvents FullScreenCheckBox As CheckBox
 End Class

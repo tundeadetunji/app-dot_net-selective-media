@@ -27,6 +27,7 @@ Public Class SettingsService
     Private ReadOnly Property RateFile As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\Rate.txt"
     Private ReadOnly Property ModeFile As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\Mode.txt"
     Private ReadOnly Property ChangeWallpaperFile As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\ChangeWallpaper.txt"
+    Private ReadOnly Property FullScreenFile As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\GoFullScreen.txt"
     Private ReadOnly Property StartWithPCFile As String = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) & "\iNovation Digital Works\Media\StartWithPC.txt"
 
 #End Region
@@ -178,6 +179,15 @@ Public Class SettingsService
         dialog.GetRateDropDown.Text = GetRate()
         dialog.GetStartWithPCCheckBox.Checked = ShouldStartWithPC()
         dialog.GetChangeWallpaperCheckBox.Checked = ShouldChangeWallpaper()
+        dialog.GetFullScreenCheckBox.Checked = ShouldGoFullScreen()
+    End Sub
+
+    Public Function ShouldGoFullScreen() As Boolean Implements ISettingsService.ShouldGoFullScreen
+        Return Boolean.Parse(ReadText(FullScreenFile))
+    End Function
+
+    Public Sub GoFullScreen(value As Boolean) Implements ISettingsService.GoFullScreen
+        WriteText(FullScreenFile, value)
     End Sub
 
 #End Region

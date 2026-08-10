@@ -18,4 +18,5 @@
     Function GetCloseDialogButton() As Label
     Function GetStartWithPCCheckBox() As CheckBox
     Function GetChangeWallpaperCheckBox() As CheckBox
+    Function GetFullScreenCheckBox() As CheckBox
 End Interface

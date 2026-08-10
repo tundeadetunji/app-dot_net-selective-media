@@ -46,7 +46,7 @@ Public Class MediaService
 
 
         'StartFile(selectedMediaFile)
-        PlayMedia(selectedMediaFile, ShouldGoFullScreen())
+        PlayMedia(selectedMediaFile, ShouldGoFullScreen(settings))
     End Sub
 
     Private Sub StartMediaSequential(state As IStateService, disk As IDiskService, history As IHistoryService, settings As ISettingsService)
@@ -82,7 +82,7 @@ Public Class MediaService
 
         Try
             'StartFile(files(index))
-            PlayMedia(files(index), ShouldGoFullScreen())
+            PlayMedia(files(index), ShouldGoFullScreen(settings))
         Catch ignored As Exception
         End Try
     End Sub
@@ -213,8 +213,8 @@ Public Class MediaService
 
     End Sub
 
-    Private Function ShouldGoFullScreen() As Boolean
-        Return True
+    Private Function ShouldGoFullScreen(settings As ISettingsService) As Boolean
+        Return settings.ShouldGoFullScreen()
     End Function
 #End Region
 

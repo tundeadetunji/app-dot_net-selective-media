@@ -23,6 +23,8 @@
     Function GetRegularMediaLocation() As String
     Function GetWallpapersLocation() As String
     Function ShouldChangeWallpaper() As Boolean
+    Function ShouldGoFullScreen() As Boolean
+    Sub GoFullScreen(value As Boolean)
     Function ShouldStartWithPC() As Boolean
     Function Validated(dialog As IDialogResource) As Boolean
     Sub RestoreSettings(dialog As IDialogResource)

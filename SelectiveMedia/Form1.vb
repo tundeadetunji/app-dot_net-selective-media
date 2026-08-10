@@ -10,6 +10,10 @@ Imports iNovation.Variant
 Public Class Form1 : Implements IDialogResource
 
 #Region "Overrides"
+    Public Function GetFullScreenCheckBox() As CheckBox Implements IDialogResource.GetFullScreenCheckBox
+        Return FullScreenCheckBox
+    End Function
+
     Public Function GetChangeWallpaperCheckBox() As CheckBox Implements IDialogResource.GetChangeWallpaperCheckBox
         Return ChangeWallpaperCheckBox
     End Function
@@ -259,5 +263,9 @@ Public Class Form1 : Implements IDialogResource
 
     Private Sub NightMediaLocationTextBox_MouseHover(sender As Object, e As EventArgs) Handles NightMediaLocationTextBox.MouseHover, RegularMediaLocationTextBox.MouseHover, AlternateMediaLocationTextBox.MouseHover, ProgramsFileTextBox.MouseHover, WallpaperLocationTextBox.MouseHover, AnnounceTextBox.MouseHover
         service.ui.ShowTip(Me, DirectCast(sender, TextBox))
+    End Sub
+
+    Private Sub FullScreenCheckBox_CheckedChanged(sender As Object, e As EventArgs) Handles FullScreenCheckBox.CheckedChanged
+        service.settings.GoFullScreen(FullScreenCheckBox.Checked)
     End Sub
 End Class
