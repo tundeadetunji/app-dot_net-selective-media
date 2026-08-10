@@ -46,7 +46,7 @@ Public Class MediaService
 
 
         'StartFile(selectedMediaFile)
-        PlayMedia(selectedMediaFile)
+        PlayMedia(selectedMediaFile, ShouldGoFullScreen())
     End Sub
 
     Private Sub StartMediaSequential(state As IStateService, disk As IDiskService, history As IHistoryService, settings As ISettingsService)
@@ -81,8 +81,8 @@ Public Class MediaService
 
 
         Try
-            StartFile(files(index))
-            PlayMedia(files(index))
+            'StartFile(files(index))
+            PlayMedia(files(index), ShouldGoFullScreen())
         Catch ignored As Exception
         End Try
     End Sub
@@ -181,17 +181,41 @@ Public Class MediaService
         End Select
     End Function
 
-    Public Sub PlayMedia(media As String)
+    'works
+    'Public Sub PlayMedia(media As String)
+
+    '    Dim psi As New ProcessStartInfo With {
+    '    .FileName = "C:\Program Files\VideoLAN\VLC\vlc.exe",
+    '    .Arguments = $"--play-and-exit ""{media}""",
+    '    .UseShellExecute = False
+    '}
+
+    '    Process.Start(psi)
+
+    'End Sub
+
+    Private Sub PlayMedia(media As String, Optional fullscreen As Boolean = False)
+
+        Dim arguments As String =
+            $"--play-and-exit ""{media}"""
+
+        If fullscreen Then
+            arguments &= " --fullscreen"
+        End If
 
         Dim psi As New ProcessStartInfo With {
-        .FileName = "C:\Program Files\VideoLAN\VLC\vlc.exe",
-        .Arguments = $"--play-and-exit ""{media}""",
-        .UseShellExecute = False
-    }
+            .FileName = "C:\Program Files\VideoLAN\VLC\vlc.exe",
+            .Arguments = arguments,
+            .UseShellExecute = False
+        }
 
         Process.Start(psi)
 
     End Sub
+
+    Private Function ShouldGoFullScreen() As Boolean
+        Return True
+    End Function
 #End Region
 
 
