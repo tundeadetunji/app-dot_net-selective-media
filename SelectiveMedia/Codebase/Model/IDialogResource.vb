@@ -19,4 +19,6 @@
     Function GetStartWithPCCheckBox() As CheckBox
     Function GetChangeWallpaperCheckBox() As CheckBox
     Function GetFullScreenCheckBox() As CheckBox
+    Function GetFullScreenMenuItem() As ToolStripMenuItem
+
 End Interface

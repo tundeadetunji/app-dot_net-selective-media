@@ -180,6 +180,7 @@ Public Class SettingsService
         dialog.GetStartWithPCCheckBox.Checked = ShouldStartWithPC()
         dialog.GetChangeWallpaperCheckBox.Checked = ShouldChangeWallpaper()
         dialog.GetFullScreenCheckBox.Checked = ShouldGoFullScreen()
+        dialog.GetFullScreenMenuItem.Checked = ShouldGoFullScreen()
     End Sub
 
     Public Function ShouldGoFullScreen() As Boolean Implements ISettingsService.ShouldGoFullScreen

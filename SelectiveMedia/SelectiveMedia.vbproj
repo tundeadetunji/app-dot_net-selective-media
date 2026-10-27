@@ -238,6 +238,7 @@
     <Content Include="Gartoon-Team-Gartoon-Places-User-home.ico" />
     <Content Include="homenet.ico" />
     <Content Include="ICS client.ico" />
+    <None Include="Resources\Iconsmind-Outline-Full-Screen.512.png" />
     <None Include="Resources\Google-Noto-Emoji-Objects-62931-pushpin.1024.png" />
     <None Include="Resources\Google-Noto-Emoji-Objects-62931-pushpin.ico" />
     <None Include="Resources\ICS client.ico" />

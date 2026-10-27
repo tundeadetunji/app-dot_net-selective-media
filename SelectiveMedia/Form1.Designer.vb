@@ -36,11 +36,8 @@ Partial Class Form1
         Me.NightTimer = New System.Windows.Forms.Timer(Me.components)
         Me.NotifyIcon1 = New System.Windows.Forms.NotifyIcon(Me.components)
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.PinMediaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripSeparator()
-        Me.ShowToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem21 = New System.Windows.Forms.ToolStripSeparator()
-        Me.AllAppsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.FadeOutTimer = New System.Windows.Forms.Timer(Me.components)
         Me.FadeInTimer = New System.Windows.Forms.Timer(Me.components)
         Me.MediaTimer = New System.Windows.Forms.Timer(Me.components)
@@ -50,18 +47,22 @@ Partial Class Form1
         Me.ProgramsFileTextBox = New System.Windows.Forms.TextBox()
         Me.CloseDialogButton = New System.Windows.Forms.Label()
         Me.DialogContextMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.EditToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
-        Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.StartWithPCCheckBox = New System.Windows.Forms.CheckBox()
         Me.ChangeWallpaperCheckBox = New System.Windows.Forms.CheckBox()
+        Me.FullScreenCheckBox = New System.Windows.Forms.CheckBox()
         Me.RightBorder = New System.Windows.Forms.PictureBox()
         Me.Divider = New System.Windows.Forms.PictureBox()
         Me.LeftBorder = New System.Windows.Forms.PictureBox()
         Me.BottomBorder = New System.Windows.Forms.PictureBox()
         Me.TopBorder = New System.Windows.Forms.PictureBox()
         Me.HelpIcon = New System.Windows.Forms.PictureBox()
-        Me.FullScreenCheckBox = New System.Windows.Forms.CheckBox()
+        Me.PinMediaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.FullScreenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ShowToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.AllAppsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.EditToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.DialogContextMenuStrip.SuspendLayout()
         CType(Me.RightBorder, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -160,42 +161,19 @@ Partial Class Form1
         'ContextMenuStrip1
         '
         Me.ContextMenuStrip1.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PinMediaToolStripMenuItem, Me.ToolStripMenuItem2, Me.ShowToolStripMenuItem, Me.ToolStripMenuItem21, Me.AllAppsToolStripMenuItem})
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PinMediaToolStripMenuItem, Me.FullScreenToolStripMenuItem, Me.ToolStripMenuItem2, Me.ShowToolStripMenuItem, Me.ToolStripMenuItem21, Me.AllAppsToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(180, 88)
-        '
-        'PinMediaToolStripMenuItem
-        '
-        Me.PinMediaToolStripMenuItem.Image = Global.SelectiveMedia.My.Resources.Resources.Google_Noto_Emoji_Objects_62931_pushpin_1024
-        Me.PinMediaToolStripMenuItem.Name = "PinMediaToolStripMenuItem"
-        Me.PinMediaToolStripMenuItem.Size = New System.Drawing.Size(179, 24)
-        Me.PinMediaToolStripMenuItem.Text = "Pin Media"
-        Me.PinMediaToolStripMenuItem.Visible = False
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(180, 112)
         '
         'ToolStripMenuItem2
         '
         Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
         Me.ToolStripMenuItem2.Size = New System.Drawing.Size(176, 6)
-        Me.ToolStripMenuItem2.Visible = False
-        '
-        'ShowToolStripMenuItem
-        '
-        Me.ShowToolStripMenuItem.Image = Global.SelectiveMedia.My.Resources.Resources.Gartoon_Team_Gartoon_Places_User_home_1024
-        Me.ShowToolStripMenuItem.Name = "ShowToolStripMenuItem"
-        Me.ShowToolStripMenuItem.Size = New System.Drawing.Size(179, 24)
-        Me.ShowToolStripMenuItem.Text = "Show"
         '
         'ToolStripMenuItem21
         '
         Me.ToolStripMenuItem21.Name = "ToolStripMenuItem21"
         Me.ToolStripMenuItem21.Size = New System.Drawing.Size(176, 6)
-        '
-        'AllAppsToolStripMenuItem
-        '
-        Me.AllAppsToolStripMenuItem.Image = Global.SelectiveMedia.My.Resources.Resources.ICS_client
-        Me.AllAppsToolStripMenuItem.Name = "AllAppsToolStripMenuItem"
-        Me.AllAppsToolStripMenuItem.Size = New System.Drawing.Size(179, 24)
-        Me.AllAppsToolStripMenuItem.Text = "Task Manager"
         '
         'FadeOutTimer
         '
@@ -262,24 +240,10 @@ Partial Class Form1
         Me.DialogContextMenuStrip.Name = "ContextMenuStrip1"
         Me.DialogContextMenuStrip.Size = New System.Drawing.Size(107, 58)
         '
-        'EditToolStripMenuItem
-        '
-        Me.EditToolStripMenuItem.Image = Global.SelectiveMedia.My.Resources.Resources.Gartoon_Team_Gartoon_Action_Draw_freehand_pencil_1024
-        Me.EditToolStripMenuItem.Name = "EditToolStripMenuItem"
-        Me.EditToolStripMenuItem.Size = New System.Drawing.Size(106, 24)
-        Me.EditToolStripMenuItem.Text = "Edit"
-        '
         'ToolStripMenuItem1
         '
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
         Me.ToolStripMenuItem1.Size = New System.Drawing.Size(103, 6)
-        '
-        'ExitToolStripMenuItem
-        '
-        Me.ExitToolStripMenuItem.Image = Global.SelectiveMedia.My.Resources.Resources.Iconsmind_Outline_Power_3_512
-        Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(106, 24)
-        Me.ExitToolStripMenuItem.Text = "Exit"
         '
         'StartWithPCCheckBox
         '
@@ -300,6 +264,16 @@ Partial Class Form1
         Me.ChangeWallpaperCheckBox.TabIndex = 16779
         Me.ChangeWallpaperCheckBox.Text = "Change Wallpaper"
         Me.ChangeWallpaperCheckBox.UseVisualStyleBackColor = True
+        '
+        'FullScreenCheckBox
+        '
+        Me.FullScreenCheckBox.AutoSize = True
+        Me.FullScreenCheckBox.Location = New System.Drawing.Point(15, 447)
+        Me.FullScreenCheckBox.Name = "FullScreenCheckBox"
+        Me.FullScreenCheckBox.Size = New System.Drawing.Size(108, 24)
+        Me.FullScreenCheckBox.TabIndex = 16780
+        Me.FullScreenCheckBox.Text = "Full Screen"
+        Me.FullScreenCheckBox.UseVisualStyleBackColor = True
         '
         'RightBorder
         '
@@ -360,15 +334,47 @@ Partial Class Form1
         Me.HelpIcon.TabIndex = 16771
         Me.HelpIcon.TabStop = False
         '
-        'FullScreenCheckBox
+        'PinMediaToolStripMenuItem
         '
-        Me.FullScreenCheckBox.AutoSize = True
-        Me.FullScreenCheckBox.Location = New System.Drawing.Point(15, 447)
-        Me.FullScreenCheckBox.Name = "FullScreenCheckBox"
-        Me.FullScreenCheckBox.Size = New System.Drawing.Size(108, 24)
-        Me.FullScreenCheckBox.TabIndex = 16780
-        Me.FullScreenCheckBox.Text = "Full Screen"
-        Me.FullScreenCheckBox.UseVisualStyleBackColor = True
+        Me.PinMediaToolStripMenuItem.Image = Global.SelectiveMedia.My.Resources.Resources.Google_Noto_Emoji_Objects_62931_pushpin_1024
+        Me.PinMediaToolStripMenuItem.Name = "PinMediaToolStripMenuItem"
+        Me.PinMediaToolStripMenuItem.Size = New System.Drawing.Size(179, 24)
+        Me.PinMediaToolStripMenuItem.Text = "Pin Media"
+        Me.PinMediaToolStripMenuItem.Visible = False
+        '
+        'FullScreenToolStripMenuItem
+        '
+        Me.FullScreenToolStripMenuItem.Name = "FullScreenToolStripMenuItem"
+        Me.FullScreenToolStripMenuItem.Size = New System.Drawing.Size(179, 24)
+        Me.FullScreenToolStripMenuItem.Text = "Full Screen"
+        '
+        'ShowToolStripMenuItem
+        '
+        Me.ShowToolStripMenuItem.Image = Global.SelectiveMedia.My.Resources.Resources.Gartoon_Team_Gartoon_Places_User_home_1024
+        Me.ShowToolStripMenuItem.Name = "ShowToolStripMenuItem"
+        Me.ShowToolStripMenuItem.Size = New System.Drawing.Size(179, 24)
+        Me.ShowToolStripMenuItem.Text = "Show"
+        '
+        'AllAppsToolStripMenuItem
+        '
+        Me.AllAppsToolStripMenuItem.Image = Global.SelectiveMedia.My.Resources.Resources.ICS_client
+        Me.AllAppsToolStripMenuItem.Name = "AllAppsToolStripMenuItem"
+        Me.AllAppsToolStripMenuItem.Size = New System.Drawing.Size(179, 24)
+        Me.AllAppsToolStripMenuItem.Text = "Task Manager"
+        '
+        'EditToolStripMenuItem
+        '
+        Me.EditToolStripMenuItem.Image = Global.SelectiveMedia.My.Resources.Resources.Gartoon_Team_Gartoon_Action_Draw_freehand_pencil_1024
+        Me.EditToolStripMenuItem.Name = "EditToolStripMenuItem"
+        Me.EditToolStripMenuItem.Size = New System.Drawing.Size(106, 24)
+        Me.EditToolStripMenuItem.Text = "Edit"
+        '
+        'ExitToolStripMenuItem
+        '
+        Me.ExitToolStripMenuItem.Image = Global.SelectiveMedia.My.Resources.Resources.Iconsmind_Outline_Power_3_512
+        Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(106, 24)
+        Me.ExitToolStripMenuItem.Text = "Exit"
         '
         'Form1
         '
@@ -459,4 +465,5 @@ Partial Class Form1
     Friend WithEvents PinMediaToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem2 As ToolStripSeparator
     Friend WithEvents FullScreenCheckBox As CheckBox
+    Friend WithEvents FullScreenToolStripMenuItem As ToolStripMenuItem
 End Class

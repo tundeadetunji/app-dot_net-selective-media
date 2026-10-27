@@ -10,6 +10,10 @@ Imports iNovation.Variant
 Public Class Form1 : Implements IDialogResource
 
 #Region "Overrides"
+
+    Public Function GetFullScreenMenuItem() As ToolStripMenuItem Implements IDialogResource.GetFullScreenMenuItem
+        Return FullScreenToolStripMenuItem
+    End Function
     Public Function GetFullScreenCheckBox() As CheckBox Implements IDialogResource.GetFullScreenCheckBox
         Return FullScreenCheckBox
     End Function
@@ -266,6 +270,15 @@ Public Class Form1 : Implements IDialogResource
     End Sub
 
     Private Sub FullScreenCheckBox_CheckedChanged(sender As Object, e As EventArgs) Handles FullScreenCheckBox.CheckedChanged
-        service.settings.GoFullScreen(FullScreenCheckBox.Checked)
+        Dim state As Boolean = FullScreenCheckBox.Checked
+        service.settings.GoFullScreen(state)
+        FullScreenToolStripMenuItem.Checked = state
     End Sub
+
+    Private Sub FullScreenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FullScreenToolStripMenuItem.Click
+        Dim state As Boolean = Not FullScreenToolStripMenuItem.Checked
+        service.settings.GoFullScreen(state)
+        FullScreenToolStripMenuItem.Checked = state
+    End Sub
+
 End Class
